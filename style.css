@@ -50,17 +50,17 @@ body {
   flex-direction: column;
 }
 
-.container .top {
+.container .topNavParent {
   background: #1d1d1d;
   text-align: end;
   padding: 8px 12px;
   flex-grow: 1;
 }
-.container .top svg {
+.container .topNavParent svg {
   cursor: pointer;
 }
 
-.container .notesLists {
+.container .notesList {
   background: tomato;
   width: 100%;
   flex-grow: 100;
