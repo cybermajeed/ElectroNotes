@@ -56,6 +56,9 @@ body {
   padding: 8px 12px;
   flex-grow: 1;
 }
+.container .top svg {
+  cursor: pointer;
+}
 
 .container .notesLists {
   background: tomato;
@@ -66,6 +69,7 @@ body {
 }
 
 .container .addNote {
+  cursor: pointer;
   width: 100%;
   outline: none;
   border: none;
