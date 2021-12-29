@@ -1,1 +1,64 @@
-/*code*/
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: #1f1f1f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: calibri;
+  color: #fff;
+}
+.wrapper {
+  height: 100%;
+  width: 70%;
+  min-width: fit-content;
+  background: #0000004d;
+  border-radius: 10px;
+}
+.wrapper .emptySpace {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px #fff;
+}
+
+.container {
+  height: 100%;
+  width: 30%;
+  min-width: fit-content;
+  background: #2c2c2c;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container .top {
+  background: #1d1d1d;
+  text-align: end;
+  padding: 8px 12px;
+  flex-grow: 1;
+}
+
+.container .notesLists {
+  background: tomato;
+  width: 100%;
+  flex-grow: 100;
+}
+
+.container .addNote {
+  width: 100%;
+  outline: none;
+  border: none;
+  background: #8300fd;
+  color: #fff;
+  font-weight: 800;
+  font-size: large;
+  border-radius: 0 0 4px 4px;
+  padding: 10px 15px;
+  flex-grow: 1;
+}
