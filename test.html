@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+    <style>
+      body {
+        background: #1f1f1f;
+      }
+      textarea {
+        font-size: large;
+        width: 30%;
+        height: 100px;
+        resize: none;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="button" class="add" value="Add Box" />
+    <script>
+      let addBtn = document.querySelector("input[type='button']");
+
+      const notes = JSON.parse(localStorage.getItem("notes"));
+
+      if (notes) {
+        notes.forEach((note) => {
+          addNote(note);
+        });
+      }
+
+      addBtn.onclick = () => {
+        addNote();
+      };
+
+      function addNote(note) {
+        let textarea = document.createElement("textarea");
+        document.body.appendChild(textarea);
+        if (note) {
+          textarea.value = note;
+        }
+        LS();
+      }
+
+      function LS() {
+        const notes = [];
+        document.querySelectorAll("textarea").forEach((note) => {
+          notes.push(note.value);
+        });
+        localStorage.setItem("notes", JSON.stringify(notes));
+      }
+    </script>
+  </body>
+</html>
