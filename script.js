@@ -83,7 +83,7 @@ function createNewNote(note) {
   noteparentDiv.appendChild(textarea);
   notesList.appendChild(noteparentDiv);
   //local Storage
-  if (note) {
+  if (note.title && note.content) {
     inputText.value = note.title;
     textarea.value = note.content;
     console.log(note.title);
