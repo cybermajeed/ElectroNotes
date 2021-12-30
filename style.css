@@ -53,12 +53,15 @@ body {
 .container .topNavParent {
   background: #1d1d1d;
   text-align: end;
-  padding: 8px 12px;
   flex-grow: 1;
   border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 .container .topNavParent svg path {
   cursor: pointer;
+  fill: rgba(0, 179, 250, 0.336);
 }
 
 .container .notesList {
@@ -83,3 +86,10 @@ body {
   flex-grow: 1;
 }
 
+.topNavParent div {
+  background: #ff000056;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+}
