@@ -2,7 +2,8 @@ let wrapper = document.querySelector(".wrapper"),
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
   notesList = container.querySelector(".notesList"),
-  addNote = container.querySelector(".addNoteParent .addNote");
+  notes = notesList.querySelectorAll(".notes");
+addNote = container.querySelector(".addNoteParent .addNote");
 
 //navigation close?open
 const navIcon = `<svg class="navClose" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill="#fff">
@@ -12,6 +13,7 @@ const navIcon = `<svg class="navClose" xmlns="http://www.w3.org/2000/svg" height
 
 //function events
 topNavParent.querySelector("div").onclick = navCloseOpen;
+addNote.onclick = createNewNote;
 
 //
 topNavParent.querySelector("div").innerHTML = navIcon;
@@ -43,4 +45,35 @@ function navCloseOpen() {
       topNavParent.style.alignItems = "center";
     }, 150);
   }
+}
+//create  a new note
+
+/*
+        <div class="notes">
+          <input
+            type="text"
+            class="noteTitle"
+            placeholder="Title"
+            maxlength="30"
+          />
+          <textarea class="noteContent" placeholder="Type Here"></textarea>
+        </div>
+*/
+
+function createNewNote() {
+  let noteparentDiv = document.createElement("div");
+  noteparentDiv.classList.add("notes");
+  let inputText = document.createElement("input");
+  inputText.type = "text";
+  inputText.classList.add("noteTitle");
+  inputText.placeholder = "Title";
+  inputText.maxLength = "30";
+  let textarea = document.createElement("textarea");
+  textarea.classList.add("noteContent");
+  textarea.placeholder = "Type Here";
+  noteparentDiv.appendChild(inputText);
+  noteparentDiv.appendChild(textarea);
+  notesList.appendChild(noteparentDiv);
+  //console
+  console.log(noteparentDiv, inputText, textarea);
 }
