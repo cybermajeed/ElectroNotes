@@ -11,6 +11,7 @@ body {
 }
 * {
   font-family: calibri;
+  transition: all 0.3s;
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -84,7 +85,6 @@ body {
   border-radius: 0 0 4px 4px;
   padding: 10px 15px;
   flex-grow: 1;
-  transition: all 0.3s;
 }
 .addNote:hover {
   text-shadow: 0 3px 5px #000;
@@ -99,5 +99,6 @@ body {
   display: flex;
   align-items: center;
   box-shadow: 0 0 4px #fff;
-  border-radius: 3px;
+  padding: 3px;
+  border-radius: 100px;
 }

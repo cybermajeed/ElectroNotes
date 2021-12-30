@@ -25,7 +25,17 @@ topNavParent.querySelector("div").innerHTML = navClose;
 function navCloseOpen() {
   if (topNavParent.querySelector("div svg").classList.contains("navClose")) {
     topNavParent.querySelector("div").innerHTML = navOpen;
+    //
+    container.style.width = "0%";
+    wrapper.style.width = "100%";
+    setTimeout(() => {
+      container.querySelector(".notesList").style.display = "none";
+      container.querySelector(".addNoteParent").style.display = "none";
+    }, 150);
   } else {
     topNavParent.querySelector("div").innerHTML = navClose;
+    container.style.width = "30%";
+    wrapper.style.width = "70%";
   }
+  //
 }
