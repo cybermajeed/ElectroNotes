@@ -27,7 +27,7 @@ body {
   width: 70%;
   min-width: fit-content;
   background: #0000004d;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 .wrapper .emptySpace {
   height: 100%;
@@ -55,8 +55,9 @@ body {
   text-align: end;
   padding: 8px 12px;
   flex-grow: 1;
+  border-radius: 4px 4px 0 0;
 }
-.container .topNavParent svg {
+.container .topNavParent svg path {
   cursor: pointer;
 }
 
@@ -81,3 +82,4 @@ body {
   padding: 10px 15px;
   flex-grow: 1;
 }
+
