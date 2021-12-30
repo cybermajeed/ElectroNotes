@@ -95,7 +95,7 @@ body {
   cursor: pointer;
   width: fit-content;
   height: fit-content;
-  margin-right: 5px;
+  margin: 5px 5px;
   display: flex;
   align-items: center;
   box-shadow: 0 0 4px #fff;
