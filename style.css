@@ -114,11 +114,11 @@ body {
 }
 
 .notesList .notes {
+  margin: 8px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: x-large;
 }
 
 .notesList .notes textarea {
@@ -130,9 +130,11 @@ body {
   overflow: hidden;
   margin-top: 0px;
   border: 2px solid dodgerblue;
+  font-size: large;
 }
 
 .notesList .notes input[type="text"] {
+  font-size: large;
   border: 2px solid dodgerblue;
   margin-bottom: 0px;
   padding: 10px;
