@@ -84,7 +84,9 @@ function createNewNote(note) {
   notesList.appendChild(noteparentDiv);
   //local Storage
   if (note) {
-    textarea.value = note;
+    inputText.value = note.title;
+    textarea.value = note.content;
+    console.log(note.title);
   }
   updateLocalStorage();
 }
@@ -96,8 +98,8 @@ function updateLocalStorage() {
   allTextarea.forEach((eachTextarea) => {
     notes.push({
       title: eachTextarea.querySelector(".noteTitle").value,
-      noteContent: eachTextarea.querySelector(".noteContent").value,
+      content: eachTextarea.querySelector(".noteContent").value,
     });
   });
-  console.log(notes);
+  localStorage.setItem("notes", JSON.stringify(notes));
 }
