@@ -90,6 +90,10 @@ body {
   text-shadow: 0 3px 5px #000;
   font-size: xx-large;
 }
+.addNote:active {
+text-shadow: none;
+font-size: x-large;
+}
 
 .topNavParent div {
   cursor: pointer;
@@ -102,3 +106,8 @@ body {
   padding: 3px;
   border-radius: 100px;
 }
+
+.topNavParent div:hover  {
+  box-shadow: 0 0 8px dodgerblue, 0 0 8px dodgerblue;
+}
+
