@@ -10,6 +10,7 @@ body {
   overflow: hidden;
 }
 * {
+  outline: none;
   font-family: calibri;
   transition: all 0.3s;
 }
@@ -68,7 +69,6 @@ body {
 .container .addNote {
   cursor: pointer;
   width: 100%;
-  outline: none;
   border: none;
   background: #8300fd;
   color: #fff;
@@ -116,12 +116,27 @@ body {
 .notesList .notes {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .notesList .notes textarea {
-  width: 90%;
-  border-radius: 10px;
+  padding: 10px;
+  width: calc(100% - 30px);
+  border-radius: 0 0 5px 5px;
   height: 150px;
   resize: none;
   overflow: hidden;
+  margin-top: 2px;
+  border: 2px solid dodgerblue;
+  border-top: none;
+}
+
+.notesList .notes input[type="text"] {
+  border: 2px solid dodgerblue;
+  border-bottom: none;
+  margin-bottom: 2px;
+  padding: 10px;
+  width: calc(100% - 30px);
+  border-radius: 5px 5px 0 0;
 }
