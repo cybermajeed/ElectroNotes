@@ -90,13 +90,14 @@ function createNewNote(note) {
 }
 
 function updateLocalStorage() {
-  const allTextarea = document.querySelectorAll(".notesList .notes");
+  const allTextarea = document.querySelectorAll(".notes");
   const notes = [];
 
   allTextarea.forEach((eachTextarea) => {
     notes.push({
-      title: allTextarea.querySelector(".noteTitle").innerText,
-      noteContent: allTextarea.querySelector(".noteContent").innerText,
+      title: eachTextarea.querySelector(".noteTitle").value,
+      noteContent: eachTextarea.querySelector(".noteContent").value,
     });
   });
+  console.log(notes);
 }
