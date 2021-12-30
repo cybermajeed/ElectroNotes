@@ -43,6 +43,10 @@ function navCloseOpen() {
       .classList.replace("navOpen", "navClose");
     container.style.width = "30%";
     wrapper.style.width = "70%";
+    setTimeout(() => {
+      container.querySelector(".notesList").style.display = "";
+      container.querySelector(".addNoteParent").style.display = "";
+      topNavParent.style.alignItems = "center";
+    }, 150);
   }
-  //
 }

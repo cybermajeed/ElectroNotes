@@ -66,7 +66,7 @@ body {
 }
 
 .container .notesList {
-  background: tomato;
+  background: dodgerblue;
   width: 100%;
   flex-grow: 100;
   overflow-x: hidden;
