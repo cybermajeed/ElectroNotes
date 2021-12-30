@@ -98,7 +98,7 @@ body {
   margin: 5px 5px;
   display: flex;
   align-items: center;
-  box-shadow: 0 0 4px #fff;
+  box-shadow: 0 0 4px #fff, 0 0 4px #fff;
   padding: 3px;
   border-radius: 100px;
 }
