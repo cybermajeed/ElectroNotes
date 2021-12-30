@@ -84,8 +84,19 @@ function createNewNote(note) {
   notesList.appendChild(noteparentDiv);
   //local Storage
   if (note) {
-    
+    textarea.value = note;
   }
-
+  updateLocalStorage();
 }
-//let notes = notesList.querySelectorAll(".notes");
+
+function updateLocalStorage() {
+  const allTextarea = document.querySelectorAll(".notesList .notes");
+  const notes = [];
+
+  allTextarea.forEach((eachTextarea) => {
+    notes.push({
+      title: allTextarea.querySelector(".noteTitle").innerText,
+      noteContent: allTextarea.querySelector(".noteContent").innerText,
+    });
+  });
+}
