@@ -6,9 +6,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: calibri;
   color: #fff;
   overflow: hidden;
+}
+* {
+  font-family: calibri;
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -34,10 +36,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: xx-large;
+  font-size: 5vw;
   font-weight: 900;
+  text-transform: uppercase;
+  user-select: none;
   color: transparent;
-  -webkit-text-stroke: 1px #fff;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.267);
 }
 
 .container {
@@ -45,7 +49,7 @@ body {
   width: 30%;
   min-width: fit-content;
   background: #2c2c2c;
-  border-radius: 10px;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
 }
@@ -58,10 +62,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: end;
-}
-.container .topNavParent svg path {
-  cursor: pointer;
-  fill: rgba(0, 179, 250, 0.336);
 }
 
 .container .notesList {
@@ -79,17 +79,25 @@ body {
   border: none;
   background: #8300fd;
   color: #fff;
-  font-weight: 800;
-  font-size: large;
+  font-weight: 900;
+  font-size: x-large;
   border-radius: 0 0 4px 4px;
   padding: 10px 15px;
   flex-grow: 1;
+  transition: all 0.3s;
+}
+.addNote:hover {
+  text-shadow: 0 3px 5px #000;
+  font-size: xx-large;
 }
 
 .topNavParent div {
-  background: #ff000056;
+  cursor: pointer;
   width: fit-content;
   height: fit-content;
+  margin-right: 5px;
   display: flex;
   align-items: center;
+  box-shadow: 0 0 4px #fff;
+  border-radius: 3px;
 }
