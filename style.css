@@ -118,24 +118,23 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-size: x-large;
 }
 
 .notesList .notes textarea {
   padding: 10px;
   width: calc(100% - 30px);
   border-radius: 0 0 5px 5px;
-  height: 150px;
+  height: 100px;
   resize: none;
   overflow: hidden;
-  margin-top: 2px;
+  margin-top: 0px;
   border: 2px solid dodgerblue;
-  border-top: none;
 }
 
 .notesList .notes input[type="text"] {
   border: 2px solid dodgerblue;
-  border-bottom: none;
-  margin-bottom: 2px;
+  margin-bottom: 0px;
   padding: 10px;
   width: calc(100% - 30px);
   border-radius: 5px 5px 0 0;
