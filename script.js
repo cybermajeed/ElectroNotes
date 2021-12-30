@@ -2,8 +2,9 @@ let wrapper = document.querySelector(".wrapper"),
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
   notesList = container.querySelector(".notesList"),
-  notes = notesList.querySelectorAll(".notes");
-addNote = container.querySelector(".addNoteParent .addNote");
+  addNote = container.querySelector(".addNoteParent .addNote");
+
+//localStorage getting
 
 //navigation close?open
 const navIcon = `<svg class="navClose" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill="#fff">
@@ -11,11 +12,8 @@ const navIcon = `<svg class="navClose" xmlns="http://www.w3.org/2000/svg" height
 </svg>`;
 //
 
-//function events
-topNavParent.querySelector("div").onclick = navCloseOpen;
-addNote.onclick = createNewNote;
-
 //
+topNavParent.querySelector("div").onclick = navCloseOpen;
 topNavParent.querySelector("div").innerHTML = navIcon;
 
 function navCloseOpen() {
@@ -51,16 +49,26 @@ function navCloseOpen() {
 /*
         <div class="notes">
           <input
-            type="text"
-            class="noteTitle"
-            placeholder="Title"
-            maxlength="30"
+          type="text"
+          class="noteTitle"
+          placeholder="Title"
+          maxlength="30"
           />
           <textarea class="noteContent" placeholder="Type Here"></textarea>
-        </div>
-*/
+          </div>
+          */
 
-function createNewNote() {
+const notes = JSON.parse(localStorage.getItem("notes"));
+
+if (notes) {
+  notes.forEach((note) => {
+    createNewNote(note);
+  });
+}
+
+addNote.onclick = createNewNote;
+
+function createNewNote(note) {
   let noteparentDiv = document.createElement("div");
   noteparentDiv.classList.add("notes");
   let inputText = document.createElement("input");
@@ -74,6 +82,10 @@ function createNewNote() {
   noteparentDiv.appendChild(inputText);
   noteparentDiv.appendChild(textarea);
   notesList.appendChild(noteparentDiv);
-  //console
-  console.log(noteparentDiv, inputText, textarea);
+  //local Storage
+  if (note) {
+    
+  }
+
 }
+//let notes = notesList.querySelectorAll(".notes");
