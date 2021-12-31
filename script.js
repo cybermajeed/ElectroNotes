@@ -83,10 +83,12 @@ function createNewNote(note) {
   noteparentDiv.appendChild(textarea);
   notesList.appendChild(noteparentDiv);
   //local Storage
-  if (note.title && note.content) {
+
+  if (note.title) {
     inputText.value = note.title;
+  }
+  if (note.content) {
     textarea.value = note.content;
-    console.log(note.title);
   }
   updateLocalStorage();
 }
@@ -103,3 +105,7 @@ function updateLocalStorage() {
   });
   localStorage.setItem("notes", JSON.stringify(notes));
 }
+
+setInterval(() => {
+  //updateLocalStorage();
+}, 2000);
