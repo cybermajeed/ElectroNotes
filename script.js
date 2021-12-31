@@ -103,6 +103,7 @@ function createNewNote(note) {
   let textarea = document.createElement("textarea");
   textarea.classList.add("noteContent");
   textarea.placeholder = "Type Here";
+  textarea.disabled = true;
   //appending
   parentTop.appendChild(inputText);
   parentTop.appendChild(deleteNote);
@@ -141,8 +142,8 @@ function createNewNote(note) {
   //del func ends
 
   //open in edit view
-  inputText.ondblclick = openInEditView;
-  textarea.ondblclick = openInEditView;
+  inputText.onclick = openInEditView;
+  textarea.onclick = openInEditView;
   function openInEditView() {
     if (!document.querySelector(".currentlyEditing")) {
       textarea.parentElement.classList.add("currentlyEditing");
