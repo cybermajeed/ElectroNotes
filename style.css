@@ -152,22 +152,23 @@ body {
   align-items: center;
   overflow: hidden;
 }
-.wrapper .noteContentInEditView {
+.wrapper textarea.noteContentInEditView {
   resize: none;
   font-size: large;
   overflow: auto;
   padding: 10px;
   width: calc(100% - 20px);
   height: 90%;
+  border-top: 2px solid dodgerblue;
 }
-.wrapper .topParentForTitleDelInEditView {
+.wrapper div.topParentForTitleDelInEditView {
   background-color: red;
   width: 100%;
   height: 10%;
   min-height: 30px;
   display: flex;
 }
-.wrapper .noteTitleInEditView {
+.wrapper input.noteTitleInEditView {
   padding: 0 10px;
   height: 100%;
   width: calc(100% - 20px);
