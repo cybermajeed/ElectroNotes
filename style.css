@@ -153,7 +153,7 @@ body {
 .notes .deleteNote svg {
   cursor: pointer;
 }
-.notes .temp {
+.notes .parentTop {
   display: flex;
   border: 2px solid dodgerblue;
   margin-bottom: 0px;
