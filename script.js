@@ -133,5 +133,5 @@ function updateLocalStorage() {
 }
 
 setInterval(() => {
-  //updateLocalStorage();
-}, 2000);
+  updateLocalStorage();
+});
