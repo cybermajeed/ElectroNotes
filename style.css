@@ -33,18 +33,6 @@ body {
   background: #0000004d;
   border-radius: 4px;
 }
-.wrapper .emptySpace {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 5vw;
-  font-weight: 900;
-  text-transform: uppercase;
-  user-select: none;
-  color: transparent;
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.267);
-}
 
 .container {
   height: 100%;

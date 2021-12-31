@@ -18,13 +18,13 @@ topNavParent.querySelector("div").innerHTML = navIcon;
 
 function navCloseOpen() {
   if (topNavParent.querySelector("div svg").classList.contains("navClose")) {
-    topNavParent.querySelector("div").style.rotate = "180deg";
     topNavParent
-      .querySelector("div svg")
-      .classList.replace("navClose", "navOpen");
+    .querySelector("div svg")
+    .classList.replace("navClose", "navOpen");
     //
     container.style.width = "0%";
     wrapper.style.width = "100%";
+    topNavParent.querySelector("div").style.rotate = "180deg";
     setTimeout(() => {
       container.querySelector(".notesList").style.display = "none";
       container.querySelector(".addNoteParent").style.display = "none";
