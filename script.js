@@ -134,9 +134,7 @@ function createNewNote(note) {
   inputText.ondblclick = openInEditView;
   textarea.ondblclick = openInEditView;
   function openInEditView() {
-    //wrapper.removeChild(wrapper.querySelector(".emptySpace"));
-    wrapper.appendChild(noteparentDiv);
-    textarea.disabled = false;
+    //
   }
   //open in edit view ends
 }
