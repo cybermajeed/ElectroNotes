@@ -152,6 +152,7 @@ body {
   align-items: center;
 }
 .wrapper .noteContentInEditView {
+  display: none;
   resize: none;
   font-size: large;
   overflow: auto;
@@ -164,6 +165,13 @@ body {
   height: 10%;
 }
 .wrapper .noteTitleInEditView {
-  height: calc(100% - 20px);
-  padding: 10px;
+  height: 100%;
+  width: 80%;
+  border: none;
+}
+
+.wrapper button.deleteNote {
+  background: white;
+  width: 15%;
+  border: none;
 }
