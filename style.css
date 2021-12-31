@@ -132,12 +132,31 @@ body {
   border: 2px solid dodgerblue;
   font-size: large;
 }
-
+/*************************************/
 .notesList .notes input[type="text"] {
   font-size: large;
+  margin: 0;
+  padding: 10px;
+  width: 70%;
+  border: none;
+  height: 100%;
+  border-radius: 5px 0 0 0;
+  border-right: 2px solid dodgerblue;
+}
+.notes .deleteNote {
+  border-radius: 0 5px 0 0;
+  width: 30%;
+  background: white;
+  border: none;
+  border-left: 2px solid dodgerblue;
+}
+.notes .deleteNote svg {
+  cursor: pointer;
+}
+.notes .temp {
+  display: flex;
   border: 2px solid dodgerblue;
   margin-bottom: 0px;
-  padding: 10px;
-  width: calc(100% - 30px);
   border-radius: 5px 5px 0 0;
+  width: calc(100% - 10px);
 }
