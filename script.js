@@ -158,6 +158,15 @@ function createNewNote(note) {
   }
   //open in edit view ends
 }
+//liveUpdate
+textareaInEditView.oninput = () => {
+  let current = document.querySelector(".currentlyEditing");
+  current.querySelector(".noteContent").value = textareaInEditView.value;
+};
+noteTitleInEditView.oninput = () => {
+  let current = document.querySelector(".currentlyEditing");
+  current.querySelector(".noteTitle").value = noteTitleInEditView.value;
+};
 
 function updateLocalStorage() {
   const allTextarea = document.querySelectorAll(".notes");
