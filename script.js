@@ -113,10 +113,14 @@ function createNewNote(note) {
     removeNote.onclick = function deleteNote() {
       let parent = this.parentNode.parentNode.parentNode;
       let noteTitle = parent.querySelector(".noteTitle").value;
+      let noteContent = parent.querySelector(".noteContent").value;
+      let generatedNoteTitle =
+        noteContent == "" ? "<No Title>" : noteContent.slice(0, 30);
+
       let confirmMsg =
         noteTitle !== ""
           ? confirm(`Are you sure you want to delete "${noteTitle}"?`)
-          : confirm(`Are you sure you want to delete this note?`);
+          : confirm(`Are you sure you want to delete "${generatedNoteTitle}"?`);
       if (confirmMsg) {
         parent.remove();
         updateLocalStorage();
@@ -142,4 +146,3 @@ function updateLocalStorage() {
 setInterval(() => {
   updateLocalStorage();
 });
-
