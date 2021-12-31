@@ -144,7 +144,7 @@ function createNewNote(note) {
   inputText.ondblclick = openInEditView;
   textarea.ondblclick = openInEditView;
   function openInEditView() {
-    //
+    textarea.parentNode.classList.add("currentlyEditing")
   }
   //open in edit view ends
 }
