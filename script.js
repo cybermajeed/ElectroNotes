@@ -112,6 +112,9 @@ function createNewNote(note) {
   deleteNotes.forEach((removeNote) => {
     removeNote.onclick = function deleteNote() {
       let parent = this.parentNode.parentNode.parentNode;
+      let noteTitle =parent.querySelector(".noteTitle").value;
+        
+      confirm("Are you sure you want to delete the note " + noteTitle);
       parent.remove();
       updateLocalStorage();
     };
