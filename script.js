@@ -119,6 +119,27 @@ function createNewNote(note) {
     textarea.value = note.content;
   }
   updateLocalStorage();
+  //delete from editor view
+  deleteNoteInEditView.onclick = deleteCurrentNote;
+  function deleteCurrentNote() {
+    let current = document.querySelector(".currentlyEditing");
+    let noteTitle = current.querySelector(".noteTitle").value;
+    let noteContent = current.querySelector(".noteContent").value;
+    let generatedNoteTitle =
+      noteContent == "" ? "<No Title>" : noteContent.slice(0, 30);
+
+    let confirmMsg =
+      noteTitle !== ""
+        ? confirm(`Are you sure you want to delete "${noteTitle}"?`)
+        : confirm(`Are you sure you want to delete "${generatedNoteTitle}"?`);
+    if (confirmMsg) {
+      current.remove();
+      updateLocalStorage();
+    }
+    //
+  }
+  //delete ends
+
   //delete
   let deleteNotes = document.querySelectorAll(".notes .parentTop button svg");
   deleteNotes.forEach((removeNote) => {
