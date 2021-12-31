@@ -107,6 +107,16 @@ function createNewNote(note) {
     textarea.value = note.content;
   }
   updateLocalStorage();
+  //delete
+  let deleteNotes = document.querySelectorAll(".notes .parentTop button svg");
+  deleteNotes.forEach((removeNote) => {
+    removeNote.onclick = function deleteNote() {
+      let parent = this.parentNode.parentNode.parentNode;
+      parent.remove();
+      updateLocalStorage();
+    };
+  });
+  //
 }
 
 function updateLocalStorage() {
