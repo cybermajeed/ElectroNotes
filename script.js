@@ -167,6 +167,10 @@ noteTitleInEditView.oninput = () => {
   let current = document.querySelector(".currentlyEditing");
   current.querySelector(".noteTitle").value = noteTitleInEditView.value;
 };
+setInterval(() => {
+  let current = document.querySelector(".currentlyEditing");
+  noteTitleInEditView.value = current.querySelector(".noteTitle").value;
+});
 
 function updateLocalStorage() {
   const allTextarea = document.querySelectorAll(".notes");
