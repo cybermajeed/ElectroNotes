@@ -26,14 +26,6 @@ body {
   background: dodgerblue;
 }
 
-.wrapper {
-  height: 100%;
-  width: 70%;
-  min-width: fit-content;
-  background: #0000004d;
-  border-radius: 4px;
-}
-
 .container {
   height: 100%;
   width: 30%;
@@ -147,4 +139,31 @@ body {
 }
 .notes .deleteNote svg {
   cursor: pointer;
+}
+
+.wrapper {
+  height: 100%;
+  width: 70%;
+  min-width: fit-content;
+  background: #0000004d;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wrapper .noteContentInEditView {
+  resize: none;
+  font-size: large;
+  overflow: auto;
+  width: 100%;
+  height: 90%;
+}
+.wrapper .topParentForTitleDelInEditView {
+  background-color: red;
+  width: 100%;
+  height: 10%;
+}
+.wrapper .noteTitleInEditView {
+  height: calc(100% - 20px);
+  padding: 10px;
 }
