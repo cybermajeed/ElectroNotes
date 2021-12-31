@@ -144,13 +144,16 @@ function createNewNote(note) {
   inputText.ondblclick = openInEditView;
   textarea.ondblclick = openInEditView;
   function openInEditView() {
-    textarea.parentElement.classList.add("currentlyEditing");
-    /*   textareaInEditView.value = document.querySelector(
-      ".currentlyEditing .noteContent"
-    ).value;
-    */
+    if (!document.querySelector(".currentlyEditing")) {
+      textarea.parentElement.classList.add("currentlyEditing");
+    } else {
+      document
+        .querySelector(".currentlyEditing")
+        .classList.remove("currentlyEditing");
+      textarea.parentElement.classList.add("currentlyEditing");
+    }
     textareaInEditView.value = textarea.value;
-    noteTitleInEditView.value = inputText.value
+    noteTitleInEditView.value = inputText.value;
   }
   //open in edit view ends
 }
