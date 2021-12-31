@@ -145,9 +145,12 @@ function createNewNote(note) {
   textarea.ondblclick = openInEditView;
   function openInEditView() {
     textarea.parentElement.classList.add("currentlyEditing");
-    textareaInEditView.value = document.querySelector(
+    /*   textareaInEditView.value = document.querySelector(
       ".currentlyEditing .noteContent"
     ).value;
+    */
+    textareaInEditView.value = textarea.value;
+    noteTitleInEditView.value = inputText.value
   }
   //open in edit view ends
 }
