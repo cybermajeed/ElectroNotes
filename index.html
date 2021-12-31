@@ -14,22 +14,7 @@
       <div class="topNavParent">
         <div></div>
       </div>
-      <div class="notesList">
-        <!--
-        <div class="notes">
-          <div class="parentTop">
-            <input
-              type="text"
-              class="noteTitle"
-              placeholder="Title"
-              maxlength="30"
-            />
-            <button class="deleteNote"></button>
-          </div>
-          <textarea class="noteContent" placeholder="Type Here"></textarea>
-        </div>
-            -->
-      </div>
+      <div class="notesList"></div>
       <div class="addNoteParent">
         <input type="button" value="Add Note" class="addNote" />
       </div>
@@ -41,11 +26,14 @@
           type="text"
           class="noteTitleInEditView"
           placeholder="Title"
-          maxlength="30"
+          maxlength="50"
         />
         <button class="deleteNote"></button>
       </div>
-      <textarea class="noteContentInEditView"></textarea>
+      <textarea
+        class="noteContentInEditView"
+        placeholder="Type Here"
+      ></textarea>
     </div>
     <script src="script.js"></script>
   </body>

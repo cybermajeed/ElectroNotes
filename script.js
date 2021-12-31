@@ -62,7 +62,7 @@ function navCloseOpen() {
           type="text"
           class="noteTitle"
           placeholder="Title"
-          maxlength="30"
+          maxlength="50"
           />
           <textarea class="noteContent" placeholder="Type Here"></textarea>
           </div>
@@ -88,7 +88,7 @@ function createNewNote(note) {
   inputText.type = "text";
   inputText.classList.add("noteTitle");
   inputText.placeholder = "Title";
-  inputText.maxLength = "30";
+  inputText.maxLength = "50";
 
   let deleteNote = document.createElement("button");
   deleteNote.classList.add("deleteNote");
