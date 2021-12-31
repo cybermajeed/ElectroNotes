@@ -85,8 +85,8 @@ function createNewNote(note) {
   parentTop.classList.add("parentTop");
 
   let inputText = document.createElement("input");
-  inputText.type = "text";
   inputText.classList.add("noteTitle");
+  inputText.type = "text";
   inputText.placeholder = "Title";
   inputText.maxLength = "50";
 
@@ -144,7 +144,10 @@ function createNewNote(note) {
   inputText.ondblclick = openInEditView;
   textarea.ondblclick = openInEditView;
   function openInEditView() {
-    textarea.parentNode.classList.add("currentlyEditing")
+    textarea.parentElement.classList.add("currentlyEditing");
+    textareaInEditView.value = document.querySelector(
+      ".currentlyEditing .noteContent"
+    ).value;
   }
   //open in edit view ends
 }
