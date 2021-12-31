@@ -93,6 +93,7 @@ function createNewNote(note) {
   let textarea = document.createElement("textarea");
   textarea.classList.add("noteContent");
   textarea.placeholder = "Type Here";
+  //appending
   parentTop.appendChild(inputText);
   parentTop.appendChild(deleteNote);
   noteparentDiv.appendChild(parentTop);
@@ -127,7 +128,17 @@ function createNewNote(note) {
       }
     };
   });
-  //
+  //del func ends
+
+  //open in edit view
+  inputText.ondblclick = openInEditView;
+  textarea.ondblclick = openInEditView;
+  function openInEditView() {
+    //wrapper.removeChild(wrapper.querySelector(".emptySpace"));
+    wrapper.appendChild(noteparentDiv);
+    textarea.disabled = false;
+  }
+  //open in edit view ends
 }
 
 function updateLocalStorage() {
