@@ -207,8 +207,20 @@ noteTitleInEditView.oninput = () => {
     current.querySelector(".noteTitle").value = noteTitleInEditView.value;
   }
 };
-
 //live update ends
+//disable?enable
+setInterval(() => {
+  if (!wrapper.classList.contains("containsNote")) {
+    noteTitleInEditView.disabled = true;
+    textareaInEditView.disabled = true;
+    deleteNoteInEditView.disabled = true;
+  } else {
+    noteTitleInEditView.disabled = false;
+    textareaInEditView.disabled = false;
+    deleteNoteInEditView.disabled = false;
+  }
+});
+//
 
 function updateLocalStorage() {
   const allTextarea = document.querySelectorAll(".notes");
@@ -228,14 +240,3 @@ setInterval(() => {
 });
 
 //test
-setInterval(() => {
-  if (!wrapper.classList.contains("containsNote")) {
-    noteTitleInEditView.disabled = true;
-    textareaInEditView.disabled = true;
-    deleteNoteInEditView.disabled = true;
-  } else {
-    noteTitleInEditView.disabled = false;
-    textareaInEditView.disabled = false;
-    deleteNoteInEditView.disabled = false;
-  }
-});
