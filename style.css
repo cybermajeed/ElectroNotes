@@ -85,7 +85,7 @@ body {
 
 /*-*/
 .container .notesList {
-  background: #00ffbf;
+  background: dodgerblue;
   width: 100%;
   flex-grow: 100;
   overflow-x: hidden;

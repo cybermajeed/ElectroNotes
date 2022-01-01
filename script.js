@@ -103,7 +103,7 @@ function createNewNote(note) {
   //
   let textarea = document.createElement("textarea");
   textarea.classList.add("noteContent");
-  textarea.placeholder = "Type Here";
+  textarea.placeholder = "Empty";
   textarea.disabled = true;
   //appending
   parentTop.appendChild(inputText);
@@ -137,10 +137,11 @@ function createNewNote(note) {
       if (confirmMsg) {
         current.remove();
         updateLocalStorage();
+
+        noteTitleInEditView.value = "";
+        textareaInEditView.value = "";
+        wrapper.classList.remove("containsNote");
       }
-      noteTitleInEditView.value = "";
-      textareaInEditView.value = "";
-      wrapper.classList.remove("containsNote");
     }
     //
   }
@@ -163,10 +164,11 @@ function createNewNote(note) {
       if (confirmMsg) {
         parent.remove();
         updateLocalStorage();
+
+        noteTitleInEditView.value = "";
+        textareaInEditView.value = "";
+        wrapper.classList.remove("containsNote");
       }
-      noteTitleInEditView.value = "";
-      textareaInEditView.value = "";
-      wrapper.classList.remove("containsNote");
     };
   });
   //del func ends
