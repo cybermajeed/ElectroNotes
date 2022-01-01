@@ -46,8 +46,10 @@ body {
   align-items: center;
   justify-content: end;
 }
-
 .container .addNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   width: 100%;
   border: none;
@@ -58,12 +60,9 @@ body {
   border-radius: 0 0 4px 4px;
   padding: 10px 15px;
   flex-grow: 1;
-  background: url("assets/addCircle.svg") no-repeat;
-  background-position: 50% 50%;
-  background-size: contain;
 }
-.addNote:hover {
-  text-shadow: 0 0 4px #fff;
+.addNote:hover svg {
+  filter: drop-shadow(0 0 5px #fff);
 }
 .addNote:active {
   text-shadow: none;
