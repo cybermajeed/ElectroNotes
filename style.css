@@ -123,6 +123,7 @@ body {
 }
 .notesList .notes input[type="text"] {
   font-size: large;
+  font-weight: 800;
   margin: 0;
   padding: 10px;
   width: 70%;
