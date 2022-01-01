@@ -180,6 +180,13 @@ function createNewNote(note) {
   //open in edit view ends
 }
 //liveUpdate
+setInterval(() => {
+  if (document.querySelector(".currentlyEditing")) {
+    let current = document.querySelector(".currentlyEditing");
+    noteTitleInEditView.value = current.querySelector(".noteTitle").value;
+  }
+});
+
 textareaInEditView.oninput = () => {
   let current = document.querySelector(".currentlyEditing");
   current.querySelector(".noteContent").value = textareaInEditView.value;
@@ -188,10 +195,7 @@ noteTitleInEditView.oninput = () => {
   let current = document.querySelector(".currentlyEditing");
   current.querySelector(".noteTitle").value = noteTitleInEditView.value;
 };
-setInterval(() => {
-  let current = document.querySelector(".currentlyEditing");
-  noteTitleInEditView.value = current.querySelector(".noteTitle").value;
-});
+
 //live update ends
 
 function updateLocalStorage() {
@@ -210,3 +214,9 @@ function updateLocalStorage() {
 setInterval(() => {
   updateLocalStorage();
 });
+
+//load
+window.onload = () => {
+  let foo = document.querySelector(".notes .noteTitle");
+  foo.click();
+};
