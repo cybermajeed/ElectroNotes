@@ -58,14 +58,15 @@ body {
   border-radius: 0 0 4px 4px;
   padding: 10px 15px;
   flex-grow: 1;
+  background: url("assets/addCircle.svg") no-repeat;
+  background-position: 50% 50%;
+  background-size: contain;
 }
 .addNote:hover {
-  text-shadow: 0 3px 5px #000;
-  font-size: xx-large;
+  text-shadow: 0 0 4px #fff;
 }
 .addNote:active {
   text-shadow: none;
-  font-size: x-large;
 }
 
 .topNavParent div {
