@@ -15,7 +15,7 @@ body {
   transition: all 0.3s;
 }
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 ::-webkit-scrollbar-track {
   border-radius: 100px;
@@ -24,6 +24,7 @@ body {
 ::-webkit-scrollbar-thumb {
   border-radius: 100px;
   background: dodgerblue;
+  box-shadow: inset 1px 0 2px #000;
 }
 
 .container {
