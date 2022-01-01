@@ -123,23 +123,25 @@ function createNewNote(note) {
   //delete from editor view
   deleteNoteInEditView.onclick = deleteCurrentNote;
   function deleteCurrentNote() {
-    let current = document.querySelector(".currentlyEditing");
-    let noteTitle = current.querySelector(".noteTitle").value;
-    let noteContent = current.querySelector(".noteContent").value;
-    let generatedNoteTitle =
-      noteContent == "" ? "<No Title>" : noteContent.slice(0, 30);
+    if (wrapper.classList.contains("containsNote")) {
+      let current = document.querySelector(".currentlyEditing");
+      let noteTitle = current.querySelector(".noteTitle").value;
+      let noteContent = current.querySelector(".noteContent").value;
+      let generatedNoteTitle =
+        noteContent == "" ? "<No Title>" : noteContent.slice(0, 30);
 
-    let confirmMsg =
-      noteTitle !== ""
-        ? confirm(`Are you sure you want to delete "${noteTitle}"?`)
-        : confirm(`Are you sure you want to delete "${generatedNoteTitle}"?`);
-    if (confirmMsg) {
-      current.remove();
-      updateLocalStorage();
+      let confirmMsg =
+        noteTitle !== ""
+          ? confirm(`Are you sure you want to delete "${noteTitle}"?`)
+          : confirm(`Are you sure you want to delete "${generatedNoteTitle}"?`);
+      if (confirmMsg) {
+        current.remove();
+        updateLocalStorage();
+      }
+      noteTitleInEditView.value = "";
+      textareaInEditView.value = "";
+      wrapper.classList.remove("containsNote");
     }
-    noteTitleInEditView.value = "";
-    textareaInEditView.value = "";
-    wrapper.classList.remove("containsNote");
     //
   }
   //delete ends
@@ -192,12 +194,16 @@ function createNewNote(note) {
 //liveUpdate
 
 textareaInEditView.oninput = () => {
-  let current = document.querySelector(".currentlyEditing");
-  current.querySelector(".noteContent").value = textareaInEditView.value;
+  if (wrapper.classList.contains("containsNote")) {
+    let current = document.querySelector(".currentlyEditing");
+    current.querySelector(".noteContent").value = textareaInEditView.value;
+  }
 };
 noteTitleInEditView.oninput = () => {
-  let current = document.querySelector(".currentlyEditing");
-  current.querySelector(".noteTitle").value = noteTitleInEditView.value;
+  if (wrapper.classList.contains("containsNote")) {
+    let current = document.querySelector(".currentlyEditing");
+    current.querySelector(".noteTitle").value = noteTitleInEditView.value;
+  }
 };
 
 //live update ends
@@ -219,4 +225,15 @@ setInterval(() => {
   updateLocalStorage();
 });
 
-//load
+//test
+setInterval(() => {
+  if (!wrapper.classList.contains("containsNote")) {
+    noteTitleInEditView.disabled = true;
+    textareaInEditView.disabled = true;
+    deleteNoteInEditView.disabled = true;
+  } else {
+    noteTitleInEditView.disabled = false;
+    textareaInEditView.disabled = false;
+    deleteNoteInEditView.disabled = false;
+  }
+});

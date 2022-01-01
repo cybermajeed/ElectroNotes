@@ -162,7 +162,6 @@ body {
   border-top: 2px solid dodgerblue;
 }
 .wrapper div.topParentForTitleDelInEditView {
-  background-color: red;
   width: 100%;
   height: 10%;
   min-height: 30px;
@@ -184,4 +183,9 @@ body {
   background: #fff;
   width: 100px;
   border: none;
+}
+
+:disabled {
+  background: #fff;
+  opacity: 0.5;
 }
