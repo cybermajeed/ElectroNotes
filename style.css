@@ -185,7 +185,9 @@ body {
   border: none;
 }
 
-:disabled {
-  background: #fff;
-  opacity: 0.5;
+:disabled,
+:disabled svg {
+  background: #ffffff;
+  opacity: 0.8;
+  cursor: auto;
 }
