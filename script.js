@@ -171,7 +171,8 @@ function createNewNote(note) {
 
   //open in edit view
   inputText.onclick = openInEditView;
-  textarea.onclick = openInEditView;
+  inputText.oninput = openInEditView;
+
   function openInEditView() {
     if (!document.querySelector(".currentlyEditing")) {
       textarea.parentElement.classList.add("currentlyEditing");
