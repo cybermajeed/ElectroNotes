@@ -5,7 +5,8 @@ let wrapper = document.querySelector(".wrapper"),
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
   notesList = container.querySelector(".notesList"),
-  addNote = container.querySelector(".addNoteParent .addNote");
+  addNote = container.querySelector(".addNoteParent .addNote"),
+  currentNoteTitle = document.querySelector(".currentlyEditing .noteTitle");
 
 //localStorage getting
 
@@ -136,6 +137,9 @@ function createNewNote(note) {
       current.remove();
       updateLocalStorage();
     }
+    noteTitleInEditView.value = "";
+    textareaInEditView.value = "";
+    wrapper.classList.remove("containsNote");
     //
   }
   //delete ends
@@ -158,6 +162,9 @@ function createNewNote(note) {
         parent.remove();
         updateLocalStorage();
       }
+      noteTitleInEditView.value = "";
+      textareaInEditView.value = "";
+      wrapper.classList.remove("containsNote");
     };
   });
   //del func ends
@@ -168,11 +175,13 @@ function createNewNote(note) {
   function openInEditView() {
     if (!document.querySelector(".currentlyEditing")) {
       textarea.parentElement.classList.add("currentlyEditing");
+      wrapper.classList.add("containsNote");
     } else {
       document
         .querySelector(".currentlyEditing")
         .classList.remove("currentlyEditing");
       textarea.parentElement.classList.add("currentlyEditing");
+      wrapper.classList.add("containsNote");
     }
     textareaInEditView.value = textarea.value;
     noteTitleInEditView.value = inputText.value;
@@ -180,12 +189,6 @@ function createNewNote(note) {
   //open in edit view ends
 }
 //liveUpdate
-setInterval(() => {
-  if (document.querySelector(".currentlyEditing")) {
-    let current = document.querySelector(".currentlyEditing");
-    noteTitleInEditView.value = current.querySelector(".noteTitle").value;
-  }
-});
 
 textareaInEditView.oninput = () => {
   let current = document.querySelector(".currentlyEditing");
@@ -216,7 +219,3 @@ setInterval(() => {
 });
 
 //load
-window.onload = () => {
-  let foo = document.querySelector(".notes .noteTitle");
-  foo.click();
-};
