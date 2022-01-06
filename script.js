@@ -240,13 +240,13 @@ setInterval(() => {
 //
 
 function updateLocalStorage() {
-  const allTextarea = document.querySelectorAll(".notes");
+  const allNotes = document.querySelectorAll(".notes");
   const notes = [];
 
-  allTextarea.forEach((eachTextarea) => {
+  allNotes.forEach((eachNote) => {
     notes.push({
-      title: eachTextarea.querySelector(".noteTitle").value,
-      content: eachTextarea.querySelector(".noteContent").value,
+      title: eachNote.querySelector(".noteTitle").value,
+      content: eachNote.querySelector(".noteContent").value,
     });
   });
 
