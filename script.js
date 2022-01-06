@@ -8,7 +8,6 @@ let wrapper = document.querySelector(".wrapper"),
   addNote = container.querySelector(".addNoteParent .addNote"),
   currentNoteTitle = document.querySelector(".currentlyEditing .noteTitle");
 
-//localStorage getting
 
 //navigation close?open
 const navIcon = `<svg class="navClose" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill="#fff">
@@ -61,8 +60,7 @@ function navCloseOpen() {
     }, 150);
   }
 }
-//create  a new note
-
+//
 /*
         <div class="notes">
           <input
@@ -75,8 +73,8 @@ function navCloseOpen() {
           </div>
           */
 
+//localStorage notes
 const notes = JSON.parse(localStorage.getItem("notes"));
-
 if (notes) {
   notes.forEach((note) => {
     createNewNote(note);
@@ -238,6 +236,7 @@ function updateLocalStorage() {
       content: eachTextarea.querySelector(".noteContent").value,
     });
   });
+
   localStorage.setItem("notes", JSON.stringify(notes));
 }
 
