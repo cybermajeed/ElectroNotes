@@ -221,7 +221,9 @@ setInterval(() => {
     noteTitleInEditView.disabled = true;
     textareaInEditView.disabled = true;
     deleteNoteInEditView.disabled = true;
+    document.title = `Cyber Note`;
   } else {
+    document.title = `${noteTitleInEditView.value} - Cyber Note`;
     noteTitleInEditView.disabled = false;
     textareaInEditView.disabled = false;
     deleteNoteInEditView.disabled = false;
@@ -254,8 +256,7 @@ function updateSessionStorage() {
 
 //session state
 
-  let navState = sessionStorage.getItem("isNavCloseOpen");
-  if (navState == "closed") {
-    topNavParent.querySelector("div").click();
-  }
-
+let navState = sessionStorage.getItem("isNavCloseOpen");
+if (navState == "closed") {
+  topNavParent.querySelector("div").click();
+}
