@@ -58,6 +58,7 @@ function navCloseOpen() {
       topNavParent.style.alignItems = "center";
     }, 150);
   }
+  updateSessionStorage();
 }
 //
 /*
@@ -241,4 +242,20 @@ function updateLocalStorage() {
 
   localStorage.setItem("notes", JSON.stringify(notes));
 }
-//test
+//this session
+function updateSessionStorage() {
+  let isNavCloseOpen = topNavParent
+    .querySelector("div svg")
+    .classList.contains("navClose")
+    ? "opened"
+    : "closed";
+  sessionStorage.setItem("isNavCloseOpen", isNavCloseOpen);
+}
+
+//session state
+
+  let navState = sessionStorage.getItem("isNavCloseOpen");
+  if (navState == "closed") {
+    topNavParent.querySelector("div").click();
+  }
+
