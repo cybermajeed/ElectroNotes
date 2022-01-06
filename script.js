@@ -223,10 +223,18 @@ setInterval(() => {
     deleteNoteInEditView.disabled = true;
     document.title = `Cyber Note`;
   } else {
-    document.title = `${noteTitleInEditView.value} - Cyber Note`;
     noteTitleInEditView.disabled = false;
     textareaInEditView.disabled = false;
     deleteNoteInEditView.disabled = false;
+    if (noteTitleInEditView.value == "") {
+      let generatedNoteTitle =
+        noteTitleInEditView.value == ""
+          ? "<No Title>"
+          : textareaInEditView.value.slice(0, 30);
+      document.title = `Cyber Note/${generatedNoteTitle}`;
+    } else {
+      document.title = `Cyber Note/${noteTitleInEditView.value}`;
+    }
   }
 });
 //
