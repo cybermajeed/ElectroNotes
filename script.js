@@ -228,7 +228,7 @@ setInterval(() => {
     deleteNoteInEditView.disabled = false;
     if (noteTitleInEditView.value == "") {
       let generatedNoteTitle =
-        noteTitleInEditView.value == ""
+        textareaInEditView.value == ""
           ? "<No Title>"
           : textareaInEditView.value.slice(0, 30);
       document.title = `Cyber Note/${generatedNoteTitle}`;
