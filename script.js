@@ -88,6 +88,9 @@ function createNewNote(note) {
   noteparentDiv.classList.add("notes");
   let parentTop = document.createElement("div");
   parentTop.classList.add("parentTop");
+  if (note.id == "" || note.id == null) {
+    noteparentDiv.id = Math.random().toString(36).slice(2);
+  }
 
   let inputText = document.createElement("input");
   inputText.classList.add("noteTitle");
@@ -122,6 +125,10 @@ function createNewNote(note) {
   }
   if (note.content) {
     textarea.value = note.content;
+  }
+
+  if (note.id) {
+    noteparentDiv.id = note.id;
   }
   updateLocalStorage();
   //delete from editor view
@@ -247,6 +254,7 @@ function updateLocalStorage() {
     notes.push({
       title: eachNote.querySelector(".noteTitle").value,
       content: eachNote.querySelector(".noteContent").value,
+      id: eachNote.id,
     });
   });
 
