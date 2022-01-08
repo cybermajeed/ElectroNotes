@@ -88,7 +88,7 @@ function createNewNote(note) {
   noteparentDiv.classList.add("notes");
   let parentTop = document.createElement("div");
   parentTop.classList.add("parentTop");
-  if (note.id == "" || note.id == null) {
+  if (note.id == "" || note.id == null || !notes) {
     noteparentDiv.id = Math.random().toString(36).slice(2);
   }
 
