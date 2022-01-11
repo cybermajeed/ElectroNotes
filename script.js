@@ -292,3 +292,8 @@ if (navState == "closed") {
 }
 
 //color palette function
+noteColorInEditView.onclick = (e) => {
+  colorPaletteInEditView.classList.toggle("colorPaletteShown");
+  colorPaletteInEditView.style.left = e.clientX - 180 + "px";
+  colorPaletteInEditView.style.top = e.clientY  + "px";
+};

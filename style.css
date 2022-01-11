@@ -140,7 +140,7 @@ body {
   border: none;
   border-left: 2px solid dodgerblue;
 }
-button svg {
+button {
   cursor: pointer;
 }
 
@@ -206,10 +206,13 @@ button svg {
   border-radius: 5px;
   width: 180px;
   height: fit-content;
-  display: grid;
+  display: none;
   grid-gap: 8px;
   grid-template-columns: auto auto auto auto;
   padding: 10px;
+}
+.colorPalette.colorPaletteShown {
+  display: grid !important;
 }
 .colorPalette .colorSet {
   cursor: pointer;
