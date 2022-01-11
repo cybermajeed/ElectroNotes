@@ -140,7 +140,10 @@ function createNewNote(note) {
     noteparentDiv.id = note.id;
   }
   if (note.themeBg) {
- //   noteparentDiv.querySelector(" ".notesList .currentlyEditing  .noteTitle"")
+    inputText.style.background = note.themeBg;
+  }
+  if (note.themeColor) {
+    inputText.style.color = note.themeColor;
   }
   updateLocalStorage();
   //delete from editor view
@@ -211,6 +214,14 @@ function createNewNote(note) {
       textarea.parentElement.classList.add("currentlyEditing");
       wrapper.classList.add("containsNote");
     }
+    if (note.themeBg) {
+      noteTitleInEditView.style.background = note.themeBg;
+      textareaInEditView.style.background = note.themeBg;
+    }
+    if (note.themeColor) {
+      noteTitleInEditView.style.color = note.themeColor;
+      textareaInEditView.style.color = note.themeColor;
+    }
     textareaInEditView.value = textarea.value;
     noteTitleInEditView.value = inputText.value;
     updateLocalStorage();
@@ -262,24 +273,6 @@ setInterval(() => {
 });
 //
 
-function updateLocalStorage() {
-  const allNotes = document.querySelectorAll(".notes");
-  const notes = [];
-
-  allNotes.forEach((eachNote) => {
-    notes.push({
-      title: eachNote.querySelector(".noteTitle").value,
-      content: eachNote.querySelector(".noteContent").value,
-      id: eachNote.id,
-      themeBg: getComputedStyle(
-        eachNote.querySelector(".noteTitle")
-      ).getPropertyValue("background"),
-      themeColor: eachNote.querySelector(".noteTitle").style.color,
-    });
-  });
-
-  localStorage.setItem("notes", JSON.stringify(notes));
-}
 //this session
 function updateSessionStorage() {
   let isNavCloseOpen = topNavParent
@@ -322,15 +315,25 @@ allColorSet.forEach((colorSet) => {
     document.querySelector(
       ".notesList .currentlyEditing  .noteTitle"
     ).style.color = computerColor;
-    //-------------------------------------------
-    document.querySelector(
-      ".notesList .currentlyEditing  .deleteNote"
-    ).style.background = computerBg;
-    document.querySelector(
-      ".notesList .currentlyEditing  .deleteNote"
-    ).style.color = computerColor;
     //
     updateLocalStorage();
-    console.log(localStorage.notes);
   };
 });
+
+//local Storage
+function updateLocalStorage() {
+  const allNotes = document.querySelectorAll(".notes");
+  const notes = [];
+
+  allNotes.forEach((eachNote) => {
+    notes.push({
+      title: eachNote.querySelector(".noteTitle").value,
+      content: eachNote.querySelector(".noteContent").value,
+      id: eachNote.id,
+      themeBg: eachNote.querySelector(".noteTitle").style.background,
+      themeColor: eachNote.querySelector(".noteTitle").style.color,
+    });
+  });
+
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
