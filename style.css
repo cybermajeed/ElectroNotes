@@ -140,7 +140,7 @@ body {
   border: none;
   border-left: 2px solid dodgerblue;
 }
-button {
+button svg {
   cursor: pointer;
 }
 

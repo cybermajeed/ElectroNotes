@@ -142,7 +142,7 @@ function createNewNote(note) {
   }
   updateLocalStorage();
   //delete from editor view
-  deleteNoteInEditView.onclick = deleteCurrentNote;
+  deleteNoteInEditView.querySelector("svg").onclick = deleteCurrentNote;
   function deleteCurrentNote() {
     if (wrapper.classList.contains("containsNote")) {
       let current = document.querySelector(".currentlyEditing");
@@ -292,8 +292,8 @@ if (navState == "closed") {
 }
 
 //color palette function
-noteColorInEditView.onclick = (e) => {
+noteColorInEditView.querySelector("svg").onclick = (e) => {
   colorPaletteInEditView.classList.toggle("colorPaletteShown");
   colorPaletteInEditView.style.left = e.clientX - 180 + "px";
-  colorPaletteInEditView.style.top = e.clientY  + "px";
+  colorPaletteInEditView.style.top = e.clientY  + 50 + "px";
 };
