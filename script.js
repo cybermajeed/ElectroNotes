@@ -210,6 +210,8 @@ function createNewNote(note) {
     updateLocalStorage();
   }
   //open in edit view ends
+  notesList.scrollTop = notesList.scrollHeight;
+  //end createNote
 }
 //liveUpdate
 
