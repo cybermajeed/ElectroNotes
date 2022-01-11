@@ -199,3 +199,24 @@ button svg {
   opacity: 0.8;
   cursor: auto;
 }
+.colorPalette {
+  position: absolute;
+  background: #fff;
+  box-shadow: 0 0 10px #000;
+  border-radius: 5px;
+  width: fit-content;
+  height: fit-content;
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: auto auto auto auto;
+  padding: 10px;
+}
+.colorPalette .colorSet {
+  cursor: pointer;
+  border-radius: 100%;
+  border: none;
+  background: #8e00fd;
+  padding: 15px;
+  height: 40px;
+  width: 40px;
+}
