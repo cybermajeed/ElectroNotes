@@ -141,9 +141,11 @@ function createNewNote(note) {
   }
   if (note.themeBg) {
     inputText.style.background = note.themeBg;
+    textarea.style.background = note.themeBg;
   }
   if (note.themeColor) {
     inputText.style.color = note.themeColor;
+    textarea.style.color = note.themeColor;
   }
   updateLocalStorage();
   //delete from editor view
@@ -321,6 +323,13 @@ allColorSet.forEach((colorSet) => {
     ).style.background = computerBg;
     document.querySelector(
       ".notesList .currentlyEditing  .noteTitle"
+    ).style.color = computerColor;
+//----
+   document.querySelector(
+      ".notesList .currentlyEditing  .noteContent"
+    ).style.background = computerBg;
+    document.querySelector(
+      ".notesList .currentlyEditing  .noteContent"
     ).style.color = computerColor;
     //
     updateLocalStorage();
