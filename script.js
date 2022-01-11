@@ -297,3 +297,24 @@ noteColorInEditView.querySelector("svg").onclick = (e) => {
   colorPaletteInEditView.style.left = e.clientX - 180 + "px";
   colorPaletteInEditView.style.top = e.clientY + 30 + "px";
 };
+
+allColorSet.forEach((colorSet) => {
+  colorSet.onclick = () => {
+    let computerBg =
+        getComputedStyle(colorSet).getPropertyValue("--background"),
+      computerColor = getComputedStyle(colorSet).getPropertyValue("--color");
+    //
+    textareaInEditView.style.background = computerBg;
+    textareaInEditView.style.color = computerColor;
+    //
+    noteTitleInEditView.style.background = computerBg;
+    noteTitleInEditView.style.color = computerColor;
+    //
+    /*
+    deleteNoteInEditView.style.background = computerBg;
+    deleteNoteInEditView.style.color = computerColor;
+    //
+    noteColorInEditView.style.background = computerBg;
+    noteColorInEditView.style.color = computerColor;*/
+  };
+});
