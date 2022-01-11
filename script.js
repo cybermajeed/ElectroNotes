@@ -313,10 +313,16 @@ allColorSet.forEach((colorSet) => {
     document.querySelector(
       ".notesList .currentlyEditing  .noteTitle"
     ).style.background = computerBg;
+    document.querySelector(
+      ".notesList .currentlyEditing  .noteTitle"
+    ).style.color = computerColor;
     //
     document.querySelector(
       ".notesList .currentlyEditing  .deleteNote"
     ).style.background = computerBg;
+    document.querySelector(
+      ".notesList .currentlyEditing  .deleteNote"
+    ).style.color = computerColor;
     //
     /*
     deleteNoteInEditView.style.background = computerBg;
