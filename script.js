@@ -295,5 +295,5 @@ if (navState == "closed") {
 noteColorInEditView.querySelector("svg").onclick = (e) => {
   colorPaletteInEditView.classList.toggle("colorPaletteShown");
   colorPaletteInEditView.style.left = e.clientX - 180 + "px";
-  colorPaletteInEditView.style.top = e.clientY  + 50 + "px";
+  colorPaletteInEditView.style.top = e.clientY + 30 + "px";
 };
