@@ -13,6 +13,7 @@ body {
   outline: none;
   font-family: calibri;
   transition: all 0.3s;
+  scroll-behavior: smooth;
 }
 ::-webkit-scrollbar {
   width: 12px;
