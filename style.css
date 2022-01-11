@@ -215,6 +215,7 @@ button svg {
   cursor: pointer;
   border-radius: 100%;
   border: none;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
   background: var(--background);
   height: 40px;
   width: 40px;
