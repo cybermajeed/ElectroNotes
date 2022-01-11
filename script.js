@@ -136,9 +136,11 @@ function createNewNote(note) {
   if (note.content) {
     textarea.value = note.content;
   }
-
   if (note.id) {
     noteparentDiv.id = note.id;
+  }
+  if (note.themeBg) {
+ //   noteparentDiv.querySelector(" ".notesList .currentlyEditing  .noteTitle"")
   }
   updateLocalStorage();
   //delete from editor view
@@ -269,6 +271,10 @@ function updateLocalStorage() {
       title: eachNote.querySelector(".noteTitle").value,
       content: eachNote.querySelector(".noteContent").value,
       id: eachNote.id,
+      themeBg: getComputedStyle(
+        eachNote.querySelector(".noteTitle")
+      ).getPropertyValue("background"),
+      themeColor: eachNote.querySelector(".noteTitle").style.color,
     });
   });
 
@@ -316,7 +322,7 @@ allColorSet.forEach((colorSet) => {
     document.querySelector(
       ".notesList .currentlyEditing  .noteTitle"
     ).style.color = computerColor;
-    //
+    //-------------------------------------------
     document.querySelector(
       ".notesList .currentlyEditing  .deleteNote"
     ).style.background = computerBg;
@@ -324,11 +330,7 @@ allColorSet.forEach((colorSet) => {
       ".notesList .currentlyEditing  .deleteNote"
     ).style.color = computerColor;
     //
-    /*
-    deleteNoteInEditView.style.background = computerBg;
-    deleteNoteInEditView.style.color = computerColor;
-    //
-    noteColorInEditView.style.background = computerBg;
-    noteColorInEditView.style.color = computerColor;*/
+    updateLocalStorage();
+    console.log(localStorage.notes);
   };
 });
