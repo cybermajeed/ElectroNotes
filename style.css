@@ -139,7 +139,7 @@ body {
   border: none;
   border-left: 2px solid dodgerblue;
 }
-.deleteNote svg {
+button svg {
   cursor: pointer;
 }
 
@@ -181,7 +181,12 @@ body {
 }
 
 .wrapper button.deleteNote {
+  background: #fff;
+  width: 100px;
+  border: none;
   border-left: 2px solid dodgerblue;
+}
+.wrapper button.noteColor {
   background: #fff;
   width: 100px;
   border: none;
