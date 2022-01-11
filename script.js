@@ -106,6 +106,7 @@ function createNewNote(note) {
 
   let deleteNote = document.createElement("button");
   deleteNote.classList.add("deleteNote");
+  deleteNote.title = "Delete Note";
   //
   const deleteNoteIcon = `<svg class="deleteNoteIcon" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill="#000">
 <path d="M0 0h24v24H0V0z" fill="none"/>
