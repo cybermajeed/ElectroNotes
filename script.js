@@ -221,7 +221,10 @@ function createNewNote(note) {
     if (note.themeColor) {
       noteTitleInEditView.style.color = note.themeColor;
       textareaInEditView.style.color = note.themeColor;
-    }
+    } else {
+      noteTitleInEditView.style.color = "#000";
+      textareaInEditView.style.color = "#000";
+}
     textareaInEditView.value = textarea.value;
     noteTitleInEditView.value = inputText.value;
     updateLocalStorage();
