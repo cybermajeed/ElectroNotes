@@ -202,7 +202,7 @@ button svg {
 .colorPalette {
   position: absolute;
   background: #fff;
-  box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
   border-radius: 5px;
   width: fit-content;
   height: fit-content;
@@ -215,8 +215,7 @@ button svg {
   cursor: pointer;
   border-radius: 100%;
   border: none;
-  background: #8e00fd;
-  padding: 15px;
+  background: var(--background);
   height: 40px;
   width: 40px;
 }
