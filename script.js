@@ -217,7 +217,11 @@ function createNewNote(note) {
     if (note.themeBg) {
       noteTitleInEditView.style.background = note.themeBg;
       textareaInEditView.style.background = note.themeBg;
-    }
+    }else {
+      noteTitleInEditView.style.background = "#fff";
+      textareaInEditView.style.background = "#fff";
+}
+//
     if (note.themeColor) {
       noteTitleInEditView.style.color = note.themeColor;
       textareaInEditView.style.color = note.themeColor;
