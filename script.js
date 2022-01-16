@@ -83,6 +83,7 @@ function navCloseOpen() {
           */
 
 //localStorage notes
+
 const notes = JSON.parse(localStorage.getItem("notes"));
 if (notes) {
   notes.forEach((note) => {
@@ -165,6 +166,7 @@ function createNewNote(note) {
       if (confirmMsg) {
         current.remove();
         updateLocalStorage();
+        updateSessionStorage();
 
         noteTitleInEditView.value = "";
         textareaInEditView.value = "";
@@ -192,6 +194,7 @@ function createNewNote(note) {
       if (confirmMsg) {
         parent.remove();
         updateLocalStorage();
+        updateSessionStorage();
 
         noteTitleInEditView.value = "";
         textareaInEditView.value = "";
@@ -216,21 +219,22 @@ function createNewNote(note) {
       textarea.parentElement.classList.add("currentlyEditing");
       wrapper.classList.add("containsNote");
     }
+    updateSessionStorage();
     if (note.themeBg) {
       noteTitleInEditView.style.background = note.themeBg;
       textareaInEditView.style.background = note.themeBg;
-    }else {
+    } else {
       noteTitleInEditView.style.background = "#fff";
       textareaInEditView.style.background = "#fff";
-}
-//
+    }
+    //
     if (note.themeColor) {
       noteTitleInEditView.style.color = note.themeColor;
       textareaInEditView.style.color = note.themeColor;
     } else {
       noteTitleInEditView.style.color = "#000";
       textareaInEditView.style.color = "#000";
-}
+    }
     textareaInEditView.value = textarea.value;
     noteTitleInEditView.value = inputText.value;
     updateLocalStorage();
@@ -283,21 +287,19 @@ setInterval(() => {
 //
 
 //this session
-function updateSessionStorage() {
-  let isNavCloseOpen = topNavParent
-    .querySelector("div svg")
-    .classList.contains("navClose")
-    ? "opened"
-    : "closed";
-  sessionStorage.setItem("isNavCloseOpen", isNavCloseOpen);
-}
 
-//session state
+//set after load
 
 let navState = sessionStorage.getItem("isNavCloseOpen");
 if (navState == "closed") {
   topNavParent.querySelector("div").click();
 }
+let isCurrentNote = sessionStorage.currentSessionNote;
+if (isCurrentNote) {
+  let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
+  noteToOpen.querySelector(".noteTitle").click();
+}
+//
 
 //color palette function
 noteColorInEditView.querySelector("svg").onclick = (e) => {
@@ -324,8 +326,8 @@ allColorSet.forEach((colorSet) => {
     document.querySelector(
       ".notesList .currentlyEditing  .noteTitle"
     ).style.color = computerColor;
-//----
-   document.querySelector(
+    //----
+    document.querySelector(
       ".notesList .currentlyEditing  .noteContent"
     ).style.background = computerBg;
     document.querySelector(
@@ -335,6 +337,30 @@ allColorSet.forEach((colorSet) => {
     updateLocalStorage();
   };
 });
+
+//session storage
+
+function updateSessionStorage() {
+  //nav
+  let isNavCloseOpen = topNavParent
+    .querySelector("div svg")
+    .classList.contains("navClose")
+    ? "opened"
+    : "closed";
+  sessionStorage.setItem("isNavCloseOpen", isNavCloseOpen);
+  //nav ends
+  //this session note
+  if (document.querySelector(".currentlyEditing")) {
+    sessionStorage.setItem(
+      "currentSessionNote",
+      document.querySelector(".currentlyEditing").id
+    );
+  } else {
+    if (sessionStorage.currentSessionNote) {
+      sessionStorage.removeItem("currentSessionNote");
+    }
+  }
+}
 
 //local Storage
 function updateLocalStorage() {
