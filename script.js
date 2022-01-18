@@ -267,7 +267,7 @@ setInterval(() => {
     textareaInEditView.disabled = true;
     deleteNoteInEditView.disabled = true;
     noteColorInEditView.disabled = true;
-    document.title = `Cyber Notes`;
+    document.title = `Electro Notes`;
   } else {
     noteTitleInEditView.disabled = false;
     textareaInEditView.disabled = false;
@@ -278,9 +278,9 @@ setInterval(() => {
         textareaInEditView.value == ""
           ? "<No Title>"
           : textareaInEditView.value.slice(0, 30);
-      document.title = `Cyber Notes/${generatedNoteTitle}`;
+      document.title = `Electro Notes/${generatedNoteTitle}`;
     } else {
-      document.title = `Cyber Notes/${noteTitleInEditView.value}`;
+      document.title = `Electro Notes/${noteTitleInEditView.value}`;
     }
   }
 });
