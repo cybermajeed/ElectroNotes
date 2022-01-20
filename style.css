@@ -85,7 +85,21 @@ body {
   box-shadow: 0 0 8px dodgerblue, 0 0 8px dodgerblue;
 }
 .topNavParent div.searchForNotes {
-  background: red;
+  padding: 0 8px;
+  min-width: fit-content;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.topNavParent div.searchForNotes input {
+  border: none;
+}
+div.searchForNotes span.icon {
+  display: flex;
+  justify-content: center;
 }
 
 /*-*/
