@@ -356,8 +356,22 @@ allColorSet.forEach((colorSet) => {
 
 //searchForNotes
 searchForNotes.querySelector("input").onkeyup = function searchNotes() {
-  var wordToSearch = searchForNotes.querySelector("input").value;
-  
+  var wordToSearch = searchForNotes
+    .querySelector("input")
+    .value.toLocaleLowerCase();
+  let notesToSearch = document.querySelectorAll(".notes");
+  notesToSearch.forEach((noteToSearch) => {
+    if (
+      !noteToSearch
+        .querySelector(".noteTitle")
+        .value.toLocaleLowerCase()
+        .includes(wordToSearch)
+    ) {
+      noteToSearch.style.display = "none";
+    } else {
+      noteToSearch.style.display = "";
+    }
+  });
 };
 //
 //session storage
