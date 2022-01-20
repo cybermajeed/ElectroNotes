@@ -69,7 +69,7 @@ body {
   text-shadow: none;
 }
 
-.topNavParent div {
+.topNavParent div.hideSidebar {
   cursor: pointer;
   width: fit-content;
   height: fit-content;
@@ -81,8 +81,11 @@ body {
   border-radius: 100px;
 }
 
-.topNavParent div:hover {
+.topNavParent div.hideSidebar:hover {
   box-shadow: 0 0 8px dodgerblue, 0 0 8px dodgerblue;
+}
+.topNavParent div.searchForNotes {
+  background: red;
 }
 
 /*-*/

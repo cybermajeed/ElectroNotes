@@ -7,6 +7,7 @@ let wrapper = document.querySelector(".wrapper"),
   allColorSet = wrapper.querySelectorAll("button.colorSet"),
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
+  searchForNotes = topNavParent.querySelector(".searchForNote"),
   notesList = container.querySelector(".notesList"),
   addNote = container.querySelector(".addNoteParent .addNote"),
   currentNoteTitle = document.querySelector(".currentlyEditing .noteTitle");
@@ -37,8 +38,8 @@ const addNoteIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="40px" viewB
 
 addNote.innerHTML = addNoteIcon;
 //
-topNavParent.querySelector("div").onclick = navCloseOpen;
-topNavParent.querySelector("div").innerHTML = navIcon;
+topNavParent.querySelector("div.hideSidebar").onclick = navCloseOpen;
+topNavParent.querySelector("div.hideSidebar").innerHTML = navIcon;
 
 function navCloseOpen() {
   if (topNavParent.querySelector("div svg").classList.contains("navClose")) {
@@ -48,14 +49,14 @@ function navCloseOpen() {
     //
     container.style.width = "0%";
     wrapper.style.width = "100%";
-    topNavParent.querySelector("div").style.rotate = "180deg";
+    topNavParent.querySelector("div.hideSidebar").style.rotate = "180deg";
     setTimeout(() => {
       container.querySelector(".notesList").style.display = "none";
       container.querySelector(".addNoteParent").style.display = "none";
       topNavParent.style.alignItems = "flex-start";
     }, 150);
   } else {
-    topNavParent.querySelector("div").style.rotate = "0deg";
+    topNavParent.querySelector("div.hideSidebar").style.rotate = "0deg";
     topNavParent
       .querySelector("div svg")
       .classList.replace("navOpen", "navClose");
@@ -292,7 +293,7 @@ setInterval(() => {
 
 let navState = sessionStorage.getItem("isNavCloseOpen");
 if (navState == "closed") {
-  topNavParent.querySelector("div").click();
+  topNavParent.querySelector("div.hideSidebar").click();
 }
 let isCurrentNote = sessionStorage.currentSessionNote;
 if (isCurrentNote) {
