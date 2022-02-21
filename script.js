@@ -305,16 +305,22 @@ setInterval(() => {
 //this session
 
 //set after load
-
 let navState = sessionStorage.getItem("isNavCloseOpen");
 if (navState == "closed") {
-  topNavParent.querySelector("div.hideSidebar").click();
-}
-let isCurrentNote = sessionStorage.currentSessionNote;
-if (isCurrentNote) {
+if (sessionStorage.currentSessionNote) {
   let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
   noteToOpen.querySelector(".noteTitle").click();
 }
+  topNavParent.querySelector("div.hideSidebar").click();
+} else {
+if (sessionStorage.currentSessionNote) {
+  let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
+  noteToOpen.querySelector(".noteTitle").click();
+}
+}
+
+
+
 //
 
 //color palette function
