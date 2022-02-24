@@ -1,6 +1,6 @@
 let wrapper = document.querySelector(".wrapper"),
   noteTitleInEditView = wrapper.querySelector(" input.noteTitleInEditView"),
-  textareaInEditView = wrapper.querySelector("textarea.noteContentInEditView"),
+  textareaInEditView = wrapper.querySelector("div.noteContentInEditView"),
   deleteNoteInEditView = wrapper.querySelector(" button.deleteNote"),
   noteColorInEditView = wrapper.querySelector(" button.noteColor"),
   colorPaletteInEditView = wrapper.querySelector("div.colorPalette"),
@@ -185,7 +185,7 @@ function createNewNote(note) {
         updateSessionStorage();
 
         noteTitleInEditView.value = "";
-        textareaInEditView.value = "";
+        textareaInEditView.innerHTML = "";
         wrapper.classList.remove("containsNote");
       }
     }
@@ -213,7 +213,7 @@ function createNewNote(note) {
         updateSessionStorage();
 
         noteTitleInEditView.value = "";
-        textareaInEditView.value = "";
+        textareaInEditView.innerHTML = "";
         wrapper.classList.remove("containsNote");
       }
     };
@@ -251,7 +251,7 @@ function createNewNote(note) {
       noteTitleInEditView.style.color = "#000";
       textareaInEditView.style.color = "#000";
     }
-    textareaInEditView.value = textarea.value;
+    textareaInEditView.innerText = textarea.value;
     noteTitleInEditView.value = inputText.value;
     updateLocalStorage();
   }
@@ -264,7 +264,7 @@ function createNewNote(note) {
 textareaInEditView.oninput = () => {
   if (wrapper.classList.contains("containsNote")) {
     let current = document.querySelector(".currentlyEditing");
-    current.querySelector(".noteContent").value = textareaInEditView.value;
+    current.querySelector(".noteContent").value = textareaInEditView.innerText;
   }
   updateLocalStorage();
 };
@@ -291,9 +291,9 @@ setInterval(() => {
     noteColorInEditView.disabled = false;
     if (noteTitleInEditView.value == "") {
       let generatedNoteTitle =
-        textareaInEditView.value == ""
+        textareaInEditView.innerHTML == ""
           ? "<No Title>"
-          : textareaInEditView.value.slice(0, 30);
+          : textareaInEditView.innerText.slice(0, 30);
       document.title = `Electro Notes/${generatedNoteTitle}`;
     } else {
       document.title = `Electro Notes/${noteTitleInEditView.value}`;
@@ -307,19 +307,17 @@ setInterval(() => {
 //set after load
 let navState = sessionStorage.getItem("isNavCloseOpen");
 if (navState == "closed") {
-if (sessionStorage.currentSessionNote) {
-  let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
-  noteToOpen.querySelector(".noteTitle").click();
-}
+  if (sessionStorage.currentSessionNote) {
+    let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
+    noteToOpen.querySelector(".noteTitle").click();
+  }
   topNavParent.querySelector("div.hideSidebar").click();
 } else {
-if (sessionStorage.currentSessionNote) {
-  let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
-  noteToOpen.querySelector(".noteTitle").click();
+  if (sessionStorage.currentSessionNote) {
+    let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
+    noteToOpen.querySelector(".noteTitle").click();
+  }
 }
-}
-
-
 
 //
 

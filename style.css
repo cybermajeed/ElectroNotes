@@ -179,7 +179,7 @@ button svg {
   align-items: center;
   overflow: hidden;
 }
-.wrapper textarea.noteContentInEditView {
+.wrapper div.noteContentInEditView {
   resize: none;
   font-size: large;
   overflow: auto;
