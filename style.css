@@ -180,7 +180,6 @@ button svg {
   overflow: hidden;
 }
 .wrapper div.noteContentInEditView {
-  resize: none;
   font-size: large;
   overflow: auto;
   padding: 10px;
@@ -218,7 +217,7 @@ button svg {
 }
 
 :disabled,
-:disabled svg {
+:disabled svg, [contenteditable="false"] {
   background: #ffffff;
   opacity: 0.8;
   cursor: auto;

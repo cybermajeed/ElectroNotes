@@ -85,19 +85,6 @@ function navCloseOpen() {
   }
   updateSessionStorage();
 }
-//
-/*
-        <div class="notes">
-          <input
-          type="text"
-          class="noteTitle"
-          placeholder="Title"
-          maxlength="100"
-          />
-          <textarea class="noteContent" placeholder="Type Here"></textarea>
-          </div>
-          */
-
 //localStorage notes
 
 const notes = JSON.parse(localStorage.getItem("notes"));
@@ -280,13 +267,13 @@ noteTitleInEditView.oninput = () => {
 setInterval(() => {
   if (!wrapper.classList.contains("containsNote")) {
     noteTitleInEditView.disabled = true;
-    textareaInEditView.disabled = true;
+ textareaInEditView.setAttribute('contenteditable', false);
     deleteNoteInEditView.disabled = true;
     noteColorInEditView.disabled = true;
     document.title = `Electro Notes`;
   } else {
     noteTitleInEditView.disabled = false;
-    textareaInEditView.disabled = false;
+   textareaInEditView.setAttribute('contenteditable', true);
     deleteNoteInEditView.disabled = false;
     noteColorInEditView.disabled = false;
     if (noteTitleInEditView.value == "") {
