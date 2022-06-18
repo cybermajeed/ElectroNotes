@@ -138,7 +138,7 @@ function createNewNote(note) {
     inputText.value = note.title;
   }
   if (note.content) {
-    textarea.value = note.content;
+    textarea.innerHTML = note.content;
   }
   if (note.id) {
     noteparentDiv.id = note.id;
@@ -158,7 +158,7 @@ function createNewNote(note) {
     if (wrapper.classList.contains("containsNote")) {
       let current = document.querySelector(".currentlyEditing");
       let noteTitle = current.querySelector(".noteTitle").value;
-      let noteContent = current.querySelector(".noteContent").value;
+      let noteContent = current.querySelector(".noteContent").innerHTML;
       let generatedNoteTitle =
         noteContent == "" ? "<No Title>" : noteContent.slice(0, 30);
 
@@ -186,7 +186,7 @@ function createNewNote(note) {
     removeNote.onclick = function deleteNote() {
       let parent = this.parentNode.parentNode.parentNode;
       let noteTitle = parent.querySelector(".noteTitle").value;
-      let noteContent = parent.querySelector(".noteContent").value;
+      let noteContent = parent.querySelector(".noteContent").innerHTML;
       let generatedNoteTitle =
         noteContent == "" ? "<No Title>" : noteContent.slice(0, 30);
 
@@ -238,7 +238,7 @@ function createNewNote(note) {
       noteTitleInEditView.style.color = "#000";
       textareaInEditView.style.color = "#000";
     }
-    textareaInEditView.innerText = textarea.value;
+    textareaInEditView.innerHTML = textarea.value;
     noteTitleInEditView.value = inputText.value;
     updateLocalStorage();
   }
@@ -251,7 +251,8 @@ function createNewNote(note) {
 textareaInEditView.oninput = () => {
   if (wrapper.classList.contains("containsNote")) {
     let current = document.querySelector(".currentlyEditing");
-    current.querySelector(".noteContent").value = textareaInEditView.innerText;
+    current.querySelector(".noteContent").innerHTML =
+      textareaInEditView.innerHTML;
   }
   updateLocalStorage();
 };
@@ -267,13 +268,13 @@ noteTitleInEditView.oninput = () => {
 setInterval(() => {
   if (!wrapper.classList.contains("containsNote")) {
     noteTitleInEditView.disabled = true;
- textareaInEditView.setAttribute('contenteditable', false);
+    textareaInEditView.setAttribute("contenteditable", false);
     deleteNoteInEditView.disabled = true;
     noteColorInEditView.disabled = true;
     document.title = `Electro Notes`;
   } else {
     noteTitleInEditView.disabled = false;
-   textareaInEditView.setAttribute('contenteditable', true);
+    textareaInEditView.setAttribute("contenteditable", true);
     deleteNoteInEditView.disabled = false;
     noteColorInEditView.disabled = false;
     if (noteTitleInEditView.value == "") {
