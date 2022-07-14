@@ -31,7 +31,7 @@ body {
 .container {
   height: 100%;
   width: 30%;
-  min-width: 30%;
+  min-width: 50px;
   max-width: 30%;
   background: #2c2c2c;
   border-radius: 4px;
