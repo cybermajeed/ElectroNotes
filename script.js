@@ -62,7 +62,7 @@ function navCloseOpen() {
     //
     container.style.width = "0%";
     wrapper.style.width = "100%";
-    topNavParent.querySelector("div.hideSidebar").style.rotate = "180deg";
+    topNavParent.querySelector("div.hideSidebar").style.transform = "rotate(180deg)";
     setTimeout(() => {
       container.querySelector(".notesList").style.display = "none";
       container.querySelector(".addNoteParent").style.display = "none";
@@ -70,7 +70,7 @@ function navCloseOpen() {
     }, 150);
   } else {
     topNavParent.querySelector("div.hideSidebar").title = "Hide Sidebar";
-    topNavParent.querySelector("div.hideSidebar").style.rotate = "0deg";
+    topNavParent.querySelector("div.hideSidebar").style.transform = "rotate(0deg)";
     topNavParent
       .querySelector("div.hideSidebar svg")
       .classList.replace("navOpen", "navClose");
