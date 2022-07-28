@@ -87,7 +87,6 @@ body {
 }
 .topNavParent div.searchForNotes {
   padding: 0 8px;
-  min-width: fit-content;
   width: 100%;
   height: 100%;
   background: transparent;
@@ -173,7 +172,6 @@ button svg {
 .wrapper {
   height: 100%;
   width: 70%;
-  min-width: fit-content;
   background: #0000004d;
   border-radius: 4px;
   display: flex;
@@ -182,6 +180,7 @@ button svg {
   overflow: hidden;
 }
 .wrapper div.noteContentInEditView {
+  white-space: break-spaces;
   font-size: large;
   overflow: auto;
   padding: 10px;

@@ -5,6 +5,7 @@ let wrapper = document.querySelector(".wrapper"),
   noteColorInEditView = wrapper.querySelector(" button.noteColor"),
   colorPaletteInEditView = wrapper.querySelector("div.colorPalette"),
   allColorSet = wrapper.querySelectorAll("button.colorSet"),
+  //
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
   searchForNotes = topNavParent.querySelector(".searchForNotes"),
@@ -62,7 +63,8 @@ function navCloseOpen() {
     //
     container.style.width = "0%";
     wrapper.style.width = "100%";
-    topNavParent.querySelector("div.hideSidebar").style.transform = "rotate(180deg)";
+    topNavParent.querySelector("div.hideSidebar").style.transform =
+      "rotate(180deg)";
     setTimeout(() => {
       container.querySelector(".notesList").style.display = "none";
       container.querySelector(".addNoteParent").style.display = "none";
@@ -70,7 +72,8 @@ function navCloseOpen() {
     }, 150);
   } else {
     topNavParent.querySelector("div.hideSidebar").title = "Hide Sidebar";
-    topNavParent.querySelector("div.hideSidebar").style.transform = "rotate(0deg)";
+    topNavParent.querySelector("div.hideSidebar").style.transform =
+      "rotate(0deg)";
     topNavParent
       .querySelector("div.hideSidebar svg")
       .classList.replace("navOpen", "navClose");
@@ -350,7 +353,8 @@ allColorSet.forEach((colorSet) => {
 searchForNotes.querySelector("input").onkeyup = function searchNotes() {
   var wordToSearch = searchForNotes
     .querySelector("input")
-    .value.toLocaleLowerCase();
+    .value.trim()
+    .toLocaleLowerCase();
   let notesToSearch = document.querySelectorAll(".notes");
   notesToSearch.forEach((noteToSearch) => {
     if (
