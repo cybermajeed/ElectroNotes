@@ -127,7 +127,9 @@ function createNewNote(note) {
   //noteInfo
   let noteInfo = document.createElement("span");
   noteInfo.classList.add("noteInfo");
-  noteInfo.textContent = "31/6/2022, 9:48 AM";
+  if (!note.modifiedOn) {
+    noteInfo.textContent = modifiedOn();
+  }
   //
   let textarea = document.createElement("textarea");
   textarea.classList.add("noteContent");
@@ -160,6 +162,9 @@ function createNewNote(note) {
     inputText.style.color = note.themeColor;
     textarea.style.color = note.themeColor;
     noteInfo.style.color = note.themeColor;
+  }
+  if (note.modifiedOn) {
+    noteInfo.textContent = note.modifiedOn;
   }
   updateLocalStorage();
   //delete from editor view
@@ -255,6 +260,15 @@ function createNewNote(note) {
   //open in edit view ends
   notesList.scrollTop = notesList.scrollHeight;
   //end createNote
+}
+//modifienOn
+
+function modifiedOn() {
+  let d = new Date();
+  hour = d.getHours() > 12 ? d.getHours() - 12 : d.getHours();
+  minutes = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+  AMoPM = d.getHours() >= 12 ? "PM" : "AM";
+  return `${d.toLocaleDateString()}, ${hour}:${minutes} ${AMoPM}`;
 }
 //liveUpdate
 
@@ -411,6 +425,7 @@ function updateLocalStorage() {
       title: eachNote.querySelector(".noteTitle").value,
       content: eachNote.querySelector(".noteContent").value,
       id: eachNote.id,
+      modifiedOn: eachNote.querySelector(".noteInfo").textContent,
       themeBg: eachNote.querySelector(".noteTitle").style.background,
       themeColor: eachNote.querySelector(".noteTitle").style.color,
     });
