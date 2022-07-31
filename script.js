@@ -124,6 +124,10 @@ function createNewNote(note) {
 </svg>`;
 
   deleteNote.innerHTML = deleteNoteIcon;
+  //noteInfo
+  let noteInfo = document.createElement("span");
+  noteInfo.classList.add("noteInfo");
+  noteInfo.textContent = "31/6/2022, 9:48 AM";
   //
   let textarea = document.createElement("textarea");
   textarea.classList.add("noteContent");
@@ -134,6 +138,7 @@ function createNewNote(note) {
   parentTop.appendChild(deleteNote);
   noteparentDiv.appendChild(parentTop);
   noteparentDiv.appendChild(textarea);
+  noteparentDiv.appendChild(noteInfo);
   notesList.appendChild(noteparentDiv);
   //local Storage
 
@@ -149,10 +154,12 @@ function createNewNote(note) {
   if (note.themeBg) {
     inputText.style.background = note.themeBg;
     textarea.style.background = note.themeBg;
+    noteInfo.style.background = note.themeBg;
   }
   if (note.themeColor) {
     inputText.style.color = note.themeColor;
     textarea.style.color = note.themeColor;
+    noteInfo.style.color = note.themeColor;
   }
   updateLocalStorage();
   //delete from editor view
@@ -216,13 +223,13 @@ function createNewNote(note) {
 
   function openInEditView() {
     if (!document.querySelector(".currentlyEditing")) {
-      textarea.parentElement.classList.add("currentlyEditing");
+      noteInfo.parentElement.classList.add("currentlyEditing");
       wrapper.classList.add("containsNote");
     } else {
       document
         .querySelector(".currentlyEditing")
         .classList.remove("currentlyEditing");
-      textarea.parentElement.classList.add("currentlyEditing");
+      noteInfo.parentElement.classList.add("currentlyEditing");
       wrapper.classList.add("containsNote");
     }
     updateSessionStorage();
@@ -339,10 +346,10 @@ allColorSet.forEach((colorSet) => {
     ).style.color = computerColor;
     //----
     document.querySelector(
-      ".notesList .currentlyEditing  .noteContent"
+      ".notesList .currentlyEditing  .noteInfo"
     ).style.background = computerBg;
     document.querySelector(
-      ".notesList .currentlyEditing  .noteContent"
+      ".notesList .currentlyEditing  .noteInfo"
     ).style.color = computerColor;
     //
     updateLocalStorage();

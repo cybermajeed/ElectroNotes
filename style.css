@@ -16,11 +16,11 @@ body {
   scroll-behavior: smooth;
 }
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
   border-radius: 100px;
-  background: black;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 100px;
@@ -127,17 +127,19 @@ div.searchForNotes span.icon {
   flex-direction: column;
 }
 
-.notesList .notes .noteContent {
-  padding: 10px;
-  max-width: calc(100% - 30px);
-  width: calc(100% - 30px);
+.notesList .notes .noteInfo {
+  padding: 5px;
+  max-width: calc(100% - 20px);
+  width: calc(100% - 20px);
+  height: 25px;
   border-radius: 0 0 5px 5px;
-  height: 100px;
-  overflow: hidden;
-  margin-top: 0px;
-  border: 2px solid dodgerblue;
-  font-size: large;
-  resize: none;
+  background: #fff;
+  color: #000;
+  display: flex;
+  align-items: center;
+}
+.notesList .notes .noteContent {
+  display: none;
 }
 /*************************************/
 .notes .parentTop {
@@ -156,14 +158,14 @@ div.searchForNotes span.icon {
   border: none;
   height: 100%;
   border-radius: 5px 0 0 0;
-  border-right: 2px solid dodgerblue;
+  border-right: 1px solid dodgerblue;
 }
 .notes .deleteNote {
   border-radius: 0 5px 0 0;
   width: 30%;
   background: white;
   border: none;
-  border-left: 2px solid dodgerblue;
+  border-left: 1px solid dodgerblue;
 }
 button svg {
   cursor: pointer;
