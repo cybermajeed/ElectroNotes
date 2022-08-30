@@ -148,7 +148,7 @@ function createNewNote(note) {
     inputText.value = note.title;
   }
   if (note.content) {
-    textarea.innerHTML = note.content;
+    textarea.textContent = note.content;
   }
   if (note.id) {
     noteparentDiv.id = note.id;
@@ -264,18 +264,19 @@ function createNewNote(note) {
 //modifienOn
 
 function modifiedOn() {
-  let d = new Date();
-  hour = d.getHours() > 12 ? d.getHours() - 12 : d.getHours();
-  minutes = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
-  AMoPM = d.getHours() >= 12 ? "PM" : "AM";
-  return `${d.toLocaleDateString()}, ${hour}:${minutes} ${AMoPM}`;
+  let d = new Date(),
+    hour = d.getHours() > 12 ? d.getHours() - 12 : d.getHours(),
+    minutes = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes(),
+    AMoPM = d.getHours() >= 12 ? "PM" : "AM",
+    date = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  return `${date}, ${hour}:${minutes} ${AMoPM}`;
 }
 //liveUpdate
 
 textareaInEditView.oninput = () => {
   if (wrapper.classList.contains("containsNote")) {
     let current = document.querySelector(".currentlyEditing");
-    current.querySelector(".noteContent").innerHTML =
+    current.querySelector(".noteContent").textContent =
       textareaInEditView.innerHTML;
   }
   updateLocalStorage();
