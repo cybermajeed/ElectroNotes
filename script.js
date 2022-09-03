@@ -173,7 +173,7 @@ function createNewNote(note) {
     if (wrapper.classList.contains("containsNote")) {
       let current = document.querySelector(".currentlyEditing");
       let noteTitle = current.querySelector(".noteTitle").value;
-      let noteContent = current.querySelector(".noteContent").innerHTML;
+      let noteContent = current.querySelector(".noteContent").innerText;
       let generatedNoteTitle =
         noteContent == "" ? "<No Title>" : noteContent.slice(0, 30);
 
