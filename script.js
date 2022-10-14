@@ -118,11 +118,12 @@ function createNewNote(note) {
   deleteNote.classList.add("deleteNote");
   deleteNote.title = "Delete Note";
   //
-  const deleteNoteIcon = `<svg class="deleteNoteIcon" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill="#000">
+  let deleteIconColor = note.themeColor ? note.themeColor : "#000";
+  const deleteNoteIcon = `<svg class="deleteNoteIcon" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill="${deleteIconColor}">
 <path d="M0 0h24v24H0V0z" fill="none"/>
 <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM18 4h-2.5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z"/>
 </svg>`;
-
+  deleteNote.style.background = note.themeBg ? note.themeBg : "#fff";
   deleteNote.innerHTML = deleteNoteIcon;
   //noteInfo
   let noteInfo = document.createElement("span");
@@ -130,6 +131,9 @@ function createNewNote(note) {
   if (!note.modifiedOn) {
     noteInfo.textContent = modifiedOn();
   }
+  //category
+  let noteCategory = document.createElement("span");
+  noteCategory.classList.add("noteCategory");
   //
   let textarea = document.createElement("textarea");
   textarea.classList.add("noteContent");
@@ -140,6 +144,7 @@ function createNewNote(note) {
   parentTop.appendChild(deleteNote);
   noteparentDiv.appendChild(parentTop);
   noteparentDiv.appendChild(textarea);
+  noteparentDiv.appendChild(noteCategory);
   noteparentDiv.appendChild(noteInfo);
   notesList.appendChild(noteparentDiv);
   //local Storage
@@ -157,11 +162,13 @@ function createNewNote(note) {
     inputText.style.background = note.themeBg;
     textarea.style.background = note.themeBg;
     noteInfo.style.background = note.themeBg;
+    noteCategory.style.background = note.themeBg;
   }
   if (note.themeColor) {
     inputText.style.color = note.themeColor;
     textarea.style.color = note.themeColor;
     noteInfo.style.color = note.themeColor;
+    noteCategory.style.color = note.themeColor;
   }
   if (note.modifiedOn) {
     noteInfo.textContent = note.modifiedOn;
@@ -238,21 +245,13 @@ function createNewNote(note) {
       wrapper.classList.add("containsNote");
     }
     updateSessionStorage();
-    if (note.themeBg) {
-      noteTitleInEditView.style.background = note.themeBg;
-      textareaInEditView.style.background = note.themeBg;
-    } else {
-      noteTitleInEditView.style.background = "#fff";
-      textareaInEditView.style.background = "#fff";
-    }
+    noteTitleInEditView.style.background = note.themeBg ? note.themeBg : "#fff";
+    textareaInEditView.style.background = note.themeBg ? note.themeBg : "#fff";
     //
-    if (note.themeColor) {
-      noteTitleInEditView.style.color = note.themeColor;
-      textareaInEditView.style.color = note.themeColor;
-    } else {
-      noteTitleInEditView.style.color = "#000";
-      textareaInEditView.style.color = "#000";
-    }
+    noteTitleInEditView.style.color = note.themeColor
+      ? note.themeColor
+      : "#000";
+    textareaInEditView.style.color = note.themeColor ? note.themeColor : "#000";
     textareaInEditView.innerHTML = textarea.value;
     noteTitleInEditView.value = inputText.value;
     updateLocalStorage();
@@ -352,20 +351,35 @@ allColorSet.forEach((colorSet) => {
     //
     noteTitleInEditView.style.background = computerBg;
     noteTitleInEditView.style.color = computerColor;
+    //title
+    document.querySelector(
+      ".notesList .currentlyEditing  .noteTitle"
+    ).style.background = computerBg;
+    document.querySelector(
+      ".notesList .currentlyEditing  .noteTitle"
+    ).style.color = computerColor;
+    //note info
+    document.querySelector(
+      ".notesList .currentlyEditing  .noteInfo"
+    ).style.background = computerBg;
+    document.querySelector(
+      ".notesList .currentlyEditing  .noteInfo"
+    ).style.color = computerColor;
+    //note category
+    document.querySelector(
+      ".notesList .currentlyEditing  .noteCategory"
+    ).style.background = computerBg;
+    document.querySelector(
+      ".notesList .currentlyEditing  .noteCategory"
+    ).style.color = computerColor;
     //
+    //note delete
     document.querySelector(
-      ".notesList .currentlyEditing  .noteTitle"
+      ".notesList .currentlyEditing  .parentTop .deleteNote"
     ).style.background = computerBg;
     document.querySelector(
-      ".notesList .currentlyEditing  .noteTitle"
-    ).style.color = computerColor;
-    //----
-    document.querySelector(
-      ".notesList .currentlyEditing  .noteInfo"
-    ).style.background = computerBg;
-    document.querySelector(
-      ".notesList .currentlyEditing  .noteInfo"
-    ).style.color = computerColor;
+      ".notesList .currentlyEditing  .parentTop .deleteNote svg"
+    ).style.fill = computerColor;
     //
     updateLocalStorage();
   };

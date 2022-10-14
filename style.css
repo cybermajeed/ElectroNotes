@@ -126,8 +126,23 @@ div.searchForNotes span.icon {
   align-items: center;
   flex-direction: column;
 }
+.notesList .notes .noteCategory {
+  padding: 5px;
+  max-width: calc(100% - 20px);
+  width: calc(100% - 20px);
 
+  height: 25px;
+  background: #fff;
+  color: #000;
+  display: flex;
+  align-items: center;
+}
+.notes .noteCategory:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
 .notesList .notes .noteInfo {
+  border-top: 2px solid dodgerblue;
   padding: 5px;
   max-width: calc(100% - 20px);
   width: calc(100% - 20px);
