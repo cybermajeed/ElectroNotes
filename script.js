@@ -9,7 +9,7 @@ let wrapper = document.querySelector(".wrapper"),
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
   searchForNotes = topNavParent.querySelector(".searchForNotes"),
-  searchForNotesIcon = topNavParent.querySelector("span.icon "),
+  filterForNotesIcon = topNavParent.querySelector("span.filter"),
   notesList = container.querySelector(".notesList"),
   addNote = container.querySelector(".addNoteParent .addNote"),
   currentNoteTitle = document.querySelector(".currentlyEditing .noteTitle");
@@ -33,11 +33,10 @@ const noteColorIcon = `<svg xmlns="http://www.w3.org/2000/svg" enable-background
 noteColorInEditView.innerHTML = noteColorIcon;
 
 //search
-const searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 0 24 24" width="25px" fill="#FFFFFF">
-<path d="M0 0h24v24H0V0z" fill="none"/>
-<path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+const filterIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="40" width="40" fill="#FFF">
+<path d="M18.042 30.292q-.667 0-1.125-.438-.459-.437-.459-1.146 0-.666.459-1.104.458-.437 1.125-.437h3.916q.667 0 1.125.458.459.458.459 1.125t-.459 1.104q-.458.438-1.125.438ZM6.375 12.833q-.667 0-1.125-.458-.458-.458-.458-1.125t.458-1.125q.458-.458 1.125-.458h27.25q.667 0 1.125.458.458.458.458 1.167 0 .666-.458 1.104-.458.437-1.125.437Zm5 8.75q-.667 0-1.125-.458-.458-.458-.458-1.125t.458-1.125q.458-.458 1.125-.458h17.25q.667 0 1.125.458.458.458.458 1.125t-.458 1.125q-.458.458-1.125.458Z"/>
 </svg>`;
-searchForNotesIcon.innerHTML = searchIcon;
+filterForNotesIcon.innerHTML = filterIcon;
 
 //
 const addNoteIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 0 24 24" width="40px" fill="#FFF">

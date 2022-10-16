@@ -103,7 +103,7 @@ body {
   color: #fff;
   font-size: 15px;
 }
-div.searchForNotes span.icon {
+div.searchForNotes span.filter {
   cursor: pointer;
   display: flex;
   justify-content: center;
