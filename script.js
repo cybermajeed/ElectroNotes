@@ -6,6 +6,9 @@ let wrapper = document.querySelector(".wrapper"),
   colorPaletteInEditView = wrapper.querySelector("div.colorPalette"),
   allColorSet = wrapper.querySelectorAll("button.colorSet"),
   //
+  imgWrapper = document.querySelector(".imgWrapper"),
+  closeImgWrapper = document.querySelector(".imgWrapper .closeImgWrapper"),
+  imgViewer = document.querySelector(".imgWrapper .imgViewer"),
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
   searchForNotes = topNavParent.querySelector(".searchForNotes"),
@@ -254,11 +257,24 @@ function createNewNote(note) {
     textareaInEditView.innerHTML = textarea.value;
     noteTitleInEditView.value = inputText.value;
     updateLocalStorage();
+    //image viewer
+    document
+      .querySelectorAll(".noteContentInEditView img")
+      .forEach((NoteImage) => {
+        NoteImage.onclick = () => {
+          imgWrapper.style.display = "flex";
+          imgViewer.src = NoteImage.src;
+        };
+      });
+    closeImgWrapper.onclick = () => {
+      imgWrapper.style.display = "none";
+    };
+    //
   }
+
   //open in edit view ends
   notesList.scrollTop = notesList.scrollHeight;
-  //end createNote
-}
+} //end createNote
 //modifienOn
 
 function modifiedOn() {
