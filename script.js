@@ -275,8 +275,8 @@ function createNewNote(note) {
   //open in edit view ends
   notesList.scrollTop = notesList.scrollHeight;
 } //end createNote
-//modifienOn
 
+//modifienOn
 function modifiedOn() {
   let d = new Date(),
     hour = d.getHours() > 12 ? d.getHours() - 12 : d.getHours(),
@@ -285,11 +285,12 @@ function modifiedOn() {
     date = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
   return `${date}, ${hour}:${minutes} ${AMoPM}`;
 }
-//liveUpdate
 
+//liveUpdate
 textareaInEditView.oninput = () => {
   if (wrapper.classList.contains("containsNote")) {
     let current = document.querySelector(".currentlyEditing");
+    current.querySelector(".noteInfo").textContent = modifiedOn();
     current.querySelector(".noteContent").textContent =
       textareaInEditView.innerHTML;
   }
@@ -299,8 +300,9 @@ noteTitleInEditView.oninput = () => {
   if (wrapper.classList.contains("containsNote")) {
     let current = document.querySelector(".currentlyEditing");
     current.querySelector(".noteTitle").value = noteTitleInEditView.value;
+    current.querySelector(".noteInfo").textContent = modifiedOn();
+    updateLocalStorage();
   }
-  updateLocalStorage();
 };
 //live update ends
 //disable?enable
@@ -449,15 +451,14 @@ function updateSessionStorage() {
 function updateLocalStorage() {
   const allNotes = document.querySelectorAll(".notes");
   const notes = [];
-
   allNotes.forEach((eachNote) => {
     notes.push({
+      id: eachNote.id,
       title: eachNote.querySelector(".noteTitle").value,
       content: eachNote.querySelector(".noteContent").value,
-      id: eachNote.id,
-      modifiedOn: eachNote.querySelector(".noteInfo").textContent,
       themeBg: eachNote.querySelector(".noteTitle").style.background,
       themeColor: eachNote.querySelector(".noteTitle").style.color,
+      modifiedOn: eachNote.querySelector(".noteInfo").textContent,
     });
   });
 
