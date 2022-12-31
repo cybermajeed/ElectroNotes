@@ -58,7 +58,7 @@ function navCloseOpen() {
       .querySelector("div.hideSidebar svg")
       .classList.contains("navClose")
   ) {
-    topNavParent.querySelector("div.hideSidebar").title = "Show Sidebar";
+    topNavParent.querySelector("div.hideSidebar").title = "Show Notes List";
     topNavParent
       .querySelector("div.hideSidebar svg")
       .classList.replace("navClose", "navOpen");
@@ -191,6 +191,8 @@ function createNewNote(note) {
           ? confirm(`Are you sure you want to delete "${noteTitle}"?`)
           : confirm(`Are you sure you want to delete "${generatedNoteTitle}"?`);
       if (confirmMsg) {
+        wrapper.classList.add("noViewMsgWrapper");
+        colorPaletteInEditView.classList.remove("colorPaletteShown");
         current.remove();
         updateLocalStorage();
         updateSessionStorage();
@@ -213,16 +215,16 @@ function createNewNote(note) {
       let noteContent = parent.querySelector(".noteContent").innerHTML;
       let generatedNoteTitle =
         noteContent == "" ? "<No Title>" : noteContent.slice(0, 30);
-
       let confirmMsg =
         noteTitle !== ""
           ? confirm(`Are you sure you want to delete "${noteTitle}"?`)
           : confirm(`Are you sure you want to delete "${generatedNoteTitle}"?`);
       if (confirmMsg) {
+        wrapper.classList.add("noViewMsgWrapper");
+        colorPaletteInEditView.classList.remove("colorPaletteShown");
         parent.remove();
         updateLocalStorage();
         updateSessionStorage();
-
         noteTitleInEditView.value = "";
         textareaInEditView.innerHTML = "";
         wrapper.classList.remove("containsNote");
@@ -236,6 +238,7 @@ function createNewNote(note) {
   inputText.oninput = openInEditView;
 
   function openInEditView() {
+    wrapper.classList.remove("noViewMsgWrapper");
     if (!document.querySelector(".currentlyEditing")) {
       noteInfo.parentElement.classList.add("currentlyEditing");
       wrapper.classList.add("containsNote");

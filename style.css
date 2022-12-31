@@ -224,6 +224,7 @@ button svg {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 .wrapper div.noteContentInEditView {
@@ -268,12 +269,23 @@ div.noteContentInEditView img {
   width: 100px;
   border: none;
 }
+.wrapper.noViewMsgWrapper div.editAreaDisabled,
+.wrapper .noViewMsg {
+  display: none;
+}
+
+.wrapper.noViewMsgWrapper .noViewMsg {
+  font-size: xx-large;
+  font-weight: 800;
+  color: #ffffff9b;
+  display: block;
+  user-select: none;
+}
 
 :disabled,
 :disabled svg,
 [contenteditable="false"] {
-  background: #ffffff;
-  opacity: 0.8;
+  display: none;
   cursor: auto;
 }
 .colorPalette {

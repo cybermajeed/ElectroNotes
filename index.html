@@ -41,8 +41,8 @@
       </div>
     </div>
     <!--wrapper-->
-    <div class="wrapper">
-      <div class="topParentForTitleDelInEditView">
+    <div class="wrapper noViewMsgWrapper">
+      <div class="topParentForTitleDelInEditView editAreaDisabled">
         <input
           type="text"
           class="noteTitleInEditView"
@@ -61,7 +61,7 @@
           ></button>
           <button
             class="colorSet"
-            style="--background: #fdfd8d; --color: #000"
+            style="--background: #fbfb7d; --color: #000"
           ></button>
           <button
             class="colorSet"
@@ -69,15 +69,19 @@
           ></button>
           <button
             class="colorSet"
-            style="--background: #54b9fc; --color: #000"
+            style="--background: #d081fd; --color: #000"
           ></button>
           <button
             class="colorSet"
-            style="--background: #fc79d5; --color: #000"
+            style="--background: #72fcfc; --color: #000"
           ></button>
           <button
             class="colorSet"
-            style="--background: #60ff60; --color: #000"
+            style="--background: #fe77d5; --color: #000"
+          ></button>
+          <button
+            class="colorSet"
+            style="--background: #85fd93; --color: #000"
           ></button>
           <button
             class="colorSet"
@@ -85,24 +89,24 @@
           ></button>
           <button
             class="colorSet"
-            style="--background: cyan; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
             style="--background: #ffaf6e; --color: #000"
           ></button>
           <button
             class="colorSet"
-            style="--background: #ff8080; --color: #000"
+            style="--background: #f98888; --color: #000"
           ></button>
           <button
             class="colorSet"
-            style="--background: #dc83ff; --color: #000"
+            style="--background: #d3d3d3; --color: #000"
           ></button>
         </div>
         <button class="deleteNote" title="Delete Note"></button>
       </div>
-      <div class="noteContentInEditView" placeholder="Type Here"></div>
+      <div
+        class="noteContentInEditView editAreaDisabled"
+        placeholder="Type Here"
+      ></div>
+      <div class="noViewMsg">Open a Note</div>
     </div>
     <script src="script.js"></script>
   </body>
