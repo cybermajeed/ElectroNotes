@@ -272,6 +272,7 @@ function createNewNote(note) {
     closeImgWrapper.onclick = () => {
       imgWrapper.style.display = "none";
     };
+    countWord();
     //
   }
 
@@ -279,6 +280,20 @@ function createNewNote(note) {
   notesList.scrollTop = notesList.scrollHeight;
 } //end createNote
 
+//word count
+function countWord() {
+  let wordsArray = document
+    .querySelector(".noteContentInEditView.editAreaDisabled")
+    .innerText.replaceAll("\n", " ")
+    .trim();
+  let wCountWrapper = document.querySelector(
+    ".wrapper.containsNote .wordCount"
+  );
+  let Ccount = wordsArray.length;
+  let Wcount = Ccount == 0 ? 0 : wordsArray.split(" ").length;
+  wCountWrapper.innerHTML = `${Wcount} W; ${Ccount} C`;
+}
+//word count ends
 //modifienOn
 function modifiedOn() {
   let d = new Date(),
@@ -298,6 +313,7 @@ textareaInEditView.oninput = () => {
       textareaInEditView.innerHTML;
   }
   updateLocalStorage();
+  countWord();
 };
 noteTitleInEditView.oninput = () => {
   if (wrapper.classList.contains("containsNote")) {
@@ -455,14 +471,19 @@ function updateLocalStorage() {
   const allNotes = document.querySelectorAll(".notes");
   const notes = [];
   allNotes.forEach((eachNote) => {
-    notes.push({
-      id: eachNote.id,
-      title: eachNote.querySelector(".noteTitle").value,
-      content: eachNote.querySelector(".noteContent").value,
-      themeBg: eachNote.querySelector(".noteTitle").style.background,
-      themeColor: eachNote.querySelector(".noteTitle").style.color,
-      modifiedOn: eachNote.querySelector(".noteInfo").textContent,
-    });
+    if (
+      eachNote.querySelector(".noteTitle").value != "" ||
+      eachNote.querySelector(".noteContent").value != ""
+    ) {
+      notes.push({
+        id: eachNote.id,
+        title: eachNote.querySelector(".noteTitle").value,
+        content: eachNote.querySelector(".noteContent").value,
+        themeBg: eachNote.querySelector(".noteTitle").style.background,
+        themeColor: eachNote.querySelector(".noteTitle").style.color,
+        modifiedOn: eachNote.querySelector(".noteInfo").textContent,
+      });
+    }
   });
 
   localStorage.setItem("notes", JSON.stringify(notes));

@@ -270,7 +270,8 @@ div.noteContentInEditView img {
   border: none;
 }
 .wrapper.noViewMsgWrapper div.editAreaDisabled,
-.wrapper .noViewMsg {
+.wrapper .noViewMsg,
+.wrapper .wordCount {
   display: none;
 }
 
@@ -280,6 +281,17 @@ div.noteContentInEditView img {
   color: #ffffff9b;
   display: block;
   user-select: none;
+}
+
+.wrapper.containsNote .wordCount {
+  position: absolute;
+  display: block;
+  bottom: 15px;
+  right: 15px;
+  background: #dddddd;
+  padding: 5px;
+  color: #000;
+  border-radius: 5px;
 }
 
 :disabled,
