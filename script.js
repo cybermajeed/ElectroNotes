@@ -282,23 +282,27 @@ function createNewNote(note) {
 
 //word count
 function countWord() {
+
   let wordsArrayTemp = document
     .querySelector(".noteContentInEditView.editAreaDisabled")
     .innerText.replaceAll("\n", " ")
     .trim()
     .split(" ");
   wordsArray = [];
+  charCount = 0;
   for (let i of wordsArrayTemp) {
     if (i != "") {
+      charCount += i.length;
       wordsArray.push(i);
     }
   }
   let wCountWrapper = document.querySelector(
     ".wrapper.containsNote .wordCount"
   );
-  let Ccount = wordsArray.length;
+  let Ccount = charCount;
   let Wcount = Ccount == 0 ? 0 : wordsArray.length;
   wCountWrapper.innerHTML = `${Wcount} W; ${Ccount} C`;
+
 }
 //word count ends
 //modifienOn
