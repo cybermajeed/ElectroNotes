@@ -236,6 +236,7 @@ function createNewNote(note) {
   //open in edit view
   inputText.onclick = openInEditView;
   inputText.oninput = openInEditView;
+  inputText.oninput = updateList;
 
   function openInEditView() {
     wrapper.classList.remove("noViewMsgWrapper");
@@ -282,7 +283,6 @@ function createNewNote(note) {
 
 //word count
 function countWord() {
-
   let wordsArrayTemp = document
     .querySelector(".noteContentInEditView.editAreaDisabled")
     .innerText.replaceAll("\n", " ")
@@ -302,7 +302,6 @@ function countWord() {
   let Ccount = charCount;
   let Wcount = Ccount == 0 ? 0 : wordsArray.length;
   wCountWrapper.innerHTML = `${Wcount} W; ${Ccount} C`;
-
 }
 //word count ends
 //modifienOn
@@ -316,13 +315,16 @@ function modifiedOn() {
 }
 
 //liveUpdate
-textareaInEditView.oninput = () => {
+function updateList() {
   if (wrapper.classList.contains("containsNote")) {
     let current = document.querySelector(".currentlyEditing");
     current.querySelector(".noteInfo").textContent = modifiedOn();
     current.querySelector(".noteContent").textContent =
       textareaInEditView.innerHTML;
   }
+}
+textareaInEditView.oninput = () => {
+  updateList();
   updateLocalStorage();
   countWord();
 };
@@ -429,6 +431,7 @@ allColorSet.forEach((colorSet) => {
     ).style.fill = computerColor;
     //
     updateLocalStorage();
+    updateList();
   };
 });
 
