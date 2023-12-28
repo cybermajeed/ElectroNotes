@@ -262,14 +262,12 @@ function createNewNote(note) {
     noteTitleInEditView.value = inputText.value;
     updateLocalStorage();
     //image viewer
-    document
-      .querySelectorAll(".noteContentInEditView img")
-      .forEach((NoteImage) => {
-        NoteImage.onclick = () => {
-          imgWrapper.style.display = "flex";
-          imgViewer.src = NoteImage.src;
-        };
-      });
+    document.querySelector(".noteContentInEditView").onclick = (e) => {
+      if (e.srcElement.localName == "img") {
+        imgWrapper.style.display = "flex";
+        imgViewer.src = e.target.src;
+      }
+    };
     closeImgWrapper.onclick = () => {
       imgWrapper.style.display = "none";
     };
@@ -280,7 +278,16 @@ function createNewNote(note) {
   //open in edit view ends
   notesList.scrollTop = notesList.scrollHeight;
 } //end createNote
-
+/*
+//modify text styles
+textareaInEditView.onkeydown = (e) => {
+  if (e.ctrlKey && e.altKey && e.key === "+") {
+    selection = window.getSelection();
+    console.log(getComputedStyle(selection).fontSize);
+  }
+};
+//modify text styles ends
+*/
 //word count
 function countWord() {
   let wordsArrayTemp = document
