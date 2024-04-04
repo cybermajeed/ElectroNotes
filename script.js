@@ -12,9 +12,10 @@ let wrapper = document.querySelector(".wrapper"),
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
   searchForNotes = topNavParent.querySelector(".searchForNotes"),
-  profilePic = topNavParent.querySelector("div.profile img"),
   notesList = container.querySelector(".notesList"),
   addNote = container.querySelector(".addNoteParent .addNote"),
+  profilePic = topNavParent.querySelector("div.profile img"),
+  loginScreen = topNavParent.querySelector("div.profile .login"),
   currentNoteTitle = document.querySelector(".currentlyEditing .noteTitle");
 
 //navigation close?open
@@ -532,5 +533,10 @@ function updateLocalStorage() {
 
 //login
 profilePic.onclick = () => {
-  console.log("profile pic clicked");
+  loginScreen.style.display = "flex";
+};
+loginScreen.onclick = (e) => {
+  if (e.target.classList.contains("login")) {
+    loginScreen.style.display = "none";
+  }
 };

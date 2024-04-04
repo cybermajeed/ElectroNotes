@@ -30,8 +30,23 @@
     </div>
     <div class="container">
       <div class="topNavParent">
-        <div class="profile" title="Profile">
-          <img class="profilePic" src="./assets/profile.svg" />
+        <div class="profile">
+          <div class="login">
+            <input
+              type="email"
+              name="userName"
+              id="username"
+              placeholder="Username"
+            />
+            <input
+              type="password"
+              name="passWord"
+              id="password"
+              placeholder="Password"
+            />
+            <input type="submit" id="submitBtn" value="Submit" />
+          </div>
+          <img title="Profile" class="profilePic" src="./assets/profile.svg" />
           <!---->
         </div>
         <input
@@ -117,7 +132,5 @@
     </div>
     <script src="script.js"></script>
   </body>
-  <!--
-    <script type="module" src="./firebase.js"></script>
-  -->
+  <script type="module" src="./firebase.js"></script>
 </html>
