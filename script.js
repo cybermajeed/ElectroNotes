@@ -56,7 +56,7 @@ function navCloseOpen() {
       .querySelector("div.hideSidebar svg")
       .classList.replace("navClose", "navOpen");
     //
-    container.style.width = "0%";
+    container.style.width = "0";
     wrapper.style.width = "100%";
     topNavParent.querySelector("div.hideSidebar").style.transform =
       "rotate(180deg)";
@@ -64,6 +64,8 @@ function navCloseOpen() {
       container.querySelector(".notesList").style.display = "none";
       container.querySelector(".addNoteParent").style.display = "none";
       searchForNotes.style.display = "none";
+      profilePic.parentNode.style.display = "none";
+      container.style.minWidth = "fit-content";
     }, 150);
   } else {
     topNavParent.querySelector("div.hideSidebar").title = "Hide Sidebar";
@@ -78,6 +80,9 @@ function navCloseOpen() {
       container.querySelector(".notesList").style.display = "";
       container.querySelector(".addNoteParent").style.display = "";
       searchForNotes.style.display = "";
+      profilePic.parentNode.style.display = "";
+      container.style.minWidth = "";
+
       topNavParent.style.alignItems = "center";
     }, 150);
   }
@@ -524,3 +529,8 @@ function updateLocalStorage() {
 
   localStorage.setItem("notes", JSON.stringify(notes));
 }
+
+//login
+profilePic.onclick = () => {
+  console.log("profile pic clicked");
+};
