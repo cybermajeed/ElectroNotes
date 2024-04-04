@@ -59,8 +59,7 @@ body {
 .container {
   height: 100%;
   width: 30%;
-  min-width: 50px;
-  max-width: 30%;
+  min-width: 160px;
   background: #2c2c2c;
   border-radius: 4px;
   display: flex;
@@ -153,7 +152,7 @@ div.profile {
 }
 
 .notesList .notes {
-  margin: 8px 0;
+  margin: 15px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,15 +162,16 @@ div.profile {
   padding: 5px;
   max-width: calc(100% - 20px);
   width: calc(100% - 20px);
-
   height: 25px;
   background: #fff;
   color: #000;
   display: flex;
   align-items: center;
+  border-left: 2px solid dodgerblue;
+  border-right: 2px solid dodgerblue;
 }
 .notesList .notes .modifiedOn {
-  border-top: 2px solid dodgerblue;
+  border: 2px solid dodgerblue;
   padding: 5px;
   max-width: calc(100% - 20px);
   width: calc(100% - 20px);
@@ -191,7 +191,7 @@ div.profile {
   border: 2px solid dodgerblue;
   margin-bottom: 0px;
   border-radius: 7px 7px 0 0;
-  width: calc(100% - 13px);
+  width: calc(100% - 10px);
 }
 .notesList .notes input[type="text"] {
   font-size: large;
@@ -218,6 +218,7 @@ button svg {
 .wrapper {
   height: 100%;
   width: 70%;
+  min-width: 160px;
   background: #0000004d;
   border-radius: 4px;
   display: flex;
