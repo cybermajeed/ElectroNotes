@@ -12,16 +12,15 @@ let wrapper = document.querySelector(".wrapper"),
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
   searchForNotes = topNavParent.querySelector(".searchForNotes"),
-  filterForNotesIcon = topNavParent.querySelector("span.filter"),
+  profilePic = topNavParent.querySelector("div.profile img"),
   notesList = container.querySelector(".notesList"),
   addNote = container.querySelector(".addNoteParent .addNote"),
   currentNoteTitle = document.querySelector(".currentlyEditing .noteTitle");
 
 //navigation close?open
-const navIcon = `<svg class="navClose" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill="#fff">
+const navIcon = `<svg class="navClose" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 0 24 24" width="40px" fill="#fff">
 <path d="M14.71 15.88L10.83 12l3.88-3.88c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0L8.71 11.3c-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0 .38-.39.39-1.03 0-1.42z"/>
 </svg>`;
-//
 //wrapper
 const deleteNoteIcon = `<svg class="deleteNoteIcon" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill="#000">
 <path d="M0 0h24v24H0V0z" fill="none"/>
@@ -34,12 +33,6 @@ const noteColorIcon = `<svg xmlns="http://www.w3.org/2000/svg" enable-background
 <path d="M12,2C6.49,2,2,6.49,2,12s4.49,10,10,10c1.38,0,2.5-1.12,2.5-2.5c0-0.61-0.23-1.2-0.64-1.67c-0.08-0.1-0.13-0.21-0.13-0.33 c0-0.28,0.22-0.5,0.5-0.5H16c3.31,0,6-2.69,6-6C22,6.04,17.51,2,12,2z M17.5,13c-0.83,0-1.5-0.67-1.5-1.5c0-0.83,0.67-1.5,1.5-1.5 s1.5,0.67,1.5,1.5C19,12.33,18.33,13,17.5,13z M14.5,9C13.67,9,13,8.33,13,7.5C13,6.67,13.67,6,14.5,6S16,6.67,16,7.5 C16,8.33,15.33,9,14.5,9z M5,11.5C5,10.67,5.67,10,6.5,10S8,10.67,8,11.5C8,12.33,7.33,13,6.5,13S5,12.33,5,11.5z M11,7.5 C11,8.33,10.33,9,9.5,9S8,8.33,8,7.5C8,6.67,8.67,6,9.5,6S11,6.67,11,7.5z"/></g>
 </svg>`;
 noteColorInEditView.innerHTML = noteColorIcon;
-
-//search
-const filterIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="40" width="40" fill="#FFF">
-<path d="M18.042 30.292q-.667 0-1.125-.438-.459-.437-.459-1.146 0-.666.459-1.104.458-.437 1.125-.437h3.916q.667 0 1.125.458.459.458.459 1.125t-.459 1.104q-.458.438-1.125.438ZM6.375 12.833q-.667 0-1.125-.458-.458-.458-.458-1.125t.458-1.125q.458-.458 1.125-.458h27.25q.667 0 1.125.458.458.458.458 1.167 0 .666-.458 1.104-.458.437-1.125.437Zm5 8.75q-.667 0-1.125-.458-.458-.458-.458-1.125t.458-1.125q.458-.458 1.125-.458h17.25q.667 0 1.125.458.458.458.458 1.125t-.458 1.125q-.458.458-1.125.458Z"/>
-</svg>`;
-filterForNotesIcon.innerHTML = filterIcon;
 
 //
 const addNoteIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 0 24 24" width="40px" fill="#FFF">
@@ -98,7 +91,6 @@ if (notes) {
     createNewNote(note);
   });
 }
-
 addNote.onclick = createNewNote;
 
 function createNewNote(note) {
@@ -127,15 +119,20 @@ function createNewNote(note) {
 </svg>`;
   deleteNote.style.background = note.themeBg ? note.themeBg : "#fff";
   deleteNote.innerHTML = deleteNoteIcon;
-  //noteInfo
-  let noteInfo = document.createElement("span");
-  noteInfo.classList.add("noteInfo");
+  //modifiedOn
+  let modifiedOn = document.createElement("span");
+  modifiedOn.classList.add("modifiedOn");
+  modifiedOn.title = "Last Edited";
   if (!note.modifiedOn) {
-    noteInfo.textContent = modifiedOn();
+    modifiedOn.textContent = f_ModifiedOn();
   }
-  //category
-  let noteCategory = document.createElement("span");
-  noteCategory.classList.add("noteCategory");
+  //createdOn
+  let createdOn = document.createElement("span");
+  createdOn.classList.add("createdOn");
+  createdOn.title = "Date Created";
+  if (!note.createdOn) {
+    createdOn.textContent = f_CreatedOn();
+  }
   //
   let textarea = document.createElement("textarea");
   textarea.classList.add("noteContent");
@@ -146,8 +143,8 @@ function createNewNote(note) {
   parentTop.appendChild(deleteNote);
   noteparentDiv.appendChild(parentTop);
   noteparentDiv.appendChild(textarea);
-  noteparentDiv.appendChild(noteCategory);
-  noteparentDiv.appendChild(noteInfo);
+  noteparentDiv.appendChild(createdOn);
+  noteparentDiv.appendChild(modifiedOn);
   notesList.appendChild(noteparentDiv);
   //local Storage
 
@@ -163,17 +160,20 @@ function createNewNote(note) {
   if (note.themeBg) {
     inputText.style.background = note.themeBg;
     textarea.style.background = note.themeBg;
-    noteInfo.style.background = note.themeBg;
-    noteCategory.style.background = note.themeBg;
+    modifiedOn.style.background = note.themeBg;
+    createdOn.style.background = note.themeBg;
   }
   if (note.themeColor) {
     inputText.style.color = note.themeColor;
     textarea.style.color = note.themeColor;
-    noteInfo.style.color = note.themeColor;
-    noteCategory.style.color = note.themeColor;
+    modifiedOn.style.color = note.themeColor;
+    createdOn.style.color = note.themeColor;
   }
   if (note.modifiedOn) {
-    noteInfo.textContent = note.modifiedOn;
+    modifiedOn.textContent = note.modifiedOn;
+  }
+  if (note.createdOn) {
+    createdOn.textContent = note.createdOn;
   }
   updateLocalStorage();
   //delete from editor view
@@ -241,13 +241,13 @@ function createNewNote(note) {
   function openInEditView() {
     wrapper.classList.remove("noViewMsgWrapper");
     if (!document.querySelector(".currentlyEditing")) {
-      noteInfo.parentElement.classList.add("currentlyEditing");
+      modifiedOn.parentElement.classList.add("currentlyEditing");
       wrapper.classList.add("containsNote");
     } else {
       document
         .querySelector(".currentlyEditing")
         .classList.remove("currentlyEditing");
-      noteInfo.parentElement.classList.add("currentlyEditing");
+      modifiedOn.parentElement.classList.add("currentlyEditing");
       wrapper.classList.add("containsNote");
     }
     updateSessionStorage();
@@ -273,6 +273,15 @@ function createNewNote(note) {
     };
     countWord();
     //
+    //live update
+    let allNotes = document.querySelectorAll(".notes");
+    allNotes.forEach((eachNote) => {
+      eachNote.querySelector(".noteTitle").oninput = () => {
+        noteTitleInEditView.value = eachNote.querySelector(".noteTitle").value;
+        console.log(eachNote.querySelector(".noteTitle").value);
+        updateLocalStorage();
+      };
+    });
   }
 
   //open in edit view ends
@@ -312,7 +321,15 @@ function countWord() {
 }
 //word count ends
 //modifienOn
-function modifiedOn() {
+function f_ModifiedOn() {
+  let d = new Date(),
+    hour = d.getHours() > 12 ? d.getHours() - 12 : d.getHours(),
+    minutes = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes(),
+    AMoPM = d.getHours() >= 12 ? "PM" : "AM",
+    date = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  return `${date}, ${hour}:${minutes} ${AMoPM}`;
+}
+function f_CreatedOn() {
   let d = new Date(),
     hour = d.getHours() > 12 ? d.getHours() - 12 : d.getHours(),
     minutes = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes(),
@@ -325,7 +342,7 @@ function modifiedOn() {
 function updateList() {
   if (wrapper.classList.contains("containsNote")) {
     let current = document.querySelector(".currentlyEditing");
-    current.querySelector(".noteInfo").textContent = modifiedOn();
+    current.querySelector(".modifiedOn").textContent = f_ModifiedOn();
     current.querySelector(".noteContent").textContent =
       textareaInEditView.innerHTML;
   }
@@ -339,10 +356,11 @@ noteTitleInEditView.oninput = () => {
   if (wrapper.classList.contains("containsNote")) {
     let current = document.querySelector(".currentlyEditing");
     current.querySelector(".noteTitle").value = noteTitleInEditView.value;
-    current.querySelector(".noteInfo").textContent = modifiedOn();
+    current.querySelector(".modifiedOn").textContent = f_ModifiedOn();
     updateLocalStorage();
   }
 };
+
 //live update ends
 //disable?enable
 setInterval(() => {
@@ -374,17 +392,16 @@ setInterval(() => {
 
 //set after load
 let navState = sessionStorage.getItem("isNavCloseOpen");
+if (sessionStorage.currentSessionNote) {
+  let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
+  if (noteToOpen) {
+    noteToOpen.querySelector(".noteTitle").click();
+  } else {
+    sessionStorage.removeItem("currentSessionNote");
+  }
+}
 if (navState == "closed") {
-  if (sessionStorage.currentSessionNote) {
-    let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
-    noteToOpen.querySelector(".noteTitle").click();
-  }
   topNavParent.querySelector("div.hideSidebar").click();
-} else {
-  if (sessionStorage.currentSessionNote) {
-    let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
-    noteToOpen.querySelector(".noteTitle").click();
-  }
 }
 
 //
@@ -416,17 +433,17 @@ allColorSet.forEach((colorSet) => {
     ).style.color = computerColor;
     //note info
     document.querySelector(
-      ".notesList .currentlyEditing  .noteInfo"
+      ".notesList .currentlyEditing  .modifiedOn"
     ).style.background = computerBg;
     document.querySelector(
-      ".notesList .currentlyEditing  .noteInfo"
+      ".notesList .currentlyEditing  .modifiedOn"
     ).style.color = computerColor;
     //note category
     document.querySelector(
-      ".notesList .currentlyEditing  .noteCategory"
+      ".notesList .currentlyEditing  .createdOn"
     ).style.background = computerBg;
     document.querySelector(
-      ".notesList .currentlyEditing  .noteCategory"
+      ".notesList .currentlyEditing  .createdOn"
     ).style.color = computerColor;
     //
     //note delete
@@ -443,11 +460,8 @@ allColorSet.forEach((colorSet) => {
 });
 
 //searchForNotes
-searchForNotes.querySelector("input").onkeyup = function searchNotes() {
-  var wordToSearch = searchForNotes
-    .querySelector("input")
-    .value.trim()
-    .toLocaleLowerCase();
+searchForNotes.onkeyup = function searchNotes() {
+  var wordToSearch = searchForNotes.value.trim().toLocaleLowerCase();
   let notesToSearch = document.querySelectorAll(".notes");
   notesToSearch.forEach((noteToSearch) => {
     if (
@@ -502,7 +516,8 @@ function updateLocalStorage() {
         content: eachNote.querySelector(".noteContent").value,
         themeBg: eachNote.querySelector(".noteTitle").style.background,
         themeColor: eachNote.querySelector(".noteTitle").style.color,
-        modifiedOn: eachNote.querySelector(".noteInfo").textContent,
+        modifiedOn: eachNote.querySelector(".modifiedOn").textContent,
+        createdOn: eachNote.querySelector(".createdOn").textContent,
       });
     }
   });

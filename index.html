@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta name="author" content="CyberMajeed" />
+    <meta name="version" content="24.4.4" />
+    <meta name="developer" content="CyberMajeed" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,10 +30,15 @@
     </div>
     <div class="container">
       <div class="topNavParent">
-        <div class="searchForNotes" title="Search Note">
-          <span class="filter"></span>
-          <input type="text" placeholder="Search Notes" />
+        <div class="profile" title="Profile">
+          <img class="profilePic" src="./assets/profile.svg" />
+          <!---->
         </div>
+        <input
+          class="searchForNotes"
+          title="Search Note"
+          placeholder="Search Notes"
+        />
         <div class="hideSidebar" title="Hide Sidebar"></div>
       </div>
       <div class="notesList"></div>
@@ -111,4 +117,7 @@
     </div>
     <script src="script.js"></script>
   </body>
+  <!--
+    <script type="module" src="./firebase.js"></script>
+  -->
 </html>
