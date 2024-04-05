@@ -31,23 +31,20 @@
     <div class="container">
       <div class="topNavParent">
         <div class="profile">
+          <!--login-->
           <div class="login">
-            <input
-              type="email"
-              name="userName"
-              id="username"
-              placeholder="Username"
-            />
-            <input
-              type="password"
-              name="passWord"
-              id="password"
-              placeholder="Password"
-            />
-            <input type="submit" id="submitBtn" value="Submit" />
+            <input type="email" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <input type="submit" id="loginBtn" value="Login" />
           </div>
+          <!--logout-->
+          <div class="logout">
+            <input type="submit" id="logoutBtn" value="Logout" />
+          </div>
+          <!--profile pic-->
           <img title="Profile" class="profilePic" src="./assets/profile.svg" />
           <!---->
+          <span class="version"></span>
         </div>
         <input
           class="searchForNotes"
@@ -132,5 +129,5 @@
     </div>
     <script src="script.js"></script>
   </body>
-  <script type="module" src="./firebase.js"></script>
+  <script type="module" src="./auth.js"></script>
 </html>

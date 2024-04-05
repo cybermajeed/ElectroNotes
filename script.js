@@ -17,7 +17,6 @@ let wrapper = document.querySelector(".wrapper"),
   profilePic = topNavParent.querySelector("div.profile img"),
   loginScreen = topNavParent.querySelector("div.profile .login"),
   currentNoteTitle = document.querySelector(".currentlyEditing .noteTitle");
-
 //navigation close?open
 const navIcon = `<svg class="navClose" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 0 24 24" width="40px" fill="#fff">
 <path d="M14.71 15.88L10.83 12l3.88-3.88c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0L8.71 11.3c-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0 .38-.39.39-1.03 0-1.42z"/>
@@ -530,13 +529,3 @@ function updateLocalStorage() {
 
   localStorage.setItem("notes", JSON.stringify(notes));
 }
-
-//login
-profilePic.onclick = () => {
-  loginScreen.style.display = "flex";
-};
-loginScreen.onclick = (e) => {
-  if (e.target.classList.contains("login")) {
-    loginScreen.style.display = "none";
-  }
-};

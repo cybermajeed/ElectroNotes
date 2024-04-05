@@ -132,6 +132,17 @@ div.profile {
   border-radius: 100px;
   margin: 5px;
 }
+.profile .version {
+  display: none;
+  position: absolute;
+  transform: translate(-1%, -2%);
+  bottom: 2%;
+  right: 1%;
+  background: #fff;
+  color: #000;
+  border-radius: 3px;
+  padding: 5px 8px;
+}
 .profile img {
   width: fit-content;
   height: fit-content;
@@ -141,7 +152,8 @@ div.profile {
   box-shadow: 0 0 8px dodgerblue, 0 0 8px dodgerblue;
 }
 
-.profile .login {
+.profile .login,
+.logout {
   position: absolute;
   background: #000000c6;
   gap: 12px;
@@ -156,7 +168,8 @@ div.profile {
   height: 100%;
   display: none;
 }
-.login input {
+.login input,
+.logout input {
   outline: none;
   border: none;
   background: #fff;
@@ -164,7 +177,8 @@ div.profile {
   width: 180px;
   padding: 8px 10px;
 }
-.login #submitBtn {
+.login #loginBtn,
+.logout #logoutBtn {
   cursor: pointer;
   margin-top: 8px;
   border-radius: 100px;
@@ -172,7 +186,8 @@ div.profile {
   background: #c5c5c5;
   font-weight: 800;
 }
-.login #submitBtn:hover {
+.login #loginBtn:hover,
+.logout #logoutBtn:hover {
   background: #2c2c2c;
   color: #fff;
   box-shadow: 0 0 10px 0 #fff;
