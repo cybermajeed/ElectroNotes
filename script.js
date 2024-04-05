@@ -91,6 +91,7 @@ function navCloseOpen() {
 //localStorage notes
 
 const notes = JSON.parse(localStorage.getItem("notes"));
+
 if (notes) {
   notes.forEach((note) => {
     createNewNote(note);
@@ -283,7 +284,6 @@ function createNewNote(note) {
     allNotes.forEach((eachNote) => {
       eachNote.querySelector(".noteTitle").oninput = () => {
         noteTitleInEditView.value = eachNote.querySelector(".noteTitle").value;
-        console.log(eachNote.querySelector(".noteTitle").value);
         updateLocalStorage();
       };
     });
@@ -309,8 +309,8 @@ function countWord() {
     .innerText.replaceAll("\n", " ")
     .trim()
     .split(" ");
-  wordsArray = [];
-  charCount = 0;
+  let wordsArray = [];
+  let charCount = 0;
   for (let i of wordsArrayTemp) {
     if (i != "") {
       charCount += i.length;
@@ -529,3 +529,9 @@ function updateLocalStorage() {
 
   localStorage.setItem("notes", JSON.stringify(notes));
 }
+
+document.querySelector("div.profile img").onclick = () => {
+  if (!navigator.onLine) {
+    alert("You are Offline");
+  }
+};

@@ -7,9 +7,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 import {
   getStorage,
-  ref,
+  ref as sRef,
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-storage.js";
+import {
+  getDatabase,
+  ref as dRef,
+  set,
+} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBCLfrQVLdX98J_Axa1PEQ9h4pLUFHb32g",
@@ -19,6 +24,7 @@ const firebaseConfig = {
   messagingSenderId: "120507508085",
   appId: "1:120507508085:web:3845e1b009dc06bdea1f3c",
   measurementId: "G-42YHWSNCW4",
+  databaseURL: "https://electronotes-fbf7e-default-rtdb.firebaseio.com/",
 };
 
 /*
@@ -30,10 +36,11 @@ password: "cyberMajeed333"
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const storage = getStorage(app, "gs://electronotes-fbf7e.appspot.com");
+const database = getDatabase(app);
 
 //app version
 const version = "V24.4.4";
-let versionSpan = topNavParent.querySelector("div.profile .version");
+let versionSpan = document.querySelector("div.profile .version");
 let loginBtn = document.querySelector(".profile .login #loginBtn"),
   logoutBtn = document.querySelector(".profile .logout #logoutBtn"),
   profilePic = document.querySelector("div.profile img"),
@@ -41,11 +48,12 @@ let loginBtn = document.querySelector(".profile .login #loginBtn"),
   logoutScreen = document.querySelector("div.profile .logout"),
   username = document.getElementById("username"),
   password = document.getElementById("password");
+
 //login
 loginBtn.addEventListener("click", (e) => {
   //login
   signInWithEmailAndPassword(auth, username.value + "@en.com", password.value)
-    .then((cred) => {
+    .then(() => {
       alert("Logged In");
       loginScreen.querySelector("#password").value = "";
       loginScreen.querySelector("#username").value = "";
@@ -72,24 +80,24 @@ logoutBtn.addEventListener("click", (e) => {
     });
   //logout ends
 });
-
+let userName;
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    let userName = user.email.split("@")[0].toUpperCase();
+    userName = user.email.split("@")[0].toUpperCase();
     profilePic.title = userName;
     //set profile pic
-    const imgRef = ref(storage, `profiles/${userName}.png`);
+    const imgRef = sRef(storage, `profiles/${userName}.png`);
     getDownloadURL(imgRef)
       .then((url) => {
         profilePic.src = url;
       })
-      .catch(() => {
-        console.log("Profile not found");
+      .catch((error) => {
+        console.log(error);
       });
     //sync
     profilePic.oncontextmenu = (e) => {
       e.preventDefault();
-      //sync()
+      syncNotes();
     };
     profilePic.onclick = () => {
       //open logout screen
@@ -121,3 +129,13 @@ onAuthStateChanged(auth, (user) => {
     //
   }
 });
+function syncNotes() {
+  if (localStorage.notes && navigator.onLine) {
+    set(dRef(database, "users/" + userName), {
+      notes: localStorage.notes,
+    });
+    alert("Notes Synced");
+  }
+}
+
+//getNotes()
