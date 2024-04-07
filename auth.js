@@ -14,17 +14,19 @@ import {
   getDatabase,
   ref as dRef,
   set,
+  child,
+  get,
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBCLfrQVLdX98J_Axa1PEQ9h4pLUFHb32g",
   authDomain: "electronotes-fbf7e.firebaseapp.com",
   projectId: "electronotes-fbf7e",
+  databaseURL: "https://electronotes-fbf7e-default-rtdb.firebaseio.com/",
   storageBucket: "electronotes-fbf7e.appspot.com",
   messagingSenderId: "120507508085",
   appId: "1:120507508085:web:3845e1b009dc06bdea1f3c",
   measurementId: "G-42YHWSNCW4",
-  databaseURL: "https://electronotes-fbf7e-default-rtdb.firebaseio.com/",
 };
 
 /*
@@ -37,7 +39,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const storage = getStorage(app, "gs://electronotes-fbf7e.appspot.com");
 const database = getDatabase(app);
-
 //app version
 const version = "V24.4.4";
 let versionSpan = document.querySelector("div.profile .version");
@@ -58,22 +59,26 @@ loginBtn.addEventListener("click", (e) => {
       loginScreen.querySelector("#password").value = "";
       loginScreen.querySelector("#username").value = "";
       loginScreen.click();
+      location.reload();
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(`Code: ${errorCode}`);
-      console.log(`Error: ${errorMessage}`);
+      console.error(`Code: ${errorCode}`);
+      console.error(`Error: ${errorMessage}`);
     });
   //
 });
 //logout
+
 logoutBtn.addEventListener("click", (e) => {
   //logout
   signOut(auth)
     .then(() => {
       alert("Logged Out");
       logoutScreen.click();
+      location.reload();
+      localStorage.removeItem("notes");
     })
     .catch((error) => {
       alert(error);
@@ -81,6 +86,7 @@ logoutBtn.addEventListener("click", (e) => {
   //logout ends
 });
 let userName;
+import { createNewNote, updateSessionStorage } from "./script.js";
 onAuthStateChanged(auth, (user) => {
   if (user) {
     userName = user.email.split("@")[0].toUpperCase();
@@ -92,12 +98,16 @@ onAuthStateChanged(auth, (user) => {
         profilePic.src = url;
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
     //sync
     profilePic.oncontextmenu = (e) => {
       e.preventDefault();
-      syncNotes();
+      if (!navigator.onLine) {
+        alert("You are Offline");
+      } else {
+        syncNotes();
+      }
     };
     profilePic.onclick = () => {
       //open logout screen
@@ -111,6 +121,11 @@ onAuthStateChanged(auth, (user) => {
         versionSpan.style.display = "none";
       }
     };
+    window.ononline = () => {
+      syncNotes();
+    };
+    //firebase loaded
+    getNotes();
   } else {
     //if use not signed in
     //set profile pic
@@ -127,15 +142,40 @@ onAuthStateChanged(auth, (user) => {
       }
     };
     //
+    const notes = JSON.parse(localStorage.getItem("notes"));
+    if (notes) {
+      notes.forEach((note) => {
+        createNewNote(note);
+      });
+    }
+    //
   }
 });
+
 function syncNotes() {
-  if (localStorage.notes && navigator.onLine) {
+  if (localStorage.getItem("notes") && navigator.onLine) {
     set(dRef(database, "users/" + userName), {
-      notes: localStorage.notes,
+      notes: localStorage.getItem("notes"),
     });
     alert("Notes Synced");
   }
 }
 
-//getNotes()
+function getNotes() {
+  get(child(dRef(database), "users/" + userName))
+    .then((data) => {
+      if (data.exists()) {
+        let Notes = data.val().notes;
+        Notes = JSON.parse(Notes);
+        Notes.forEach((note) => {
+          createNewNote(note);
+        });
+        updateSessionStorage();
+      } else {
+        console.log("No data found!");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}

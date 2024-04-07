@@ -92,11 +92,13 @@ function navCloseOpen() {
 
 const notes = JSON.parse(localStorage.getItem("notes"));
 
-if (notes) {
+if (notes && !navigator.onLine) {
   notes.forEach((note) => {
     createNewNote(note);
+    console.log("s");
   });
 }
+
 addNote.onclick = createNewNote;
 
 function createNewNote(note) {
@@ -535,3 +537,9 @@ document.querySelector("div.profile img").onclick = () => {
     alert("You are Offline");
   }
 };
+document.querySelector("div.profile img").oncontextmenu = () => {
+  if (!navigator.onLine) {
+    alert("You are Offline");
+  }
+};
+export { createNewNote, updateSessionStorage };
