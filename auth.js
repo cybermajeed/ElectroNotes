@@ -40,7 +40,7 @@ const auth = getAuth(app);
 const storage = getStorage(app, "gs://electronotes-fbf7e.appspot.com");
 const database = getDatabase(app);
 //app version
-const version = "V24.4.4";
+const version = "V24.4.7";
 let versionSpan = document.querySelector("div.profile .version");
 let loginBtn = document.querySelector(".profile .login #loginBtn"),
   logoutBtn = document.querySelector(".profile .logout #logoutBtn"),
