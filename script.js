@@ -7,7 +7,6 @@ let wrapper = document.querySelector(".wrapper"),
   allColorSet = wrapper.querySelectorAll("button.colorSet"),
   //
   imgWrapper = document.querySelector(".imgWrapper"),
-  closeImgWrapper = document.querySelector(".imgWrapper .closeImgWrapper"),
   imgViewer = document.querySelector(".imgWrapper .imgViewer"),
   container = document.querySelector(".container"),
   topNavParent = container.querySelector(".topNavParent"),
@@ -270,8 +269,11 @@ function createNewNote(note) {
         imgViewer.src = e.target.src;
       }
     };
-    closeImgWrapper.onclick = () => {
-      imgWrapper.style.display = "none";
+    ////close img
+    imgWrapper.onclick = (e) => {
+      if (e.target == imgWrapper) {
+        imgWrapper.style.display = "none";
+      }
     };
     countWord();
     //
