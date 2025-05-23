@@ -83,54 +83,83 @@ function navCloseOpen() {
 }
 //localStorage notes
 class NotesStore {
-  constructor(request) {
-    request = indexedDB.open("NOTESDB", 1);
+  constructor() {
+    this.dbName = "NOTESDB";
+    this.storeName = "eNotes";
+    this.dbVersion = 3;
+  }
+
+  openDB(callback) {
+    const request = indexedDB.open(this.dbName, this.dbVersion);
     request.onupgradeneeded = (e) => {
       const db = e.target.result;
-      if (!db.objectStoreNames.contains("eNotes")) {
-        db.createObjectStore("eNotes", { keyPath: "id" });
+      if (!db.objectStoreNames.contains(this.storeName)) {
+        db.createObjectStore(this.storeName, { keyPath: "id" });
       }
     };
-    this.request = request;
+    request.onsuccess = (e) => callback(e.target.result);
+    request.onerror = (e) => console.error("DB open error:", e.target.error);
   }
-  setNotes(note) {
-    this.request.onsuccess = (e) => {
-      const db = e.target.result;
 
-      const transaction = db.transaction(["eNotes"], "readwrite");
-      const store = transaction.objectStore("eNotes");
-
+  setNote(note) {
+    this.openDB((db) => {
+      const tx = db.transaction([this.storeName], "readwrite");
+      const store = tx.objectStore(this.storeName);
       store.put(note);
-      transaction.onsuccess = () => db.close();
-    };
+      tx.oncomplete = () => db.close();
+    });
+  }
+
+  getAllNotes(callback) {
+    this.openDB((db) => {
+      const tx = db.transaction([this.storeName], "readonly");
+      const store = tx.objectStore(this.storeName);
+      const request = store.getAll();
+      request.onsuccess = () => {
+        callback(request.result);
+        db.close();
+      };
+    });
   }
   deleteNote(id) {
-    this.request.onsuccess = (e) => {
-      const db = e.target.result;
-      const transaction = db.transaction(["eNotes"], "readwrite");
-      const store = transaction.objectStore("eNotes");
+    this.openDB((db) => {
+      const tx = db.transaction([this.storeName], "readwrite");
+      const store = tx.objectStore(this.storeName);
       store.delete(id);
-      transaction.onsuccess = () => db.close();
-    };
-  }
-  getNotes() {
-    this.request.onsuccess = (e) => {
-      const db = e.target.result;
-      const transaction = db.transaction(["eNotes"], "readwrite");
-      const store = transaction.objectStore("eNotes");
-      const getAllNotes = store.getAll();
-
-      getAllNotes.onsuccess = function () {
-        const notes = getAllNotes.result;
-        notes.forEach((note) => {
-          createNewNote(note);
-        });
-      };
-      transaction.onsuccess = () => db.close();
-    };
+      tx.oncomplete = () => db.close();
+    });
   }
 }
-let notes_store;
+let db = new NotesStore();
+window.onload = () => {
+  db.getAllNotes((notes) => {
+    Promise.all(
+      notes.map((note) => {
+        return new Promise((resolve) => {
+          createNewNote(note);
+          resolve();
+        });
+      })
+    ).then(() => {
+      //set after load
+      let navState = sessionStorage.getItem("isNavCloseOpen");
+      if (sessionStorage.currentSessionNote) {
+        let noteToOpen = document.getElementById(
+          sessionStorage.currentSessionNote
+        );
+        if (noteToOpen) {
+          noteToOpen.querySelector(".noteTitle").click();
+        } else {
+          sessionStorage.removeItem("currentSessionNote");
+        }
+      }
+      if (navState == "closed") {
+        topNavParent.querySelector("div.hideSidebar").click();
+      }
+    });
+  });
+};
+
 addNote.onclick = createNewNote;
 
 function createNewNote(note) {
@@ -231,8 +260,8 @@ function createNewNote(note) {
           ? confirm(`Are you sure you want to delete "${noteTitle}"?`)
           : confirm(`Are you sure you want to delete "${generatedNoteTitle}"?`);
       if (confirmMsg) {
-        notes_store = new NotesStore();
-        notes_store.deleteNote(current.id);
+        db = new NotesStore();
+        db.deleteNote(current.id);
         wrapper.classList.add("noViewMsgWrapper");
         colorPaletteInEditView.classList.remove("colorPaletteShown");
         current.remove();
@@ -261,8 +290,8 @@ function createNewNote(note) {
           ? confirm(`Are you sure you want to delete "${noteTitle}"?`)
           : confirm(`Are you sure you want to delete "${generatedNoteTitle}"?`);
       if (confirmMsg) {
-        notes_store = new NotesStore();
-        notes_store.deleteNote(parent.id);
+        db = new NotesStore();
+        db.deleteNote(parent.id);
         wrapper.classList.add("noViewMsgWrapper");
         colorPaletteInEditView.classList.remove("colorPaletteShown");
         parent.remove();
@@ -331,10 +360,6 @@ function createNewNote(note) {
   //open in edit view ends
   notesList.scrollTop = notesList.scrollHeight;
 } //end createNote
-window.onload = () => {
-  notes_store = new NotesStore();
-  notes_store.getNotes();
-};
 
 //word count
 function countWord() {
@@ -428,22 +453,6 @@ setInterval(() => {
 //
 
 //this session
-
-//set after load
-let navState = sessionStorage.getItem("isNavCloseOpen");
-if (sessionStorage.currentSessionNote) {
-  let noteToOpen = document.getElementById(sessionStorage.currentSessionNote);
-  if (noteToOpen) {
-    noteToOpen.querySelector(".noteTitle").click();
-  } else {
-    sessionStorage.removeItem("currentSessionNote");
-  }
-}
-if (navState == "closed") {
-  topNavParent.querySelector("div.hideSidebar").click();
-}
-
-//
 
 //color palette function
 noteColorInEditView.querySelector("svg").onclick = (e) => {
@@ -544,7 +553,7 @@ function updateSessionStorage() {
 
 function updateStorage() {
   const allNotes = document.querySelectorAll(".notes");
-  notes_store = new NotesStore();
+  db = new NotesStore();
   allNotes.forEach((eachNote) => {
     if (
       eachNote.querySelector(".noteTitle").value != "" ||
@@ -559,7 +568,7 @@ function updateStorage() {
         modifiedOn: eachNote.querySelector(".modifiedOn").textContent,
         createdOn: eachNote.querySelector(".createdOn").textContent,
       };
-      notes_store.setNotes(note);
+      db.setNote(note);
     }
   });
 }
