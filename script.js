@@ -39,7 +39,11 @@ let wrapper = document.querySelector(".wrapper"),
   topNavParent.querySelector("div.hideSidebar").onclick = navCloseOpen;
   topNavParent.querySelector("div.hideSidebar").innerHTML = navIcon;
 })();
-
+window.onkeyup = (e) => {
+  if (e.key == "Escape") {
+    navCloseOpen();
+  }
+};
 function navCloseOpen() {
   if (
     topNavParent
