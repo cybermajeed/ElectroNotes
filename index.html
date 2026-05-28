@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,29 +6,34 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electro Notes</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/png" href="./assets/ElectroNote.png" />
   </head>
   <body>
-    <!---->
     <div class="imgWrapper">
-      <img class="imgViewer" src="" />
+      <img class="imgViewer" src="" alt="" />
     </div>
+
     <div class="container">
+      <div class="brand">
+        <img src="./assets/ElectroNote.png" alt="" />
+        <span>Electro Notes</span>
+      </div>
       <div class="topNavParent">
         <input
           class="searchForNotes"
           title="Search Note"
           placeholder="Search Notes"
         />
-        <div class="hideSidebar" title="Hide Sidebar"></div>
+        <button class="hideSidebar" title="Hide Sidebar"></button>
       </div>
       <div class="notesList"></div>
       <div class="addNoteParent">
         <button class="addNote" title="Add Note"></button>
       </div>
     </div>
-    <!--wrapper-->
+
     <div class="wrapper noViewMsgWrapper">
       <div class="topParentForTitleDelInEditView editAreaDisabled">
         <input
@@ -92,221 +95,49 @@
         </div>
         <button class="deleteNote" title="Delete Note"></button>
       </div>
+
+      <div class="formatToolbar editAreaDisabled" aria-label="Formatting toolbar">
+        <button data-command="bold" title="Bold" aria-label="Bold"></button>
+        <button data-command="italic" title="Italic" aria-label="Italic"></button>
+        <button data-command="underline" title="Underline" aria-label="Underline"></button>
+        <button
+          data-command="strikeThrough"
+          title="Strikethrough"
+          aria-label="Strikethrough"
+        ></button>
+        <span class="toolbarDivider"></span>
+        <button
+          data-command="insertUnorderedList"
+          title="Bullet List"
+          aria-label="Bullet List"
+        ></button>
+        <button
+          data-command="insertOrderedList"
+          title="Numbered List"
+          aria-label="Numbered List"
+        ></button>
+        <button
+          data-command="formatBlock"
+          data-value="blockquote"
+          title="Quote"
+          aria-label="Quote"
+        ></button>
+        <span class="toolbarDivider"></span>
+        <button
+          data-command="removeFormat"
+          title="Clear Formatting"
+          aria-label="Clear Formatting"
+        ></button>
+      </div>
+
       <div
         class="noteContentInEditView editAreaDisabled"
         placeholder="Type Here"
       ></div>
-      <div class="wordCount">0 W 0 C</div>
+      <div class="wordCount">0 W; 0 C</div>
       <div class="noViewMsg">Open a Note</div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>
-=======
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="version" content="24.6.1" />
-    <meta name="developer" content="CyberMajeed" />
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/png" href="./assets/ElectroNote.png" />
-  </head>
-  <body>
-    <!---->
-    <div class="imgWrapper">
-      <img class="imgViewer" src="" />
-    </div>
-    <div class="container">
-      <div class="topNavParent">
-        <input
-          class="searchForNotes"
-          title="Search Note"
-          placeholder="Search Notes"
-        />
-        <div class="hideSidebar" title="Hide Sidebar"></div>
-      </div>
-      <div class="notesList"></div>
-      <div class="addNoteParent">
-        <button class="addNote" title="Add Note"></button>
-      </div>
-    </div>
-    <!--wrapper-->
-    <div class="wrapper noViewMsgWrapper">
-      <div class="topParentForTitleDelInEditView editAreaDisabled">
-        <input
-          type="text"
-          class="noteTitleInEditView"
-          placeholder="Title"
-          maxlength="100"
-        />
-        <button class="noteColor" title="Change Theme"></button>
-        <div class="colorPalette">
-          <button
-            class="colorSet"
-            style="--background: #fff; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #1d1d1d; --color: #fff"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #fbfb7d; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #15ffb1; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #d081fd; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #72fcfc; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #fe77d5; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #85fd93; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #ffe5b4; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #ffaf6e; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #f98888; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #d3d3d3; --color: #000"
-          ></button>
-        </div>
-        <button class="deleteNote" title="Delete Note"></button>
-      </div>
-      <div
-        class="noteContentInEditView editAreaDisabled"
-        placeholder="Type Here"
-      ></div>
-      <div class="wordCount">0 W 0 C</div>
-      <div class="noViewMsg">Open a Note</div>
-    </div>
-    <script src="script.js"></script>
-  </body>
-</html>
->>>>>>> 76e2688 (..)
-=======
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="version" content="24.6.1" />
-    <meta name="developer" content="CyberMajeed" />
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/png" href="./assets/ElectroNote.png" />
-  </head>
-  <body>
-    <!---->
-    <div class="imgWrapper">
-      <img class="imgViewer" src="" />
-    </div>
-    <div class="container">
-      <div class="topNavParent">
-        <input
-          class="searchForNotes"
-          title="Search Note"
-          placeholder="Search Notes"
-        />
-        <div class="hideSidebar" title="Hide Sidebar"></div>
-      </div>
-      <div class="notesList"></div>
-      <div class="addNoteParent">
-        <button class="addNote" title="Add Note"></button>
-      </div>
-    </div>
-    <!--wrapper-->
-    <div class="wrapper noViewMsgWrapper">
-      <div class="topParentForTitleDelInEditView editAreaDisabled">
-        <input
-          type="text"
-          class="noteTitleInEditView"
-          placeholder="Title"
-          maxlength="100"
-        />
-        <button class="noteColor" title="Change Theme"></button>
-        <div class="colorPalette">
-          <button
-            class="colorSet"
-            style="--background: #fff; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #1d1d1d; --color: #fff"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #fbfb7d; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #15ffb1; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #d081fd; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #72fcfc; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #fe77d5; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #85fd93; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #ffe5b4; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #ffaf6e; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #f98888; --color: #000"
-          ></button>
-          <button
-            class="colorSet"
-            style="--background: #d3d3d3; --color: #000"
-          ></button>
-        </div>
-        <button class="deleteNote" title="Delete Note"></button>
-      </div>
-      <div
-        class="noteContentInEditView editAreaDisabled"
-        placeholder="Type Here"
-      ></div>
-      <div class="wordCount">0 W 0 C</div>
-      <div class="noViewMsg">Open a Note</div>
-    </div>
-    <script src="script.js"></script>
-  </body>
-</html>
->>>>>>> b141facbcc2d0eabdc83098dd1b1186bd43708b6
