@@ -6,6 +6,8 @@ const noteColorInEditView = wrapper.querySelector(".noteColor");
 const colorPaletteInEditView = wrapper.querySelector(".colorPalette");
 const allColorSet = wrapper.querySelectorAll(".colorSet");
 const formatToolbar = wrapper.querySelector(".formatToolbar");
+const headingSelect = wrapper.querySelector(".headingSelect");
+const textColorInput = wrapper.querySelector(".textColorInput");
 
 const imgWrapper = document.querySelector(".imgWrapper");
 const imgViewer = imgWrapper.querySelector(".imgViewer");
@@ -22,6 +24,7 @@ const DEFAULT_THEME = {
 };
 
 let currentNoteId = null;
+let savedEditorRange = null;
 
 const shortcuts = {
   nav: "Ctrl+Shift+S",
@@ -38,10 +41,13 @@ const icons = {
   color: `<svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor"><path d="M12 2a10 10 0 0 0 0 20c1.38 0 2.5-1.12 2.5-2.5 0-.61-.23-1.2-.64-1.67a.5.5 0 0 1 .36-.83H16a6.5 6.5 0 0 0 0-13.01A9.9 9.9 0 0 0 12 2zM6.5 13A1.5 1.5 0 1 1 8 11.5 1.5 1.5 0 0 1 6.5 13zm3-4A1.5 1.5 0 1 1 11 7.5 1.5 1.5 0 0 1 9.5 9zm5 0A1.5 1.5 0 1 1 16 7.5 1.5 1.5 0 0 1 14.5 9zm3 4A1.5 1.5 0 1 1 19 11.5 1.5 1.5 0 0 1 17.5 13z"/></svg>`,
   add: `<svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 0 24 24" width="26" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>`,
   toolbar: {
+    taskList: "☑",
     bold: "B",
     italic: "<i>I</i>",
     underline: "<u>U</u>",
     strikeThrough: "<s>S</s>",
+    codeBlock: "{ }",
+    highlight: "HL",
     insertUnorderedList: `<img src="./assets/bullet_list.svg" alt="" />`,
     insertOrderedList: `<img src="./assets/numbered_list.svg" alt="" />`,
     formatBlock: `<img src="./assets/quote.svg" alt="" />`,
@@ -143,10 +149,12 @@ function hydrateIcons() {
   noteColorInEditView.title = "Change Theme";
   deleteNoteInEditView.title = "Delete Note";
   addNote.title = "Add Note";
+  headingSelect.title = "Heading Level";
+  textColorInput.title = "Text Color";
 
   formatToolbar.querySelectorAll("button").forEach((button) => {
-    const command = button.dataset.command;
-    button.innerHTML = icons.toolbar[command] || "";
+    const key = button.dataset.command || button.dataset.action;
+    button.innerHTML = icons.toolbar[key] || "";
     button.title = getFormatTooltip(button);
   });
 }
@@ -161,7 +169,13 @@ function bindEvents() {
   searchForNotes.addEventListener("input", searchNotes);
   formatToolbar.addEventListener("mousedown", keepEditorSelection);
   formatToolbar.addEventListener("click", applyFormat);
+  headingSelect.addEventListener("change", applyHeading);
+  textColorInput.addEventListener("pointerdown", saveEditorSelection);
+  textColorInput.addEventListener("input", applyTextColor);
   textareaInEditView.addEventListener("keydown", handleEditorKeys);
+  textareaInEditView.addEventListener("keyup", saveEditorSelection);
+  textareaInEditView.addEventListener("mouseup", saveEditorSelection);
+  textareaInEditView.addEventListener("change", updateCurrentNoteContent);
 
   textareaInEditView.addEventListener("click", (e) => {
     if (e.target.localName === "img") {
@@ -203,7 +217,8 @@ function bindEvents() {
 }
 
 function keepEditorSelection(e) {
-  if (e.target.closest("button[data-command]")) {
+  if (e.target.closest("button[data-command], button[data-action]")) {
+    saveEditorSelection();
     e.preventDefault();
   }
 }
@@ -214,13 +229,16 @@ function getFormatTooltip(button) {
     italic: `Italic (${shortcuts.italic})`,
     underline: `Underline (${shortcuts.underline})`,
     strikeThrough: `Strikethrough (${shortcuts.strikeThrough})`,
+    taskList: "Checkbox / Task List",
+    codeBlock: "Code Block",
+    highlight: "Highlight Text",
     insertUnorderedList: "Bullet List (Enter on empty item to exit)",
     insertOrderedList: "Numbered List (Enter on empty item to exit)",
     formatBlock: "Quote (Enter on empty quote to exit)",
     removeFormat: "Clear Formatting",
   };
 
-  return labels[button.dataset.command] || button.title || "";
+  return labels[button.dataset.command || button.dataset.action] || button.title || "";
 }
 
 function createNewNote(note = {}) {
@@ -404,13 +422,18 @@ async function deleteNoteElement(noteElement) {
 }
 
 function applyFormat(e) {
-  const button = e.target.closest("button[data-command]");
+  const button = e.target.closest("button[data-command], button[data-action]");
   if (!button || !currentNoteId) {
     return;
   }
 
   e.preventDefault();
-  textareaInEditView.focus();
+  restoreEditorSelection();
+
+  if (button.dataset.action) {
+    applyCustomFormat(button.dataset.action);
+    return;
+  }
 
   const command = button.dataset.command;
   const value =
@@ -419,6 +442,86 @@ function applyFormat(e) {
       : button.dataset.value || null;
   document.execCommand(command, false, value);
   updateCurrentNoteContent();
+  saveEditorSelection();
+}
+
+function applyCustomFormat(action) {
+  const actions = {
+    taskList: insertTaskList,
+    codeBlock: insertCodeBlock,
+    highlight: applyHighlight,
+  };
+
+  actions[action]?.();
+  updateCurrentNoteContent();
+  saveEditorSelection();
+}
+
+function applyHeading() {
+  if (!currentNoteId) {
+    headingSelect.value = "";
+    return;
+  }
+
+  restoreEditorSelection();
+  const block = headingSelect.value ? `<${headingSelect.value}>` : "<div>";
+  document.execCommand("formatBlock", false, block);
+  headingSelect.value = "";
+  updateCurrentNoteContent();
+  saveEditorSelection();
+}
+
+function applyTextColor() {
+  if (!currentNoteId) {
+    return;
+  }
+
+  restoreEditorSelection();
+  document.execCommand("foreColor", false, textColorInput.value);
+  updateCurrentNoteContent();
+  saveEditorSelection();
+}
+
+function insertTaskList() {
+  const selectedText = getSelectedText() || "Task";
+  const items = selectedText
+    .split(/\r?\n/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+  const taskHtml = (items.length ? items : ["Task"])
+    .map(
+      (item) =>
+        `<div class="taskLine"><input type="checkbox"> <span>${escapeHtml(item)}</span></div>`,
+    )
+    .join("");
+
+  document.execCommand("insertHTML", false, `${taskHtml}<div><br></div>`);
+}
+
+function insertCodeBlock() {
+  const selectedText = getSelectedText() || "code";
+  document.execCommand(
+    "insertHTML",
+    false,
+    `<pre><code>${escapeHtml(selectedText)}</code></pre><div><br></div>`,
+  );
+}
+
+function applyHighlight() {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+    document.execCommand("insertHTML", false, "<mark>highlight</mark>&nbsp;");
+    return;
+  }
+
+  const range = selection.getRangeAt(0);
+  const mark = document.createElement("mark");
+  mark.appendChild(range.extractContents());
+  range.insertNode(mark);
+  range.setStartAfter(mark);
+  range.collapse(true);
+  selection.removeAllRanges();
+  selection.addRange(range);
 }
 
 function handleEditorKeys(e) {
@@ -429,6 +532,26 @@ function handleEditorKeys(e) {
   const selectionElement = getSelectionElement();
   const listItem = selectionElement?.closest("li");
   const quote = selectionElement?.closest("blockquote");
+  const taskLine = selectionElement?.closest(".taskLine");
+
+  if (taskLine && textareaInEditView.contains(taskLine)) {
+    e.preventDefault();
+
+    if (taskLine.innerText.trim() === "") {
+      const line = document.createElement("div");
+      line.innerHTML = "<br>";
+      taskLine.after(line);
+      taskLine.remove();
+      placeCaretAtStart(line);
+    } else {
+      const nextTask = createTaskLine("");
+      taskLine.after(nextTask);
+      placeCaretAtStart(nextTask.querySelector("span"));
+    }
+
+    updateCurrentNoteContent();
+    return;
+  }
 
   if (listItem && textareaInEditView.contains(listItem)) {
     if (listItem.innerText.trim() !== "") {
@@ -452,7 +575,11 @@ function handleEditorKeys(e) {
     quote.innerText.trim() === ""
   ) {
     e.preventDefault();
-    document.execCommand("formatBlock", false, "<div>");
+    const line = document.createElement("div");
+    line.innerHTML = "<br>";
+    quote.after(line);
+    quote.remove();
+    placeCaretAtStart(line);
     updateCurrentNoteContent();
   }
 }
@@ -479,6 +606,56 @@ function getSelectionElement() {
 
   const node = selection.getRangeAt(0).startContainer;
   return node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+}
+
+function saveEditorSelection() {
+  const selection = window.getSelection();
+  if (
+    selection &&
+    selection.rangeCount > 0 &&
+    textareaInEditView.contains(selection.anchorNode)
+  ) {
+    savedEditorRange = selection.getRangeAt(0).cloneRange();
+  }
+}
+
+function restoreEditorSelection() {
+  textareaInEditView.focus();
+  if (!savedEditorRange) {
+    return;
+  }
+
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(savedEditorRange);
+}
+
+function getSelectedText() {
+  const selection = window.getSelection();
+  return selection ? selection.toString() : "";
+}
+
+function createTaskLine(text) {
+  const taskLine = document.createElement("div");
+  const checkbox = document.createElement("input");
+  const label = document.createElement("span");
+
+  taskLine.className = "taskLine";
+  checkbox.type = "checkbox";
+  label.textContent = text;
+  taskLine.append(checkbox, label);
+  return taskLine;
+}
+
+function placeCaretAtStart(element) {
+  const range = document.createRange();
+  const selection = window.getSelection();
+
+  range.selectNodeContents(element);
+  range.collapse(true);
+  selection.removeAllRanges();
+  selection.addRange(range);
+  saveEditorSelection();
 }
 
 function toggleSidebar() {
@@ -563,6 +740,8 @@ function refreshEditorState() {
   textareaInEditView.setAttribute("contenteditable", hasNote);
   deleteNoteInEditView.disabled = !hasNote;
   noteColorInEditView.disabled = !hasNote;
+  headingSelect.disabled = !hasNote;
+  textColorInput.disabled = !hasNote;
   formatToolbar.querySelectorAll("button").forEach((button) => {
     button.disabled = !hasNote;
   });
@@ -621,6 +800,12 @@ function stripHtml(html) {
   const div = document.createElement("div");
   div.innerHTML = html;
   return div.innerText.trim();
+}
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 function createId() {
