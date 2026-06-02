@@ -663,16 +663,7 @@ button {
 }
 
 /* Collapsible section styling inside editor */
-.noteContentInEditView .collapsible-handle {
-  display: inline-block;
-  margin-right: 8px;
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.noteContentInEditView .section-collapsed {
-  display: none;
-}
+/* (collapse section feature removed) */
 
 /* Basic table styling for inserted tables */
 .noteContentInEditView table {
@@ -683,6 +674,6 @@ button {
 
 .noteContentInEditView table td,
 .noteContentInEditView table th {
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.6);
   padding: 8px 10px;
 }

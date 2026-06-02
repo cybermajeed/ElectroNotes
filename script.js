@@ -57,14 +57,12 @@ const icons = {
     justifyCenter: `⟷`,
     justifyRight: `⟶`,
     insertHR: `─`,
-    outdent: `⤺`,
-    indent: `⤻`,
+
     createLink: `🔗`,
     unlink: `⤫`,
     increaseFont: `A+`,
     decreaseFont: `A-`,
     insertTable: `▦`,
-    toggleCollapse: `▾`,
   },
 };
 
@@ -256,8 +254,6 @@ function getFormatTooltip(button) {
     justifyCenter: "Align Center",
     justifyRight: "Align Right",
     insertHR: "Horizontal Divider",
-    outdent: "Outdent",
-    indent: "Indent",
     createLink: "Insert Link",
     unlink: "Remove Link",
     increaseFont: "Increase Font Size",
@@ -265,7 +261,6 @@ function getFormatTooltip(button) {
     superscript: "Superscript",
     subscript: "Subscript",
     insertTable: "Insert Table",
-    toggleCollapse: "Toggle Collapse Section",
   };
 
   return (
@@ -467,6 +462,7 @@ async function deleteNoteElement(noteElement) {
 function applyFormat(e) {
   const button = e.target.closest("button[data-command], button[data-action]");
   if (!button || !currentNoteId) {
+    console.debug("applyFormat aborted", { button: !!button, currentNoteId });
     return;
   }
 
@@ -474,6 +470,7 @@ function applyFormat(e) {
   restoreEditorSelection();
 
   if (button.dataset.action) {
+    console.debug("applyFormat action", button.dataset.action);
     applyCustomFormat(button.dataset.action);
     return;
   }
@@ -502,11 +499,13 @@ function applyFormat(e) {
       ? `<${button.dataset.value}>`
       : button.dataset.value || null;
   document.execCommand(command, false, value);
+  console.debug("execCommand", { command, value });
   updateCurrentNoteContent();
   saveEditorSelection();
 }
 
 function applyCustomFormat(action) {
+  console.debug("applyCustomFormat", action);
   const actions = {
     taskList: insertTaskList,
     codeBlock: insertCodeBlock,
@@ -516,12 +515,35 @@ function applyCustomFormat(action) {
     increaseFont: () => adjustFontSize(2),
     decreaseFont: () => adjustFontSize(-2),
     insertTable: insertTable,
-    toggleCollapse: toggleCollapseSection,
   };
 
   actions[action]?.();
   updateCurrentNoteContent();
   saveEditorSelection();
+}
+
+function insertTaskList() {
+  const taskLine = getSelectionElement()?.closest(".taskLine");
+  if (taskLine && textareaInEditView.contains(taskLine)) {
+    unwrapTaskLine(taskLine);
+    return;
+  }
+
+  const selectedText = getSelectedText() || "Task";
+  const items = selectedText
+    .split(/\r?\n/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+  const taskHtml = (items.length ? items : ["Task"])
+    .map(
+      (item) =>
+        `<div class="taskLine"><input type="checkbox"> <span>${escapeHtml(
+          item,
+        )}</span></div>`,
+    )
+    .join("");
+
+  document.execCommand("insertHTML", false, `${taskHtml}<div><br></div>`);
 }
 
 function applyHeading() {
@@ -555,29 +577,6 @@ function applyTextColor() {
   updateCurrentNoteContent();
   saveEditorSelection();
 }
-
-function insertTaskList() {
-  const taskLine = getSelectionElement()?.closest(".taskLine");
-  if (taskLine && textareaInEditView.contains(taskLine)) {
-    unwrapTaskLine(taskLine);
-    return;
-  }
-
-  const selectedText = getSelectedText() || "Task";
-  const items = selectedText
-    .split(/\r?\n/)
-    .map((item) => item.trim())
-    .filter(Boolean);
-  const taskHtml = (items.length ? items : ["Task"])
-    .map(
-      (item) =>
-        `<div class="taskLine"><input type="checkbox"> <span>${escapeHtml(item)}</span></div>`,
-    )
-    .join("");
-
-  document.execCommand("insertHTML", false, `${taskHtml}<div><br></div>`);
-}
-
 function insertCodeBlock() {
   const codeBlock = getSelectionElement()?.closest("pre");
   if (codeBlock && textareaInEditView.contains(codeBlock)) {
