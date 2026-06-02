@@ -443,6 +443,17 @@ function applyFormat(e) {
     return;
   }
 
+  if (
+    command === "formatBlock" &&
+    button.dataset.value === "blockquote" &&
+    getSelectionElement()?.closest("blockquote")
+  ) {
+    document.execCommand("formatBlock", false, "<div>");
+    updateCurrentNoteContent();
+    saveEditorSelection();
+    return;
+  }
+
   const value =
     command === "formatBlock"
       ? `<${button.dataset.value}>`
@@ -551,18 +562,33 @@ function applyHighlight() {
   }
 
   const range = selection.getRangeAt(0);
-  const mark = document.createElement("mark");
-  mark.appendChild(range.extractContents());
-  range.insertNode(mark);
-  range.setStartAfter(mark);
+  const highlight = document.createElement("mark");
+  highlight.appendChild(range.extractContents());
+  range.insertNode(highlight);
+  range.setStartAfter(highlight);
   range.collapse(true);
   selection.removeAllRanges();
   selection.addRange(range);
 }
 
 function clearFormatting() {
+  const semanticFormats = getSelectedElements("h1, h2, h3, mark, pre, code");
+  const selectionElement = getSelectionElement();
+  const closestSemanticFormat =
+    selectionElement?.closest("pre") ||
+    selectionElement?.closest("h1, h2, h3, mark, code");
+
   document.execCommand("removeFormat", false, null);
-  textareaInEditView.querySelectorAll("mark").forEach(unwrapElement);
+
+  if (semanticFormats.length) {
+    semanticFormats.forEach((element) => {
+      if (element.isConnected) {
+        clearSemanticElement(element);
+      }
+    });
+  } else if (closestSemanticFormat?.isConnected) {
+    clearSemanticElement(closestSemanticFormat);
+  }
 }
 
 function handleEditorKeys(e) {
@@ -676,6 +702,18 @@ function getSelectedText() {
   return selection ? selection.toString() : "";
 }
 
+function getSelectedElements(selector) {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0) {
+    return [];
+  }
+
+  const range = selection.getRangeAt(0);
+  return Array.from(textareaInEditView.querySelectorAll(selector)).filter(
+    (element) => range.intersectsNode(element),
+  );
+}
+
 function createTaskLine(text) {
   const taskLine = document.createElement("div");
   const checkbox = document.createElement("input");
@@ -701,6 +739,19 @@ function unwrapElement(element) {
     fragment.appendChild(element.firstChild);
   }
   element.replaceWith(fragment);
+}
+
+function clearSemanticElement(element) {
+  const tagName = element.tagName.toLowerCase();
+
+  if (["h1", "h2", "h3", "pre"].includes(tagName)) {
+    const line = document.createElement("div");
+    line.textContent = element.innerText;
+    element.replaceWith(line);
+    return;
+  }
+
+  unwrapElement(element);
 }
 
 function placeCaretAtStart(element) {
