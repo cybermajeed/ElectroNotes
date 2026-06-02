@@ -436,6 +436,13 @@ function applyFormat(e) {
   }
 
   const command = button.dataset.command;
+  if (command === "removeFormat") {
+    clearFormatting();
+    updateCurrentNoteContent();
+    saveEditorSelection();
+    return;
+  }
+
   const value =
     command === "formatBlock"
       ? `<${button.dataset.value}>`
@@ -464,7 +471,14 @@ function applyHeading() {
   }
 
   restoreEditorSelection();
-  const block = headingSelect.value ? `<${headingSelect.value}>` : "<div>";
+  const selectionElement = getSelectionElement();
+  const currentHeading = selectionElement?.closest("h1, h2, h3");
+  const selectedHeading = headingSelect.value;
+  const block =
+    selectedHeading && currentHeading?.tagName.toLowerCase() !== selectedHeading
+      ? `<${selectedHeading}>`
+      : "<div>";
+
   document.execCommand("formatBlock", false, block);
   headingSelect.value = "";
   updateCurrentNoteContent();
@@ -483,6 +497,12 @@ function applyTextColor() {
 }
 
 function insertTaskList() {
+  const taskLine = getSelectionElement()?.closest(".taskLine");
+  if (taskLine && textareaInEditView.contains(taskLine)) {
+    unwrapTaskLine(taskLine);
+    return;
+  }
+
   const selectedText = getSelectedText() || "Task";
   const items = selectedText
     .split(/\r?\n/)
@@ -499,6 +519,15 @@ function insertTaskList() {
 }
 
 function insertCodeBlock() {
+  const codeBlock = getSelectionElement()?.closest("pre");
+  if (codeBlock && textareaInEditView.contains(codeBlock)) {
+    const line = document.createElement("div");
+    line.textContent = codeBlock.innerText;
+    codeBlock.replaceWith(line);
+    placeCaretAtStart(line);
+    return;
+  }
+
   const selectedText = getSelectedText() || "code";
   document.execCommand(
     "insertHTML",
@@ -509,6 +538,13 @@ function insertCodeBlock() {
 
 function applyHighlight() {
   const selection = window.getSelection();
+  const mark = getSelectionElement()?.closest("mark");
+
+  if (mark && textareaInEditView.contains(mark)) {
+    unwrapElement(mark);
+    return;
+  }
+
   if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
     document.execCommand("insertHTML", false, "<mark>highlight</mark>&nbsp;");
     return;
@@ -522,6 +558,11 @@ function applyHighlight() {
   range.collapse(true);
   selection.removeAllRanges();
   selection.addRange(range);
+}
+
+function clearFormatting() {
+  document.execCommand("removeFormat", false, null);
+  textareaInEditView.querySelectorAll("mark").forEach(unwrapElement);
 }
 
 function handleEditorKeys(e) {
@@ -645,6 +686,21 @@ function createTaskLine(text) {
   label.textContent = text;
   taskLine.append(checkbox, label);
   return taskLine;
+}
+
+function unwrapTaskLine(taskLine) {
+  const line = document.createElement("div");
+  line.textContent = taskLine.innerText.trim() || "Task";
+  taskLine.replaceWith(line);
+  placeCaretAtStart(line);
+}
+
+function unwrapElement(element) {
+  const fragment = document.createDocumentFragment();
+  while (element.firstChild) {
+    fragment.appendChild(element.firstChild);
+  }
+  element.replaceWith(fragment);
 }
 
 function placeCaretAtStart(element) {
