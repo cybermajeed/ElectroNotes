@@ -238,7 +238,11 @@ function getFormatTooltip(button) {
     removeFormat: "Clear Formatting",
   };
 
-  return labels[button.dataset.command || button.dataset.action] || button.title || "";
+  return (
+    labels[button.dataset.command || button.dataset.action] ||
+    button.title ||
+    ""
+  );
 }
 
 function createNewNote(note = {}) {

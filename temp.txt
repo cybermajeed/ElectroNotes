@@ -1,0 +1,14 @@
+pending features:
+
+Align left / center / right
+Horizontal divider
+Indent / outdent
+Link insertion
+Increase / decrease font size
+Superscript / subscript
+Table insert
+Pin notes 
+Collapse sections or folding headings.
+
+
+need to download icons
