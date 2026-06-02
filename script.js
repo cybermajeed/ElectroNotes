@@ -491,7 +491,7 @@ function applyHeading() {
       : "<div>";
 
   document.execCommand("formatBlock", false, block);
-  headingSelect.value = "";
+  headingSelect.value = block === "<div>" ? "" : selectedHeading;
   updateCurrentNoteContent();
   saveEditorSelection();
 }
@@ -572,23 +572,7 @@ function applyHighlight() {
 }
 
 function clearFormatting() {
-  const semanticFormats = getSelectedElements("h1, h2, h3, mark, pre, code");
-  const selectionElement = getSelectionElement();
-  const closestSemanticFormat =
-    selectionElement?.closest("pre") ||
-    selectionElement?.closest("h1, h2, h3, mark, code");
-
   document.execCommand("removeFormat", false, null);
-
-  if (semanticFormats.length) {
-    semanticFormats.forEach((element) => {
-      if (element.isConnected) {
-        clearSemanticElement(element);
-      }
-    });
-  } else if (closestSemanticFormat?.isConnected) {
-    clearSemanticElement(closestSemanticFormat);
-  }
 }
 
 function handleEditorKeys(e) {
@@ -702,18 +686,6 @@ function getSelectedText() {
   return selection ? selection.toString() : "";
 }
 
-function getSelectedElements(selector) {
-  const selection = window.getSelection();
-  if (!selection || selection.rangeCount === 0) {
-    return [];
-  }
-
-  const range = selection.getRangeAt(0);
-  return Array.from(textareaInEditView.querySelectorAll(selector)).filter(
-    (element) => range.intersectsNode(element),
-  );
-}
-
 function createTaskLine(text) {
   const taskLine = document.createElement("div");
   const checkbox = document.createElement("input");
@@ -739,19 +711,6 @@ function unwrapElement(element) {
     fragment.appendChild(element.firstChild);
   }
   element.replaceWith(fragment);
-}
-
-function clearSemanticElement(element) {
-  const tagName = element.tagName.toLowerCase();
-
-  if (["h1", "h2", "h3", "pre"].includes(tagName)) {
-    const line = document.createElement("div");
-    line.textContent = element.innerText;
-    element.replaceWith(line);
-    return;
-  }
-
-  unwrapElement(element);
 }
 
 function placeCaretAtStart(element) {
