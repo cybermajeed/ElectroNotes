@@ -97,6 +97,22 @@
       </div>
 
       <div class="formatToolbar editAreaDisabled" aria-label="Formatting toolbar">
+        <select
+          class="headingSelect"
+          title="Heading Level"
+          aria-label="Heading Level"
+        >
+          <option value="">Text</option>
+          <option value="h1">H1</option>
+          <option value="h2">H2</option>
+          <option value="h3">H3</option>
+        </select>
+        <span class="toolbarDivider"></span>
+        <button
+          data-action="taskList"
+          title="Checkbox / Task List"
+          aria-label="Checkbox / Task List"
+        ></button>
         <button data-command="bold" title="Bold" aria-label="Bold"></button>
         <button data-command="italic" title="Italic" aria-label="Italic"></button>
         <button data-command="underline" title="Underline" aria-label="Underline"></button>
@@ -105,6 +121,21 @@
           title="Strikethrough"
           aria-label="Strikethrough"
         ></button>
+        <span class="toolbarDivider"></span>
+        <button
+          data-action="codeBlock"
+          title="Code Block"
+          aria-label="Code Block"
+        ></button>
+        <button
+          data-action="highlight"
+          title="Highlight Text"
+          aria-label="Highlight Text"
+        ></button>
+        <label class="textColorControl" title="Text Color">
+          <span>A</span>
+          <input type="color" class="textColorInput" value="#0c1118" />
+        </label>
         <span class="toolbarDivider"></span>
         <button
           data-command="insertUnorderedList"
