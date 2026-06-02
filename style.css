@@ -645,3 +645,44 @@ button {
     padding: 24px 18px 72px;
   }
 }
+
+/* Pinned notes styling */
+.notes.pinned {
+  border-left: 4px solid var(--accent);
+}
+
+.pinNote {
+  width: 48px;
+  min-width: 48px;
+  border-radius: 8px;
+  color: #0c1118;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+}
+
+/* Collapsible section styling inside editor */
+.noteContentInEditView .collapsible-handle {
+  display: inline-block;
+  margin-right: 8px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.noteContentInEditView .section-collapsed {
+  display: none;
+}
+
+/* Basic table styling for inserted tables */
+.noteContentInEditView table {
+  border-collapse: collapse;
+  width: auto;
+  margin: 8px 0;
+}
+
+.noteContentInEditView table td,
+.noteContentInEditView table th {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 8px 10px;
+}

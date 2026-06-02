@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta name="version" content="24.6.1" />
@@ -43,6 +43,7 @@
           maxlength="100"
         />
         <button class="noteColor" title="Change Theme"></button>
+        <button class="pinNote" title="Pin Note"></button>
         <div class="colorPalette">
           <button
             class="colorSet"
@@ -96,7 +97,10 @@
         <button class="deleteNote" title="Delete Note"></button>
       </div>
 
-      <div class="formatToolbar editAreaDisabled" aria-label="Formatting toolbar">
+      <div
+        class="formatToolbar editAreaDisabled"
+        aria-label="Formatting toolbar"
+      >
         <select
           class="headingSelect"
           title="Heading Level"
@@ -114,8 +118,16 @@
           aria-label="Checkbox / Task List"
         ></button>
         <button data-command="bold" title="Bold" aria-label="Bold"></button>
-        <button data-command="italic" title="Italic" aria-label="Italic"></button>
-        <button data-command="underline" title="Underline" aria-label="Underline"></button>
+        <button
+          data-command="italic"
+          title="Italic"
+          aria-label="Italic"
+        ></button>
+        <button
+          data-command="underline"
+          title="Underline"
+          aria-label="Underline"
+        ></button>
         <button
           data-command="strikeThrough"
           title="Strikethrough"
@@ -136,6 +148,77 @@
           <span>A</span>
           <input type="color" class="textColorInput" value="#0c1118" />
         </label>
+        <span class="toolbarDivider"></span>
+        <button
+          data-command="justifyLeft"
+          title="Align Left"
+          aria-label="Align Left"
+        ></button>
+        <button
+          data-command="justifyCenter"
+          title="Align Center"
+          aria-label="Align Center"
+        ></button>
+        <button
+          data-command="justifyRight"
+          title="Align Right"
+          aria-label="Align Right"
+        ></button>
+        <button
+          data-action="insertHR"
+          title="Horizontal Divider"
+          aria-label="Horizontal Divider"
+        ></button>
+        <button
+          data-command="outdent"
+          title="Outdent"
+          aria-label="Outdent"
+        ></button>
+        <button
+          data-command="indent"
+          title="Indent"
+          aria-label="Indent"
+        ></button>
+        <button
+          data-action="createLink"
+          title="Insert Link"
+          aria-label="Insert Link"
+        ></button>
+        <button
+          data-command="unlink"
+          title="Remove Link"
+          aria-label="Remove Link"
+        ></button>
+        <button
+          data-action="increaseFont"
+          title="Increase Font"
+          aria-label="Increase Font"
+        ></button>
+        <button
+          data-action="decreaseFont"
+          title="Decrease Font"
+          aria-label="Decrease Font"
+        ></button>
+        <button
+          data-command="superscript"
+          title="Superscript"
+          aria-label="Superscript"
+        ></button>
+        <button
+          data-command="subscript"
+          title="Subscript"
+          aria-label="Subscript"
+        ></button>
+        <button
+          data-action="insertTable"
+          title="Insert Table"
+          aria-label="Insert Table"
+        ></button>
+        <button
+          data-action="toggleCollapse"
+          title="Toggle Collapse Section"
+          aria-label="Toggle Collapse Section"
+        ></button>
         <span class="toolbarDivider"></span>
         <button
           data-command="insertUnorderedList"

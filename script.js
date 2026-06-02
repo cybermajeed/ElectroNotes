@@ -8,6 +8,7 @@ const allColorSet = wrapper.querySelectorAll(".colorSet");
 const formatToolbar = wrapper.querySelector(".formatToolbar");
 const headingSelect = wrapper.querySelector(".headingSelect");
 const textColorInput = wrapper.querySelector(".textColorInput");
+const pinNoteButton = wrapper.querySelector(".pinNote");
 
 const imgWrapper = document.querySelector(".imgWrapper");
 const imgViewer = imgWrapper.querySelector(".imgViewer");
@@ -52,6 +53,18 @@ const icons = {
     insertOrderedList: `<img src="./assets/numbered_list.svg" alt="" />`,
     formatBlock: `<img src="./assets/quote.svg" alt="" />`,
     removeFormat: `<img src="./assets/clear_format.svg" alt="" />`,
+    justifyLeft: `⟵`,
+    justifyCenter: `⟷`,
+    justifyRight: `⟶`,
+    insertHR: `─`,
+    outdent: `⤺`,
+    indent: `⤻`,
+    createLink: `🔗`,
+    unlink: `⤫`,
+    increaseFont: `A+`,
+    decreaseFont: `A-`,
+    insertTable: `▦`,
+    toggleCollapse: `▾`,
   },
 };
 
@@ -142,6 +155,7 @@ function hydrateIcons() {
   hideSidebar.innerHTML = icons.nav;
   deleteNoteInEditView.innerHTML = icons.delete;
   noteColorInEditView.innerHTML = icons.color;
+  if (pinNoteButton) pinNoteButton.innerHTML = "📌";
   addNote.innerHTML = icons.add;
   hideSidebar.title = `Hide Sidebar (${shortcuts.nav})`;
   noteTitleInEditView.title = `Title (${shortcuts.save} to save)`;
@@ -151,6 +165,7 @@ function hydrateIcons() {
   addNote.title = "Add Note";
   headingSelect.title = "Heading Level";
   textColorInput.title = "Text Color";
+  if (pinNoteButton) pinNoteButton.title = "Pin Note";
 
   formatToolbar.querySelectorAll("button").forEach((button) => {
     const key = button.dataset.command || button.dataset.action;
@@ -164,6 +179,7 @@ function bindEvents() {
   addNote.addEventListener("click", () => openNote(createNewNote()));
   deleteNoteInEditView.addEventListener("click", () => deleteCurrentNote());
   noteColorInEditView.addEventListener("pointerdown", showColorPalette);
+  if (pinNoteButton) pinNoteButton.addEventListener("click", togglePin);
   textareaInEditView.addEventListener("input", updateCurrentNoteContent);
   noteTitleInEditView.addEventListener("input", updateCurrentNoteTitle);
   searchForNotes.addEventListener("input", searchNotes);
@@ -257,6 +273,10 @@ function createNewNote(note = {}) {
 
   noteparentDiv.id = normalized.id;
   noteparentDiv.className = "notes";
+  if (normalized.pinned) {
+    noteparentDiv.classList.add("pinned");
+    noteparentDiv.dataset.pinned = "true";
+  }
   parentTop.className = "parentTop";
   inputText.className = "noteTitle";
   deleteNote.className = "deleteNote";
@@ -280,7 +300,11 @@ function createNewNote(note = {}) {
 
   parentTop.append(inputText, deleteNote);
   noteparentDiv.append(parentTop, textarea, createdOn, modifiedOn);
-  notesList.appendChild(noteparentDiv);
+  if (normalized.pinned) {
+    notesList.prepend(noteparentDiv);
+  } else {
+    notesList.appendChild(noteparentDiv);
+  }
 
   applyThemeToCard(noteparentDiv, normalized.themeBg, normalized.themeColor);
 
@@ -304,6 +328,7 @@ function normalizeNote(note) {
     content: note.content || "",
     themeBg: note.themeBg || DEFAULT_THEME.bg,
     themeColor: note.themeColor || DEFAULT_THEME.color,
+    pinned: note.pinned || false,
     createdOn: note.createdOn || now,
     modifiedOn: note.modifiedOn || now,
   };
@@ -472,6 +497,12 @@ function applyCustomFormat(action) {
     taskList: insertTaskList,
     codeBlock: insertCodeBlock,
     highlight: applyHighlight,
+    insertHR: insertHorizontalRule,
+    createLink: createLinkPrompt,
+    increaseFont: () => adjustFontSize(2),
+    decreaseFont: () => adjustFontSize(-2),
+    insertTable: insertTable,
+    toggleCollapse: toggleCollapseSection,
   };
 
   actions[action]?.();
@@ -573,6 +604,104 @@ function applyHighlight() {
   range.collapse(true);
   selection.removeAllRanges();
   selection.addRange(range);
+}
+
+function insertHorizontalRule() {
+  document.execCommand("insertHTML", false, "<hr><div><br></div>");
+}
+
+function createLinkPrompt() {
+  const selection = window.getSelection();
+  const selectedText =
+    selection && !selection.isCollapsed ? selection.toString() : "";
+  const url = prompt("Enter URL (include https://)", "https://");
+  if (!url) return;
+  if (selectedText) {
+    document.execCommand("createLink", false, url);
+  } else {
+    document.execCommand(
+      "insertHTML",
+      false,
+      `<a href="${url}" target="_blank">${escapeHtml(url)}</a>&nbsp;`,
+    );
+  }
+}
+
+function insertTable() {
+  const rows = parseInt(prompt("Rows", "2"), 10) || 2;
+  const cols = parseInt(prompt("Columns", "2"), 10) || 2;
+  let html = "<table>";
+  for (let r = 0; r < rows; r++) {
+    html += "<tr>";
+    for (let c = 0; c < cols; c++) {
+      html += "<td>&nbsp;</td>";
+    }
+    html += "</tr>";
+  }
+  html += "</table><div><br></div>";
+  document.execCommand("insertHTML", false, html);
+}
+
+function adjustFontSize(delta) {
+  restoreEditorSelection();
+  const el = getSelectionElement();
+  if (!el) return;
+  const currentSize = parseInt(window.getComputedStyle(el).fontSize) || 16;
+  const newSize = Math.max(8, currentSize + delta);
+  document.execCommand("fontSize", false, 7); // normalize
+  // wrap selection in span with exact px size
+  const selection = window.getSelection();
+  if (selection && selection.rangeCount) {
+    const range = selection.getRangeAt(0);
+    const span = document.createElement("span");
+    span.style.fontSize = `${newSize}px`;
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+    range.selectNodeContents(span);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+}
+
+function togglePin() {
+  const current = getCurrentNoteElement();
+  if (!current) return;
+  const pinned = current.classList.toggle("pinned");
+  current.dataset.pinned = pinned ? "true" : "false";
+  if (pinned) {
+    notesList.prepend(current);
+  }
+  touchNote(current);
+  saveNoteElement(current);
+}
+
+function toggleCollapseSection() {
+  restoreEditorSelection();
+  const selEl = getSelectionElement();
+  const heading = selEl?.closest("h1,h2,h3") || selEl;
+  if (!heading) return;
+  const isCollapsed = heading.dataset.collapsed === "true";
+  heading.dataset.collapsed = isCollapsed ? "false" : "true";
+  heading.classList.toggle("collapsible-handle", true);
+
+  // hide/show following siblings until next heading of same or higher level
+  const level = parseInt(heading.tagName?.slice(1)) || 6;
+  let sibling = heading.nextSibling;
+  while (sibling) {
+    if (sibling.nodeType === Node.ELEMENT_NODE) {
+      const tag = sibling.tagName?.toLowerCase();
+      if (tag && /^h[1-6]$/.test(tag)) {
+        const siblingLevel = parseInt(tag.slice(1));
+        if (siblingLevel <= level) break;
+      }
+      if (heading.dataset.collapsed === "true") {
+        sibling.classList.add("section-collapsed");
+      } else {
+        sibling.classList.remove("section-collapsed");
+      }
+    }
+    sibling = sibling.nextSibling;
+  }
 }
 
 function clearFormatting() {
@@ -795,6 +924,9 @@ function getNoteFromElement(noteElement) {
     content: content.value,
     themeBg: title.style.background || DEFAULT_THEME.bg,
     themeColor: title.style.color || DEFAULT_THEME.color,
+    pinned:
+      noteElement.dataset.pinned === "true" ||
+      noteElement.classList.contains("pinned"),
     createdOn: createdOn.textContent,
     modifiedOn: modifiedOn.textContent,
   };
