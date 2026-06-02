@@ -252,6 +252,20 @@ function getFormatTooltip(button) {
     insertOrderedList: "Numbered List (Enter on empty item to exit)",
     formatBlock: "Quote (Enter on empty quote to exit)",
     removeFormat: "Clear Formatting",
+    justifyLeft: "Align Left",
+    justifyCenter: "Align Center",
+    justifyRight: "Align Right",
+    insertHR: "Horizontal Divider",
+    outdent: "Outdent",
+    indent: "Indent",
+    createLink: "Insert Link",
+    unlink: "Remove Link",
+    increaseFont: "Increase Font Size",
+    decreaseFont: "Decrease Font Size",
+    superscript: "Superscript",
+    subscript: "Subscript",
+    insertTable: "Insert Table",
+    toggleCollapse: "Toggle Collapse Section",
   };
 
   return (
