@@ -660,6 +660,15 @@ button {
   display: grid;
   place-items: center;
   border: 1px solid var(--border-strong);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.pinNote.isPinned {
+  color: #0c1118 !important;
+  background: #ffd85a !important;
+  border-color: #ffbd2e;
+  box-shadow: 0 0 0 2px rgba(255, 216, 90, 0.24);
 }
 
 /* Collapsible section styling inside editor */
@@ -668,12 +677,15 @@ button {
 /* Basic table styling for inserted tables */
 .noteContentInEditView table {
   border-collapse: collapse;
+  color: inherit;
   width: auto;
   margin: 8px 0;
 }
 
 .noteContentInEditView table td,
 .noteContentInEditView table th {
-  border: 1px solid rgba(0, 0, 0, 0.6);
+  background: transparent;
+  border: 1px solid currentColor;
+  color: inherit;
   padding: 8px 10px;
 }

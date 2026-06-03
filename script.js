@@ -155,6 +155,7 @@ function hydrateIcons() {
   noteColorInEditView.innerHTML = icons.color;
   if (pinNoteButton) pinNoteButton.innerHTML = "📌";
   addNote.innerHTML = icons.add;
+  if (pinNoteButton) pinNoteButton.textContent = "PIN";
   hideSidebar.title = `Hide Sidebar (${shortcuts.nav})`;
   noteTitleInEditView.title = `Title (${shortcuts.save} to save)`;
   textareaInEditView.title = `Editor (${shortcuts.save} to save)`;
@@ -361,6 +362,7 @@ function openNote(noteElement) {
   noteTitleInEditView.value = note.title;
   textareaInEditView.innerHTML = note.content;
   applyThemeToEditor(note.themeBg, note.themeColor);
+  updatePinButtonState(note.pinned);
   refreshEditorState();
   updateSessionStorage();
   updateWordCount();
@@ -410,8 +412,14 @@ function applyThemeToEditor(bg, color) {
   [noteTitleInEditView, textareaInEditView].forEach((element) => {
     element.style.background = bg;
     element.style.color = color;
+    element.style.setProperty("--note-bg", bg);
+    element.style.setProperty("--note-color", color);
   });
-  [noteColorInEditView, deleteNoteInEditView].forEach((button) => {
+  [noteColorInEditView, pinNoteButton, deleteNoteInEditView].forEach((button) => {
+    if (!button) {
+      return;
+    }
+
     button.style.background = bg;
     button.style.color = color;
   });
@@ -462,7 +470,6 @@ async function deleteNoteElement(noteElement) {
 function applyFormat(e) {
   const button = e.target.closest("button[data-command], button[data-action]");
   if (!button || !currentNoteId) {
-    console.debug("applyFormat aborted", { button: !!button, currentNoteId });
     return;
   }
 
@@ -470,7 +477,6 @@ function applyFormat(e) {
   restoreEditorSelection();
 
   if (button.dataset.action) {
-    console.debug("applyFormat action", button.dataset.action);
     applyCustomFormat(button.dataset.action);
     return;
   }
@@ -499,13 +505,11 @@ function applyFormat(e) {
       ? `<${button.dataset.value}>`
       : button.dataset.value || null;
   document.execCommand(command, false, value);
-  console.debug("execCommand", { command, value });
   updateCurrentNoteContent();
   saveEditorSelection();
 }
 
 function applyCustomFormat(action) {
-  console.debug("applyCustomFormat", action);
   const actions = {
     taskList: insertTaskList,
     codeBlock: insertCodeBlock,
@@ -683,9 +687,22 @@ function togglePin() {
   current.dataset.pinned = pinned ? "true" : "false";
   if (pinned) {
     notesList.prepend(current);
+  } else {
+    notesList.appendChild(current);
   }
+  updatePinButtonState(pinned);
   touchNote(current);
   saveNoteElement(current);
+}
+
+function updatePinButtonState(isPinned) {
+  if (!pinNoteButton) {
+    return;
+  }
+
+  pinNoteButton.classList.toggle("isPinned", isPinned);
+  pinNoteButton.setAttribute("aria-pressed", isPinned ? "true" : "false");
+  pinNoteButton.title = isPinned ? "Unpin Note" : "Pin Note";
 }
 
 function toggleCollapseSection() {
@@ -955,6 +972,12 @@ function refreshEditorState() {
   textareaInEditView.setAttribute("contenteditable", hasNote);
   deleteNoteInEditView.disabled = !hasNote;
   noteColorInEditView.disabled = !hasNote;
+  if (pinNoteButton) {
+    pinNoteButton.disabled = !hasNote;
+    if (!hasNote) {
+      updatePinButtonState(false);
+    }
+  }
   headingSelect.disabled = !hasNote;
   textColorInput.disabled = !hasNote;
   formatToolbar.querySelectorAll("button").forEach((button) => {
