@@ -415,14 +415,16 @@ function applyThemeToEditor(bg, color) {
     element.style.setProperty("--note-bg", bg);
     element.style.setProperty("--note-color", color);
   });
-  [noteColorInEditView, pinNoteButton, deleteNoteInEditView].forEach((button) => {
-    if (!button) {
-      return;
-    }
+  [noteColorInEditView, pinNoteButton, deleteNoteInEditView].forEach(
+    (button) => {
+      if (!button) {
+        return;
+      }
 
-    button.style.background = bg;
-    button.style.color = color;
-  });
+      button.style.background = bg;
+      button.style.color = color;
+    },
+  );
 }
 
 function applyThemeToCard(noteElement, bg, color) {
