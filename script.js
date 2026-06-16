@@ -66,6 +66,12 @@ const icons = {
   },
 };
 
+window.onload = () => {
+  if (sessionStorage.getItem("isNavCloseOpen") === "closed") {
+    container.classList.add("sidebarClosed");
+  }
+};
+
 class NotesStore {
   constructor() {
     this.dbName = "NOTESDB";
@@ -385,7 +391,6 @@ function updateCurrentNoteContent() {
   if (!current) {
     return;
   }
-
   current.querySelector(".noteContent").value = textareaInEditView.innerHTML;
   touchNote(current);
   saveNoteElement(current);
@@ -858,6 +863,7 @@ function createTaskLine(text) {
 
   taskLine.className = "taskLine";
   checkbox.type = "checkbox";
+  checkbox.checked = false;
   label.textContent = text;
   taskLine.append(checkbox, label);
   return taskLine;
@@ -897,7 +903,6 @@ function toggleSidebar() {
     : "";
   updateSessionStorage();
 }
-
 function searchNotes() {
   const query = searchForNotes.value.trim().toLowerCase();
   document.querySelectorAll(".notes").forEach((noteElement) => {
@@ -1011,12 +1016,12 @@ function updateWordCount() {
 function restoreSession() {
   const sessionNote = sessionStorage.getItem("currentSessionNote");
   const noteToOpen = sessionNote ? document.getElementById(sessionNote) : null;
-
   if (noteToOpen) {
     openNote(noteToOpen);
   }
 
   if (sessionStorage.getItem("isNavCloseOpen") === "closed") {
+    console.log("open?");
     container.classList.add("sidebarClosed");
     hideSidebar.title = `Show Notes List (${shortcuts.nav})`;
     hideSidebar.querySelector("svg").style.transform = "rotate(180deg)";
@@ -1028,7 +1033,6 @@ function updateSessionStorage() {
     "isNavCloseOpen",
     container.classList.contains("sidebarClosed") ? "closed" : "opened",
   );
-
   if (currentNoteId) {
     sessionStorage.setItem("currentSessionNote", currentNoteId);
   } else {

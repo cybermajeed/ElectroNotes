@@ -517,7 +517,7 @@ button {
 }
 
 .taskLine:has(input:checked) {
-  color: rgba(12, 17, 24, 0.58);
+  color: rgba(138, 138, 138, 0.58);
   text-decoration: line-through;
 }
 
