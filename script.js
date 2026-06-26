@@ -66,6 +66,17 @@ const icons = {
   },
 };
 
+Object.assign(icons.toolbar, {
+  taskList: "&#9745;",
+  justifyLeft: "&larr;",
+  justifyCenter: "&harr;",
+  justifyRight: "&rarr;",
+  insertHR: "&mdash;",
+  createLink: "&#128279;",
+  unlink: "&#x21B5;",
+  insertTable: "&#9638;",
+});
+
 window.onload = () => {
   if (sessionStorage.getItem("isNavCloseOpen") === "closed") {
     container.classList.add("sidebarClosed");
@@ -186,6 +197,7 @@ function bindEvents() {
   noteColorInEditView.addEventListener("pointerdown", showColorPalette);
   if (pinNoteButton) pinNoteButton.addEventListener("click", togglePin);
   textareaInEditView.addEventListener("input", updateCurrentNoteContent);
+  textareaInEditView.addEventListener("change", updateCurrentNoteContent);
   noteTitleInEditView.addEventListener("input", updateCurrentNoteTitle);
   searchForNotes.addEventListener("input", searchNotes);
   formatToolbar.addEventListener("mousedown", keepEditorSelection);
@@ -196,7 +208,6 @@ function bindEvents() {
   textareaInEditView.addEventListener("keydown", handleEditorKeys);
   textareaInEditView.addEventListener("keyup", saveEditorSelection);
   textareaInEditView.addEventListener("mouseup", saveEditorSelection);
-  textareaInEditView.addEventListener("change", updateCurrentNoteContent);
 
   textareaInEditView.addEventListener("click", (e) => {
     if (e.target.localName === "img") {
@@ -638,17 +649,30 @@ function createLinkPrompt() {
   const selection = window.getSelection();
   const selectedText =
     selection && !selection.isCollapsed ? selection.toString() : "";
-  const url = prompt("Enter URL (include https://)", "https://");
+  const url = normalizeUrl(prompt("Enter URL (include https://)", "https://"));
   if (!url) return;
   if (selectedText) {
     document.execCommand("createLink", false, url);
+    secureSelectedLinks(url);
   } else {
     document.execCommand(
       "insertHTML",
       false,
-      `<a href="${url}" target="_blank">${escapeHtml(url)}</a>&nbsp;`,
+      `<a href="${escapeAttribute(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>&nbsp;`,
     );
   }
+}
+
+function secureSelectedLinks(url) {
+  textareaInEditView
+    .querySelectorAll("a")
+    .forEach((link) => {
+      if (link.href !== url) {
+        return;
+      }
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    });
 }
 
 function insertTable() {
@@ -1021,7 +1045,6 @@ function restoreSession() {
   }
 
   if (sessionStorage.getItem("isNavCloseOpen") === "closed") {
-    console.log("open?");
     container.classList.add("sidebarClosed");
     hideSidebar.title = `Show Notes List (${shortcuts.nav})`;
     hideSidebar.querySelector("svg").style.transform = "rotate(180deg)";
@@ -1050,6 +1073,30 @@ function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
+}
+
+function escapeAttribute(text) {
+  return escapeHtml(text).replace(/"/g, "&quot;");
+}
+
+function normalizeUrl(value) {
+  const trimmed = value?.trim();
+  if (!trimmed || trimmed === "https://") {
+    return "";
+  }
+
+  try {
+    const url = new URL(trimmed);
+    return ["http:", "https:", "mailto:"].includes(url.protocol)
+      ? url.href
+      : "";
+  } catch {
+    try {
+      return new URL(`https://${trimmed}`).href;
+    } catch {
+      return "";
+    }
+  }
 }
 
 function createId() {
